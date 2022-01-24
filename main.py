@@ -1,6 +1,8 @@
 from flask import Flask, render_template, url_for, session, request, redirect
 from dotenv import load_dotenv
 from werkzeug.security import generate_password_hash, check_password_hash
+
+import card_queries
 from util import json_response
 import mimetypes
 import users_queries, board_queries, status_queries
@@ -55,6 +57,7 @@ def login():
         if my_user and check_password_hash(my_user['password'], password):
             session['login'] = True
             session['user'] = my_user['name']
+            session['user_id'] = my_user['id']
             return redirect('/')
         else:
             return render_template('login.html', message="Incorrect user name or password")
@@ -66,6 +69,7 @@ def logout():
     if session['login'] == True:
         session.pop('login')
         session.pop('user')
+        session.pop('user_id')
     return render_template('login.html', message="You are logged out")
 
 
@@ -85,6 +89,24 @@ def register():
         users_queries.create_new_user(user_data)
         return render_template('login.html', message="Successful registration. Log in to continue.")
     return render_template('register.html')
+
+
+@app.route("/api/boards/<int:board_id>/cards/add", methods=['POST'])
+@json_response
+def create_new_card(board_id: int):
+    """
+    Create new card for user and board.
+    """
+    card_data = {
+        'board_id': board_id,
+        'status_id': 1,
+        'user_id': session['user_id'],
+        'title': request.get_json()['title'],
+        'card_order': 0
+    }
+    card_id = card_queries.create_new_card(card_data)
+    card_data['card_id'] = card_id['id']
+    return card_data
 
 
 if __name__ == '__main__':
