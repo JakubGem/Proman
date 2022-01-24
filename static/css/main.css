@@ -1,3 +1,26 @@
 #boards {
     background-color: green;
 }
+
+.corner{
+    float: right;
+    margin-right: 5%;
+}
+
+.log{
+    width: 40%;
+    height: 45%;
+    text-align: center;
+    border-color: #3A7734;
+    border-style: solid;
+    padding: 5%;
+    margin: 5% auto auto;
+}
+
+.log_second_option{
+    padding-top: 5%;
+}
+
+input{
+    width: 50%;
+}
