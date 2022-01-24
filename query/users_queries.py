@@ -12,6 +12,7 @@ def get_one_user(name):
 def create_new_user(user_data):
     return data_manager.execute_insert("""
         INSERT INTO proman_users(name, password, email) 
-        VALUES (%(name)s, %(password)s, %(email)s);""", {'name': user_data['name'],
+        VALUES (%(name)s, %(password)s, %(email)s)
+        RETURNING id;""", {'name': user_data['name'],
                                                          'password': user_data['password'],
                                                          'email': user_data['email']})

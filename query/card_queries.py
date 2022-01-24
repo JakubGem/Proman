@@ -1,6 +1,15 @@
 import data_manager
 
 
+def create_new_card(card_data):
+    return data_manager.execute_insert("""
+        INSERT INTO cards(board_id, status_id, user_id, title, card_order) 
+        VALUES (%(board_id)s, %(status_id)s, %(user_id)s, %(title)s, %(card_order)s)
+        RETURNING id;""", {'board_id': card_data['board_id'], 'status_id': card_data['status_id'],
+                           'user_id': card_data['user_id'], 'title': card_data['title'],
+                           'card_order': card_data['card_order']})
+
+
 def get_cards_for_board(board_id):
     # remove this code once you implement the database
     return [{"title": "title1", "id": 1}, {"title": "board2", "id": 2}]
