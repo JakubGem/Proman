@@ -19,7 +19,8 @@ SET default_with_oids = false;
 
 DROP TABLE IF EXISTS statuses CASCADE;
 DROP TABLE IF EXISTS boards CASCADE;
-DROP TABLE IF EXISTS cards;
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS cards CASCADE;
 
 ---
 --- create tables
@@ -32,16 +33,43 @@ CREATE TABLE statuses (
 
 CREATE TABLE boards (
     id          SERIAL PRIMARY KEY  NOT NULL,
-    title       VARCHAR(200)        NOT NULL
+    title       VARCHAR(200)        NOT NULL,
+    type   VARCHAR(10) default 'public',
+    user_id   INTEGER
 );
 
 CREATE TABLE cards (
     id          SERIAL PRIMARY KEY  NOT NULL,
     board_id    INTEGER             NOT NULL,
     status_id   INTEGER             NOT NULL,
+    user_id   INTEGER             NOT NULL,
     title       VARCHAR (200)       NOT NULL,
     card_order  INTEGER             NOT NULL
 );
+
+CREATE TABLE  proman_users(
+    id          SERIAL PRIMARY KEY  NOT NULL,
+    name       VARCHAR (200)     NOT NULL unique,
+    email       VARCHAR (200)     NOT NULL unique,
+    password       VARCHAR (200)     NOT NULL
+);
+
+---
+--- add constraints
+---
+
+ALTER TABLE ONLY cards
+    ADD CONSTRAINT fk_cards_board_id FOREIGN KEY (board_id) REFERENCES boards(id);
+
+ALTER TABLE ONLY cards
+    ADD CONSTRAINT fk_cards_user_id FOREIGN KEY (user_id) REFERENCES proman_users(id);
+
+ALTER TABLE ONLY cards
+    ADD CONSTRAINT fk_cards_status_id FOREIGN KEY (status_id) REFERENCES statuses(id);
+
+ALTER TABLE ONLY boards
+    ADD CONSTRAINT fk_boards_user_id FOREIGN KEY (user_id) REFERENCES proman_users(id);
+
 
 ---
 --- insert data
@@ -67,13 +95,3 @@ INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 2, 'in progress card', 1);
 INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 3, 'planning', 1);
 INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 4, 'done card 1', 1);
 INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 4, 'done card 1', 2);
-
----
---- add constraints
----
-
-ALTER TABLE ONLY cards
-    ADD CONSTRAINT fk_cards_board_id FOREIGN KEY (board_id) REFERENCES boards(id);
-
-ALTER TABLE ONLY cards
-    ADD CONSTRAINT fk_cards_status_id FOREIGN KEY (status_id) REFERENCES statuses(id);
