@@ -4,4 +4,4 @@
 /venv/
 /proman/
 .env.template
-query/__pycache__
+query/__pycache__/

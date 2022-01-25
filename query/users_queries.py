@@ -14,5 +14,5 @@ def create_new_user(user_data):
         INSERT INTO proman_users(name, password, email) 
         VALUES (%(name)s, %(password)s, %(email)s)
         RETURNING id;""", {'name': user_data['name'],
-                                                         'password': user_data['password'],
-                                                         'email': user_data['email']})
+         'password': user_data['password'],
+         'email': user_data['email']})
