@@ -17,34 +17,39 @@ SET default_with_oids = false;
 --- drop tables
 ---
 
-DROP TABLE IF EXISTS statuses CASCADE;
+DROP TABLE IF EXISTS columns CASCADE;
 DROP TABLE IF EXISTS boards CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS cards CASCADE;
+DROP TABLE IF EXISTS proman_users CASCADE;
 
 ---
 --- create tables
 ---
 
-CREATE TABLE statuses (
+CREATE TABLE columns (
     id       SERIAL PRIMARY KEY     NOT NULL,
-    title    VARCHAR(200)           NOT NULL
+    title    VARCHAR(200)           NOT NULL,
+    board_id INTEGER                NOT NULL,
+    active   BOOLEAN    default 'true' NOT NULL
 );
 
 CREATE TABLE boards (
     id          SERIAL PRIMARY KEY  NOT NULL,
     title       VARCHAR(200)        NOT NULL,
     type   VARCHAR(10) default 'public',
-    user_id   INTEGER
+    user_id   INTEGER,
+    active   BOOLEAN    default 'true' NOT NULL
 );
 
 CREATE TABLE cards (
     id          SERIAL PRIMARY KEY  NOT NULL,
     board_id    INTEGER             NOT NULL,
-    status_id   INTEGER             NOT NULL,
-    user_id   INTEGER             NOT NULL,
+    columns_id   INTEGER             NOT NULL,
     title       VARCHAR (200)       NOT NULL,
-    card_order  INTEGER             NOT NULL
+    card_order  INTEGER             NOT NULL,
+    user_id   INTEGER             NOT NULL,
+    active   BOOLEAN    default 'true' NOT NULL
 );
 
 CREATE TABLE  proman_users(
@@ -59,39 +64,46 @@ CREATE TABLE  proman_users(
 ---
 
 ALTER TABLE ONLY cards
-    ADD CONSTRAINT fk_cards_board_id FOREIGN KEY (board_id) REFERENCES boards(id);
+    ADD CONSTRAINT fk_cards_boards_id FOREIGN KEY (board_id) REFERENCES boards(id);
 
 ALTER TABLE ONLY cards
     ADD CONSTRAINT fk_cards_user_id FOREIGN KEY (user_id) REFERENCES proman_users(id);
 
 ALTER TABLE ONLY cards
-    ADD CONSTRAINT fk_cards_status_id FOREIGN KEY (status_id) REFERENCES statuses(id);
+    ADD CONSTRAINT fk_cards_columns_id FOREIGN KEY (columns_id) REFERENCES columns(id);
 
 ALTER TABLE ONLY boards
     ADD CONSTRAINT fk_boards_user_id FOREIGN KEY (user_id) REFERENCES proman_users(id);
+
+ALTER TABLE ONLY columns
+    ADD CONSTRAINT fk_columns_board_id FOREIGN KEY (board_id) REFERENCES boards(id);
 
 
 ---
 --- insert data
 ---
 
-INSERT INTO statuses(title) VALUES ('new');
-INSERT INTO statuses(title) VALUES ('in progress');
-INSERT INTO statuses(title) VALUES ('testing');
-INSERT INTO statuses(title) VALUES ('done');
+INSERT INTO proman_users(name, email, password) VALUES ('Test', 'test@.pl', '1234');
+
 
 INSERT INTO boards(title) VALUES ('Board 1');
 INSERT INTO boards(title) VALUES ('Board 2');
 
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 1, 'new card 1', 1);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 1, 'new card 2', 2);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 2, 'in progress card', 1);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 3, 'planning', 1);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 4, 'done card 1', 1);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 4, 'done card 1', 2);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 1, 'new card 1', 1);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 1, 'new card 2', 2);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 2, 'in progress card', 1);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 3, 'planning', 1);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 4, 'done card 1', 1);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 4, 'done card 1', 2);
+INSERT INTO columns(title, board_id) VALUES ('new', 1);
+INSERT INTO columns(title, board_id) VALUES ('in progress', 1);
+INSERT INTO columns(title, board_id) VALUES ('testing', 1);
+INSERT INTO columns(title, board_id) VALUES ('done', 1);
+
+
+INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 1, 'new card 1', 1, 1);
+INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 1, 'new card 2', 2, 1);
+INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 2, 'in progress card', 1, 1);
+INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 3, 'planning', 1, 1);
+INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 4, 'done card 1', 1, 1);
+INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 4, 'done card 1', 2, 1);
+INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 1, 'new card 1', 1, 1);
+INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 1, 'new card 2', 2, 1);
+INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 2, 'in progress card', 1, 1);
+INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 3, 'planning', 1, 1);
+INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 4, 'done card 1', 1, 1);
+INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 4, 'done card 1', 2, 1);
