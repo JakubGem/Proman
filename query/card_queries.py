@@ -10,6 +10,11 @@ def create_new_card(card_data):
                            'user_id': card_data['user_id'], 'active': card_data['active']})
 
 
+def delete_card(card_id):
+    return data_manager.execute_delete("""DELETE FROM proman.public.cards
+    WHERE cards.id = %(card_id)s;""", {'card_id': card_id})
+
+
 def get_cards_for_board(board_id):
     # remove this code once you implement the database
     return [{"title": "title1", "id": 1}, {"title": "board2", "id": 2}]

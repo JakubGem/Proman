@@ -110,5 +110,15 @@ def create_new_card(board_id: int):
     return card_data
 
 
+@app.route("/api/cards/<int:card_id>/delete", methods=['DELETE'])
+@json_response
+def delete_card(card_id: int):
+    """
+    Delete card.
+    """
+    card_queries.delete_card(card_id)
+    return 'DELETED'
+
+
 if __name__ == '__main__':
     main()
