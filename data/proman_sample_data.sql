@@ -37,7 +37,7 @@ CREATE TABLE columns (
 CREATE TABLE boards (
     id          SERIAL PRIMARY KEY  NOT NULL,
     title       VARCHAR(200)        NOT NULL,
-    type   VARCHAR(10) default 'public',
+    type   BOOLEAN default 'true',
     user_id   INTEGER,
     active   BOOLEAN    default 'true' NOT NULL
 );
@@ -86,8 +86,8 @@ ALTER TABLE ONLY columns
 INSERT INTO proman_users(name, email, password) VALUES ('Test', 'test@.pl', '1234');
 
 
-INSERT INTO boards(title) VALUES ('Board 1');
-INSERT INTO boards(title) VALUES ('Board 2');
+INSERT INTO boards(title, user_id) VALUES ('Board 1', 1);
+INSERT INTO boards(title, user_id) VALUES ('Board 2', 1);
 
 INSERT INTO columns(title, board_id) VALUES ('new', 1);
 INSERT INTO columns(title, board_id) VALUES ('in progress', 1);
