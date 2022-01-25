@@ -122,7 +122,7 @@ def delete_card(card_id: int):
 
 @app.route("/api/cards/<int:card_id>/edit", methods=['PUT'])
 @json_response
-def edit_card(card_id: int):
+def edit_card_title(card_id: int):
     """
     Edit card.
     """
