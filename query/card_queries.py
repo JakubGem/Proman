@@ -15,6 +15,13 @@ def delete_card(card_id):
     WHERE cards.id = %(card_id)s;""", {'card_id': card_id})
 
 
+def edit_card(card_id, title):
+    return data_manager.execute_edit("""UPDATE cards 
+    SET title = %(title)s
+    WHERE cards.id = %(card_id)s
+    RETURNING *;""", {'card_id': card_id, 'title': title})
+
+
 def get_cards_for_board(board_id):
     # remove this code once you implement the database
     return [{"title": "title1", "id": 1}, {"title": "board2", "id": 2}]

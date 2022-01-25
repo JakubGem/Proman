@@ -86,3 +86,18 @@ def execute_delete(statement, variables=None):
     with establish_connection() as conn:
         with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cursor:
             cursor.execute(statement, variables)
+
+
+def execute_edit(statement, variables=None):
+    """
+    Execute SELECT statement optionally parameterized.
+    Use fetchall=False to get back one value (fetchone)
+
+    Example:
+    > execute_select('SELECT %(title)s; FROM shows', variables={'title': 'Codecool'})
+    statement: SELECT statement
+    variables:  optional parameter dict, optional parameter fetchall"""
+    with establish_connection() as conn:
+        with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cursor:
+            cursor.execute(statement, variables)
+            return cursor.fetchone()
