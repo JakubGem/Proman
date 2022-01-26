@@ -1,4 +1,4 @@
-function drop(){
+export function drop(){
 const cards = document.querySelectorAll('.card');
 const empties = document.querySelectorAll('.empty');
 console.log(cards);
@@ -10,9 +10,9 @@ cards.forEach((card) => {
 
 empties.forEach((empty) => {
     empty.addEventListener('dragover', dragOver)
-    empty.addEventListener('dragenter', dragEnter)
+    empty.addEventListener('dragenter', dragEnd)
     empty.addEventListener('dragleave', dragLeave)
-    empty.addEventListener('dragdrop', dragDrop)
+    empty.addEventListener('drop', dragDrop)
 });
 
 }
@@ -41,7 +41,10 @@ function dragLeave() {
     console.log('leave')
 }
 
-function dragDrop() {
-    this.appendChild(dragable)
-    console.log('drop')
+async function dragDrop(card_id) {
+    let response = await fetch("/api/cards/" + card_id.toString() + "/change-column"); // robi geta na podanego urla
+    let card = await response.json(); // wyciąga jsona z zapytania
+    this.appendChild(dragable);
+    console.log('drop');
+
 }

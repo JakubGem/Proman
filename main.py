@@ -130,5 +130,14 @@ def edit_card_title(card_id: int):
     return card_queries.edit_card(card_id, title)
 
 
+@app.route("/api/cards/<int:card_id>/change-column", methods=['PUT'])
+@json_response
+def change_column_card(card_id: int):
+    """
+    Change column by card.
+    """
+    column = request.get_json()['column_id']
+    return card_queries.edit_card(card_id, column)
+
 if __name__ == '__main__':
     main()
