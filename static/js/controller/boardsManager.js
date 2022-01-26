@@ -14,7 +14,7 @@ export let boardsManager = {
       domManager.addEventListener(
         `.toggle-board-button[data-board-id="${board.id}"]`,
         "click",
-        showHideButtonHandler
+        showHideButtonHandler,
       );
     }
   },
@@ -23,4 +23,6 @@ export let boardsManager = {
 function showHideButtonHandler(clickEvent) {
   const boardId = clickEvent.target.dataset.boardId;
   columnsManager.loadColumns(boardId);
+  document.getElementById(`board${boardId}`).classList.add('display')
+
 }

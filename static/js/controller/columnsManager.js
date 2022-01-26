@@ -11,7 +11,7 @@ export let columnsManager = {
       const content = columnBuilder(column);
       domManager.addChild(`.board[data-board-id="${boardId}"]`, content);
       domManager.addEventListener(
-        `.column[data-column-id="${column.id}"]`,
+        `.board-column[data-column-id="${column.id}"]`,
         "click",
         deleteButtonHandler)
     }await cardsManager.loadCards(boardId, columns)
@@ -19,8 +19,5 @@ export let columnsManager = {
 };
 
 function deleteButtonHandler(clickEvent) {
-
-}
-function sortCardsByColumn(cards){
 
 }
