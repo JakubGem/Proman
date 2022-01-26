@@ -106,8 +106,28 @@ def create_new_card(board_id: int):
         'active': True
     }
     card_id = card_queries.create_new_card(card_data)
-    card_data['card_id'] = card_id['id']
+    card_data['id'] = card_id['id']
     return card_data
+
+
+@app.route("/api/cards/<int:card_id>/delete", methods=['DELETE'])
+@json_response
+def delete_card(card_id: int):
+    """
+    Delete card.
+    """
+    card_queries.delete_card(card_id)
+    return 'DELETED'
+
+
+@app.route("/api/cards/<int:card_id>/edit", methods=['PUT'])
+@json_response
+def edit_card_title(card_id: int):
+    """
+    Edit card.
+    """
+    title = request.get_json()['title']
+    return card_queries.edit_card(card_id, title)
 
 
 if __name__ == '__main__':
