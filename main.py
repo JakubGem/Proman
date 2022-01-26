@@ -4,7 +4,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from util import json_response
 import mimetypes
-from query import users_queries, board_queries, columns_queries, card_queries
+from query import users_queries, board_queries, status_queries, card_queries, columns_queries
+
 
 mimetypes.add_type('application/javascript', '.js')
 app = Flask(__name__)
@@ -26,7 +27,14 @@ def get_boards():
     """
     All the boards
     """
+
     return board_queries.get_boards()
+
+
+@app.route("/api/columns/<int:board_id>")
+@json_response
+def get_columns_for_board(board_id: int):
+    return columns_queries.get_columns(board_id)
 
 
 @app.route("/api/boards/<int:board_id>/cards/")
