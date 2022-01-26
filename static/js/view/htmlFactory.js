@@ -55,7 +55,7 @@ export function newBoardModal () {
 
 </div>
     <button type="button" class="add-another-new-column">➕</button>
-<div class="new-board-menu-text">Do you want to make this board to be private?</div>
+<!--<div class="new-board-menu-text">Do you want to make this board to be private?</div>-->
  <div class="radio-form">
     <input type="radio" id="private"
      name="type" value="Private" checked="checked">
@@ -68,6 +68,7 @@ export function newBoardModal () {
 </div>
  </div>
 </form>
-
 <div class="overlay"></div>`
 }
+
+
