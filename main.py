@@ -2,10 +2,9 @@ from flask import Flask, render_template, url_for, session, request, redirect
 from dotenv import load_dotenv
 from werkzeug.security import generate_password_hash, check_password_hash
 
-import card_queries
 from util import json_response
 import mimetypes
-import users_queries, board_queries, status_queries
+from query import users_queries, board_queries, status_queries, card_queries
 
 mimetypes.add_type('application/javascript', '.js')
 app = Flask(__name__)
@@ -27,7 +26,7 @@ def get_boards():
     """
     All the boards
     """
-    return query.board_queries.get_boards()
+    return board_queries.get_boards()
 
 
 @app.route("/api/boards/<int:board_id>/cards/")
@@ -37,7 +36,7 @@ def get_cards_for_board(board_id: int):
     All cards that belongs to a board
     :param board_id: id of the parent board
     """
-    return query.card_queries.get_cards_for_board(board_id)
+    return card_queries.get_cards_for_board(board_id)
 
 
 def main():

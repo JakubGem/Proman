@@ -11,7 +11,9 @@ export function htmlFactory(template) {
             return cardBuilder
         default:
             console.error("Undefined template: " + template)
-            return () => { return "" }
+            return () => {
+                return ""
+            }
     }
 }
 
@@ -23,6 +25,6 @@ function boardBuilder(board) {
 }
 
 function cardBuilder(card) {
-    return `<div class="card" data-card-id="${card.id}">${card.title}</div>`;
+    return `<div class="card" draggable="true" data-card-id="${card.id}">${card.title}</div>`;
 }
 

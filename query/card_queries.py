@@ -12,7 +12,7 @@ def create_new_card(card_data):
 
 def get_cards_for_board(board_id):
     # remove this code once you implement the database
-    return [{"title": "title1", "id": 1}, {"title": "board2", "id": 2}]
+    # return [{"title": "title1", "id": 1}, {"title": "board2", "id": 2}]
 
     matching_cards = data_manager.execute_select(
         """
