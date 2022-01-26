@@ -4,7 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from util import json_response
 import mimetypes
-from query import users_queries, board_queries, status_queries, card_queries, columns_queries
+from query import users_queries, board_queries, card_queries, columns_queries
 
 
 mimetypes.add_type('application/javascript', '.js')
