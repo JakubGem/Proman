@@ -3,11 +3,23 @@ import data_manager
 
 def create_new_card(card_data):
     return data_manager.execute_insert("""
-        INSERT INTO cards(board_id, status_id, user_id, title, card_order) 
-        VALUES (%(board_id)s, %(status_id)s, %(user_id)s, %(title)s, %(card_order)s)
-        RETURNING id;""", {'board_id': card_data['board_id'], 'status_id': card_data['status_id'],
-                           'user_id': card_data['user_id'], 'title': card_data['title'],
-                           'card_order': card_data['card_order']})
+        INSERT INTO cards(board_id, columns_id, title, card_order, user_id, active) 
+        VALUES (%(board_id)s, %(columns_id)s, %(title)s, %(card_order)s, %(user_id)s, %(active)s)
+        RETURNING id;""", {'board_id': card_data['board_id'], 'columns_id': card_data['columns_id'],
+                           'title': card_data['title'], 'card_order': card_data['card_order'],
+                           'user_id': card_data['user_id'], 'active': card_data['active']})
+
+
+def delete_card(card_id):
+    return data_manager.execute_delete("""DELETE FROM proman.public.cards
+    WHERE cards.id = %(card_id)s;""", {'card_id': card_id})
+
+
+def edit_card(card_id, title):
+    return data_manager.execute_edit("""UPDATE cards 
+    SET title = %(title)s
+    WHERE cards.id = %(card_id)s
+    RETURNING *;""", {'card_id': card_id, 'title': title})
 
 
 def get_cards_for_board(board_id):
