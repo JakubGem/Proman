@@ -1,9 +1,10 @@
 import { dataHandler } from "../data/dataHandler.js";
-import { htmlFactory, htmlTemplates } from "../view/htmlFactory.js";
+import { htmlFactory, htmlTemplates, newBoardModal} from "../view/htmlFactory.js";
 import { domManager } from "../view/domManager.js";
 import { cardsManager } from "./cardsManager.js";
 
 export let boardsManager = {
+
   loadBoards: async function () {
     const boards = await dataHandler.getBoards();
     for (let board of boards) {
@@ -22,4 +23,23 @@ export let boardsManager = {
 function showHideButtonHandler(clickEvent) {
   const boardId = clickEvent.target.dataset.boardId;
   cardsManager.loadCards(boardId);
+}
+
+export const addNewBoard = function (){
+  document.querySelector('.new-board-button').addEventListener('click', newBoardMenu)
+}
+
+async function newBoardMenu (){
+  const content = newBoardModal();
+  domManager.addChild("#root", content, 'afterend');
+  document.querySelector('.new-board-button').classList.add('hidden')
+  addEventListenerToRemoveButtons()
+}
+
+const addEventListenerToRemoveButtons = function (){
+  const buttons = document.querySelectorAll('.remove-input')
+  for (let button of buttons) {
+    console.debug(button)
+    button.addEventListener('click', ()=>button.parentElement.remove())
+  }
 }
