@@ -6,6 +6,7 @@ from util import json_response
 import mimetypes
 from query import users_queries, board_queries, status_queries, card_queries, columns_queries
 
+
 mimetypes.add_type('application/javascript', '.js')
 app = Flask(__name__)
 load_dotenv()
@@ -103,16 +104,38 @@ def create_new_card(board_id: int):
     """
     Create new card for user and board.
     """
+    column_new_id = columns_queries.get_column_new_for_board(board_id)
     card_data = {
         'board_id': board_id,
-        'status_id': 1,
-        'user_id': session['user_id'],
+        'columns_id': column_new_id['id'],
         'title': request.get_json()['title'],
-        'card_order': 0
+        'card_order': 0,
+        'user_id': session['user_id'],
+        'active': True
     }
     card_id = card_queries.create_new_card(card_data)
-    card_data['card_id'] = card_id['id']
+    card_data['id'] = card_id['id']
     return card_data
+
+
+@app.route("/api/cards/<int:card_id>/delete", methods=['DELETE'])
+@json_response
+def delete_card(card_id: int):
+    """
+    Delete card.
+    """
+    card_queries.delete_card(card_id)
+    return 'DELETED'
+
+
+@app.route("/api/cards/<int:card_id>/edit", methods=['PUT'])
+@json_response
+def edit_card_title(card_id: int):
+    """
+    Edit card.
+    """
+    title = request.get_json()['title']
+    return card_queries.edit_card(card_id, title)
 
 
 if __name__ == '__main__':
