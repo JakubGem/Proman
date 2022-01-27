@@ -24,9 +24,13 @@ def save_new_board_data(userid, board_name, col1, col2, col3, col4, type=True):
         VALUES (%(board_name)s, %(type)s, %(userid)s)
         RETURNING id)
         INSERT INTO columns (title, board_id)
-        VALUES (%(col1)s, ins1.id), 
-        (%(col2)s, ins1.id),
-        (%(col3)s, ins1.id),
-        (%(col4)s, ins1.id);
+        VALUES (%(col1)s, (SELECT id FROM ins1)), 
+        (%(col2)s, (SELECT id FROM ins1)),
+        (%(col3)s, (SELECT id FROM ins1)),
+        (%(col4)s, (SELECT id FROM ins1));
+        SELECT id, type 
+        FROM boards
+        GROUP BY id
+        HAVING id = max(id);
         """, {'board_name': board_name, 'userid': userid, 'col1': col1, 'col2': col2, 'col3': col3, 'col4': col4,
               'type': type})

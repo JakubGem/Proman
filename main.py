@@ -24,17 +24,17 @@ def index():
 @json_response
 def save_new_board():
     print(request.form)
-    try:
-        userid = request.form.get('userid')
-        board_name = request.form.get('board-title')
-        col1 = request.form.get('col1')
-        col2 = request.form.get('col2')
-        col3 = request.form.get('col3')
-        col4 = request.form.get('col4')
-        board_queries.save_new_board_data(userid, board_name, col1, col2, col3, col4)
-        return "Success"
-    except:
-        return 'failed to save data'
+    # try:
+    userid = request.form.get('userid')
+    board_name = request.form.get('board-title')
+    col1 = request.form.get('col1')
+    col2 = request.form.get('col2')
+    col3 = request.form.get('col3')
+    col4 = request.form.get('col4')
+    return board_queries.save_new_board_data(userid, board_name, col1, col2, col3, col4)
+
+    # except:
+    #     return 'failed to save data'
 
 
 @app.route("/api/boards")
