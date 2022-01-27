@@ -152,7 +152,6 @@ section.board{
     display: flex;
     justify-self: center;
 }
-
 .empty{
     display: table;
     width: 200px;
@@ -161,4 +160,8 @@ section.board{
     top: 5px;
     border: 1px solid #000000;
 
+}
+.card_button{
+    text-align: right;
+    margin: 1%;
 }
