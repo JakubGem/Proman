@@ -143,8 +143,10 @@ def change_column_card(card_id: int):
     """
     Change column by card.
     """
-    column = request.get_json()['column_id']
-    return card_queries.edit_card(card_id, column)
+    column = request.get_json()
+    card_id = column['card_id']
+    column_id = column['column_id']
+    return card_queries.change_column(card_id, column_id)
 
 if __name__ == '__main__':
     main()
