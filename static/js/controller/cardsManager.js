@@ -1,18 +1,18 @@
-import {dataHandler} from "../data/dataHandler.js";
+import { dataHandler } from "../data/dataHandler.js";
 import {htmlFactory, htmlTemplates, loadDeleteButtonForCard, loadEditButtonForCard} from "../view/htmlFactory.js";
-import {domManager} from "../view/domManager.js";
-
+import { domManager } from "../view/domManager.js";
+import {drop} from './dragAndDrop.js'
 
 export let cardsManager = {
     loadCards: async function (boardId, columns) {
         const cards = await dataHandler.getCardsByBoardId(boardId);
         const cardsList = createSortedCardList(columns, cards);
-
         injectCardsToHTML(columns, cardsList);
+        await drop()
     },
 };
 
-const createSortedCardList = function (columns, cards) {
+const createSortedCardList = function (columns, cards){
     const cardsList = []
     for (const column of columns) {
         let temporaryList = cards.filter(card => card.columns_id === column.id);

@@ -52,3 +52,10 @@ def get_card_status(status_id):
         , {"status_id": status_id})
 
     return status
+
+
+def change_column(card_id, column_id):
+    return data_manager.execute_edit("""UPDATE cards 
+    SET columns_id = %(column_id)s
+    WHERE cards.id = %(card_id)s
+    RETURNING *;""", {'card_id': card_id, 'column_id': column_id})

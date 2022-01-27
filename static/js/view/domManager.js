@@ -1,8 +1,8 @@
 export let domManager = {
-  addChild(parentIdentifier, childContent) {
+  addChild(parentIdentifier, childContent, place = 'beforeend') {
     const parent = document.querySelector(parentIdentifier);
     if (parent) {
-      parent.insertAdjacentHTML("beforeend", childContent);
+      parent.insertAdjacentHTML(place, childContent);
     } else {
       console.error("could not find such html element: " + parentIdentifier);
     }
@@ -15,4 +15,14 @@ export let domManager = {
       console.error("could not find such html element: " + parentIdentifier);
     }
   },
-};
+}
+// let parent, childContent, place
+//   export function dragDiv(parent, childContent, place= 'beforeend'){
+//     {
+//     if (parent) {
+//       parent.insertAdjacentHTML(place, childContent);
+//     } else {
+//       console.error("could not find such html element: " + parent);
+//     }
+//   }
+// }

@@ -6,7 +6,6 @@ from util import json_response
 import mimetypes
 from query import users_queries, board_queries, card_queries, columns_queries
 
-
 mimetypes.add_type('application/javascript', '.js')
 app = Flask(__name__)
 load_dotenv()
@@ -137,6 +136,17 @@ def edit_card_title(card_id: int):
     title = request.get_json()['title']
     return card_queries.edit_card(card_id, title)
 
+
+@app.route("/api/cards/<int:card_id>/change-column", methods=['PUT'])
+@json_response
+def change_column_card(card_id: int):
+    """
+    Change column by card.
+    """
+    column = request.get_json()
+    card_id = column['card_id']
+    column_id = column['column_id']
+    return card_queries.change_column(card_id, column_id)
 
 if __name__ == '__main__':
     main()
