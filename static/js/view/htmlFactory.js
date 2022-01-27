@@ -29,46 +29,61 @@ function cardBuilder(card) {
     return `<div class="card" data-card-id="${card.id}">${card.title}</div>`;
 }
 
-export function newBoardModal () {
-    return `    <div class="modal-window"></div>
-<button class="close-modal-window">❌</button>
-        <div class="new-board-window"></div>
-<form action="/" method="post">
-    <div class="new-board-title">Give board name:</div>
-    <input type="text" class="new-board-title" id="board-title" name="board-title" placeholder="Board name..." required>
-<div class="new-board-menu-text">Give columns name:</div>
-<div class="new-column-input">
-    <input type="text" class="new-column-name" minlength="1" id="column-name-1" name="column-name-1" value="new">
-    <button type="button" class="remove-input">✖</button>
-</div>
-<div class="new-column-input">
-    <input type="text" class="new-column-name" minlength="1" id="column-name-2" name="column-name-2" value="in progress">
-<button type="button" class="remove-input">✖</button>
-</div>
-<div class="new-column-input">
-    <input type="text" class="new-column-name" minlength="1" id="column-name-3" name="column-name-3" value="testing">
-<button type="button" class="remove-input">✖</button>
-</div>
-<div class="new-column-input">
-    <input type="text" class="new-column-name" minlength="1" id="column-name-4" name="column-name-4" value="done">
-<button type="button" class="remove-input">✖</button>
 
-</div>
-    <button type="button" class="add-another-new-column">➕</button>
-<!--<div class="new-board-menu-text">Do you want to make this board to be private?</div>-->
- <div class="radio-form">
-    <input type="radio" id="private"
-     name="type" value="Private" checked="checked">
-    <label for="private">Private</label>
-    <input type="radio" id="public"
-     name="type" value="Public">
-    <label for="public">Public</label>
-    <div class="new-board-buttons">
-<button type="submit">Save</button>
-</div>
- </div>
-</form>
-<div class="overlay"></div>`
+
+export function newBoardModal () {
+    return `    
+    <div class="modal-window">
+        <button class="close-modal-window" title="Cancel submit new board">❌</button>
+        <div class="new-board-window">
+            <form action="/" method="post">
+                <div class="new-board-title">Give board name:</div>
+                <input type="text" class="new-board-title" id="board-title" name="board-title" placeholder="Board name..." required>
+                <div class="new-board-menu-text">Give columns name:</div>
+                <div class="new-column-input">
+                    <input type="text" class="new-column-name" minlength="1" id="column-name-1" name="column-name-1" value="new">
+                    <button type="button" class="remove-input" title="Remove this column">✖</button>
+                </div>
+                <div class="new-column-input">
+                    <input type="text" class="new-column-name" minlength="1" id="column-name-2" name="column-name-2" value="in progress">
+                    <button type="button" class="remove-input" title="Remove this column">✖</button>
+                </div>
+                <div class="new-column-input">
+                    <input type="text" class="new-column-name" minlength="1" id="column-name-3" name="column-name-3" value="testing">
+                    <button type="button" class="remove-input" title="Remove this column">✖</button>
+                </div>
+                <div class="new-column-input">
+                    <input type="text" class="new-column-name" minlength="1" id="column-name-4" name="column-name-4" value="done">
+                    <button type="button" class="remove-input" title="Remove this column">✖</button>
+                </div>
+                <div class="add-another-new-column-div">
+                    <button type="button" class="add-another-new-column" title="Add new column">➕</button> 
+                </div>
+                 <div class="radio-form">
+                     <div class="radio-form-one-pick">
+                        <label for="public">Public<span class="public-board-expl" title="This board will be visible to everyone">💡</span></label>
+                        <input type="radio" id="public" name="type" value="Public">
+                    </div>
+                    <div class="radio-form-one-pick">
+                        <label for="private">Private<span class="private-board-expl" title="This board will be visible only to you">💡</span></label>
+                        <input type="radio" id="private" name="type" value="Private" checked="checked">
+                    </div>
+
+                 </div>
+                <div class="new-board-submit-buttons">
+                    <button type="submit" class="submit-new-board">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="overlay"></div>`
 }
 
 
+function newBoardColumn(index){
+    return `
+<div className="new-column-input">
+    <input type="text" className="new-column-name" minLength="1" id="column-name-${index}" name="column-name-${index}"">
+    <button type="button" className="remove-input">✖</button>
+</div>`
+}

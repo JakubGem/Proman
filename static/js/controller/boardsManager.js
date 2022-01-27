@@ -32,7 +32,7 @@ export const addNewBoard = function (){
 async function newBoardMenu (){
   const content = newBoardModal();
   domManager.addChild("#root", content, 'afterend');
-  document.querySelector('.new-board-button').classList.add('hidden')
+  document.querySelector('.new-board-btn-container').classList.add('hidden')
   addEventListenerToRemoveButtons()
 }
 
