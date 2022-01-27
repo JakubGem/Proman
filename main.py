@@ -1,7 +1,7 @@
 from flask import Flask, render_template, url_for, session, request, redirect
 from dotenv import load_dotenv
 from werkzeug.security import generate_password_hash, check_password_hash
-
+import os
 from util import json_response
 import mimetypes
 from query import users_queries, board_queries, columns_queries, card_queries
@@ -18,6 +18,23 @@ def index():
     This is a one-pager which shows all the boards and cards
     """
     return render_template('index.html')
+
+
+@app.route("/save_new_board", methods=['POST'])
+@json_response
+def save_new_board():
+    print(request.form)
+    try:
+        userid = request.form.get('userid')
+        board_name = request.form.get('board-title')
+        col1 = request.form.get('col1')
+        col2 = request.form.get('col2')
+        col3 = request.form.get('col3')
+        col4 = request.form.get('col4')
+        board_queries.save_new_board_data(userid, board_name, col1, col2, col3, col4)
+        return "Success"
+    except:
+        return 'failed to save data'
 
 
 @app.route("/api/boards")
