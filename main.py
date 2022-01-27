@@ -24,15 +24,10 @@ def index():
 @app.route("/save_new_board", methods=['POST', 'GET'])
 @json_response
 def save_new_board():
+    print(request.get_json())
     try:
         data = request.get_json()
-        userid = data.get('userid')
-        board_name = data.get('boardTitle')
-        col1 = data.get('col1')
-        col2 = data.get('col2')
-        col3 = data.get('col3')
-        col4 = data.get('col4')
-        return board_queries.save_new_board_data(userid, board_name, col1, col2, col3, col4)
+        return board_queries.save_new_board_data(data)
     except:
         return 'failed to save data'
 

@@ -35,8 +35,8 @@ function cardBuilder(card) {
 
 export function newBoardModal () {
     return `    
-    <div class="modal-window">
-        <button class="close-modal-window" title="Cancel submit new board">❌</button>
+    <div class="modal-window" id="add-new-board-window">
+        <button type="button" class="close-modal-window" title="Cancel submit new board">❌</button>
         <div class="new-board-window">
             <form action="/save_new_board" id="new-board-form" class="new-board-form" method="post">
                 <div class="new-board-title">Give board name:</div>
@@ -66,11 +66,11 @@ export function newBoardModal () {
                 <div class="radio-form">
                      <div class="radio-form-one-pick">
                         <label for="public">Public<span class="public-board-expl" title="This board will be visible to everyone">💡</span></label>
-                        <input type="radio" id="public" name="type" value="Public">
+                        <input class="type-new-board" type="radio" id="public" name="type" value="Public">
                     </div>
                     <div class="radio-form-one-pick">
                         <label for="private">Private<span class="private-board-expl" title="This board will be visible only to you">💡</span></label>
-                        <input type="radio" id="private" name="type" value="Private" checked="checked">
+                        <input class="type-new-board" type="radio" id="private" name="type" value="Private" checked="checked">
                     </div>
                  </div>
                 <div class="new-board-submit-buttons">

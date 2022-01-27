@@ -36,10 +36,16 @@ async function newBoardMenu (){
   const content = newBoardModal();
   domManager.addChild("#root", content, 'afterend');
   document.querySelector('.new-board-btn-container').classList.add('hidden')
+  addEventListenerToCloseModalWinow()
   addEventListenerToRemoveButtons()
   addEventListenerToAddNewColumnButton()
-  submitNewBoard()
+  await submitNewBoard()
 }
+
+const addEventListenerToCloseModalWinow = function (){
+  document.querySelector('.close-modal-window').addEventListener('click', closeAddNewBoardWindow)
+}
+
 
 const addEventListenerToRemoveButtons = function (){
   const buttons = document.querySelectorAll('.remove-input')
@@ -80,16 +86,26 @@ const submitNewBoard = async function () {
     const data = {}
     data['userid'] = 1
     data['boardTitle'] = document.getElementById('board-title').value
-    data['col1'] = document.getElementById('column-name-1').value
-    data['col2'] = document.getElementById('column-name-2').value
-    data['col3'] = document.getElementById('column-name-3').value
-    data['col4'] = document.getElementById('column-name-4').value
+    data['columns'] = searchingNewColumnsValue()
+    data['type'] = document.getElementById('public').checked
+    console.debug(data)
     dataHandler.createNewBoard(data)
     alert('You have successfully add new board')
-    // alert('You have successfully add new board')
+    closeAddNewBoardWindow()
   })
 }
 
 const searchingNewColumnsValue = function (){
-
+  const allNewBoardColumnData = document.querySelectorAll('.new-column-name');
+  const columnData= {}
+  for (let i=0; i<allNewBoardColumnData.length; i++){
+      columnData[i+1] = allNewBoardColumnData[i].value
+    }
+  return columnData
 }
+
+
+const closeAddNewBoardWindow = function (){
+    document.getElementById('add-new-board-window').remove()
+    document.querySelector('.new-board-btn-container').classList.remove('hidden')
+  }
