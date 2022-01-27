@@ -1,6 +1,7 @@
 export const htmlTemplates = {
     board: 1,
     card: 2,
+    column:3,
     newBoard: 4
 }
 
@@ -12,6 +13,8 @@ export function htmlFactory(template) {
             return cardBuilder
         case htmlTemplates.newBoard:
             return newBoardModal
+        case htmlTemplates.column:
+            return columnBuilder
         default:
             console.error("Undefined template: " + template)
             return () => { return "" }
@@ -19,17 +22,16 @@ export function htmlFactory(template) {
 }
 
 function boardBuilder(board) {
-    return `<div class="board-container">
-                <div class="board" data-board-id=${board.id}>${board.title}</div>
-                <button class="toggle-board-button" data-board-id="${board.id}">Show Cards</button>
-            </div>`;
+    return `<div class="board-container" id='board${board.id}'>
+            <div class="board-header">${board.title}</div>
+            <div class="board" data-board-id=${board.id}></div>  
+            </div>
+            <button class="toggle-board-button" data-board-id="${board.id}">Show Cards</button>`;
 }
 
 function cardBuilder(card) {
     return `<div class="card" data-card-id="${card.id}">${card.title}</div>`;
 }
-
-
 
 export function newBoardModal () {
     return `    
@@ -87,4 +89,25 @@ export function newBoardColumn(index){
     <input type="text" className="new-column-name" minLength="1" id="column-name-${index}" name="column-name-${index}" placeholder="Column name..."">
     <button type="button" className="remove-input">✖</button>
 </div>`
+}
+
+function columnBuilder(column) {
+    return `<div class="board-columns-container">
+<div class="board-column" data-column-id="${column.id}">${column.title}</div>
+</div>`;
+}
+
+export function loadAddNewCardButton(boardId){
+    // create new button
+    return `<div class="add_card_button"><button id='add_card_button_for_board${boardId}'>Add new card</button></div>`
+}
+
+export function loadEditButtonForCard(cardId){
+    // create new button
+    return `<button class="card_button" id='edit_title_for_card${cardId}'>🗒️</button></div>`
+}
+
+export function loadDeleteButtonForCard(cardId){
+    // create new button
+    return `<button class="card_button" id='delete_card${cardId}'>🗑️</button></div>`
 }

@@ -21,10 +21,32 @@
     padding-top: 5%;
 }
 
+.go_to_main_page{
+    padding-top: 5%;
+}
+
 input{
     width: 50%;
 }
 
 .hidden {
     display: none;
+}
+
+.main_page {
+    display: grid;
+    grid-template-columns: 80% 10% 10%;
+    grid-template-rows: 20% 1fr;
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.log_on_main_page {
+    grid-column: 3;
+    grid-row: 1;
+}
+
+.boards_on_main_page {
+    grid-column: 1/4;
+    grid-row: 2;
 }
