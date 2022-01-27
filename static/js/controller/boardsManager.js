@@ -70,32 +70,23 @@ const findLowestColumnIndex = function (){
   }
 }
 
-const submitNewBoard = function () {
+const submitNewBoard = async function () {
   const newBoard = document.getElementById('new-board-form');
   newBoard.addEventListener('submit', (e) => {
     e.preventDefault()
-    const data = new FormData();
-    data.append('userid', "1")
-    data.append('board-title', document.getElementById('board-title').value)
-    data.append('col1', document.getElementById('column-name-1').value)
-    data.append('col2', document.getElementById('column-name-2').value)
-    data.append('col3', document.getElementById('column-name-3').value)
-    data.append('col4', document.getElementById('column-name-4').value)
-    console.debug(data)
+    const data = {}
+    data['userid'] = 1
+    data['boardTitle'] = document.getElementById('board-title').value
+    data['col1'] = document.getElementById('column-name-1').value
+    data['col2'] = document.getElementById('column-name-2').value
+    data['col3'] = document.getElementById('column-name-3').value
+    data['col4'] = document.getElementById('column-name-4').value
     dataHandler.createNewBoard(data)
-    // const request = new XMLHttpRequest();
-    // request.onload = () =>{
-    //   const data = JSON.parse(request.responseText);
-    //   console.debug(data)
-    //   if (data.id) {
-    //     alert('success')
-    //     } else {
-    //     alert("Database connection failed")
-    //   }
-    // }
-
-    // request.open('POST', '/save_new_board', true)
-    // request.send(data);
     alert('You have successfully add new board')
+    // alert('You have successfully add new board')
   })
+}
+
+const searchingNewColumnsValue = function (){
+
 }

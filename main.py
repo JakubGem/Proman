@@ -20,21 +20,20 @@ def index():
     return render_template('index.html')
 
 
-@app.route("/save_new_board", methods=['POST'])
+@app.route("/save_new_board", methods=['POST', 'GET'])
 @json_response
 def save_new_board():
-    print(request.form)
-    # try:
-    userid = request.form.get('userid')
-    board_name = request.form.get('board-title')
-    col1 = request.form.get('col1')
-    col2 = request.form.get('col2')
-    col3 = request.form.get('col3')
-    col4 = request.form.get('col4')
-    return board_queries.save_new_board_data(userid, board_name, col1, col2, col3, col4)
-
-    # except:
-    #     return 'failed to save data'
+    try:
+        data = request.get_json()
+        userid = data.get('userid')
+        board_name = data.get('boardTitle')
+        col1 = data.get('col1')
+        col2 = data.get('col2')
+        col3 = data.get('col3')
+        col4 = data.get('col4')
+        return board_queries.save_new_board_data(userid, board_name, col1, col2, col3, col4)
+    except:
+        return 'failed to save data'
 
 
 @app.route("/api/boards")
