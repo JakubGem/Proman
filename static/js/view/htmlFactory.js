@@ -1,6 +1,7 @@
 export const htmlTemplates = {
     board: 1,
-    card: 2
+    card: 2,
+    column:3,
 }
 
 export function htmlFactory(template) {
@@ -9,6 +10,8 @@ export function htmlFactory(template) {
             return boardBuilder
         case htmlTemplates.card:
             return cardBuilder
+        case htmlTemplates.column:
+            return columnBuilder
         default:
             console.error("Undefined template: " + template)
             return () => {
@@ -18,13 +21,33 @@ export function htmlFactory(template) {
 }
 
 function boardBuilder(board) {
-    return `<div class="board-container">
-                <div class="board" data-board-id=${board.id}>${board.title}</div>
-                <button class="toggle-board-button" data-board-id="${board.id}">Show Cards</button>
-            </div>`;
+    return `<div class="board-container" id='board${board.id}'>
+            <div class="board-header">${board.title}</div>
+            <div class="board" data-board-id=${board.id}></div>    
+            </div>
+            <button class="toggle-board-button" data-board-id="${board.id}">Show Cards</button>`;
 }
 
 function cardBuilder(card) {
-    return `<div class="card" draggable="true" data-card-id="${card.id}">${card.title}</div>`;
+    return `<div class="empty" draggable="false" >
+<div class="card" draggable="true" data-card-id="${card.id}" data-title="${card.title}">${card.title}</div></div>
+<div class="empty" draggable="false" ></div>`;
 }
 
+
+// export function addDiv(){
+//     return `<div class="empty" draggable="false"></div>`
+// }
+
+
+
+
+
+
+
+
+function columnBuilder(column) {
+    return `<div class="board-columns-container">
+<div class="board-column" data-column-id="${column.id}">${column.title}</div>
+</div>`;
+}

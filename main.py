@@ -26,7 +26,14 @@ def get_boards():
     """
     All the boards
     """
+
     return board_queries.get_boards()
+
+
+@app.route("/api/columns/<int:board_id>")
+@json_response
+def get_columns_for_board(board_id: int):
+    return columns_queries.get_columns(board_id)
 
 
 @app.route("/api/boards/<int:board_id>/cards/")
