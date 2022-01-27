@@ -18,7 +18,7 @@ export let columnsManager = {
     await cardsManager.loadCards(boardId, columns);
     console.log(boardId);
     domManager.addChild(`.board[data-board-id="${boardId}"]`, loadAddNewCardButton(boardId));
-    document.getElementById('add_card_button_for_board' + boardId).addEventListener('click', () => createNewCard(boardId, columns));
+    document.getElementById('add_card_button_for_board' + boardId).addEventListener('click', () => createNewCard(boardId));
   },
 };
 
@@ -26,7 +26,7 @@ function deleteButtonHandler(clickEvent) {
 
 }
 
-async function createNewCard(boardId, columns){
+async function createNewCard(boardId){
   let new_title = prompt('Enter card title: ', 'card title');
   if (new_title !== null) {
     let response = await fetch("/api/boards/" + boardId.toString() + "/cards/add", {
