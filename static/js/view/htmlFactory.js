@@ -45,3 +45,8 @@ export function loadEditButtonForCard(cardId){
     // create new button
     return `<button id='edit_title_for_card${cardId}'>ET</button></div>`
 }
+
+export function loadDeleteButtonForCard(cardId){
+    // create new button
+    return `<button id='delete_card${cardId}'>D</button></div>`
+}

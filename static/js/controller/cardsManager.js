@@ -1,5 +1,5 @@
 import {dataHandler} from "../data/dataHandler.js";
-import {htmlFactory, htmlTemplates, loadAddNewCardButton, loadEditButtonForCard} from "../view/htmlFactory.js";
+import {htmlFactory, htmlTemplates, loadEditButtonForCard, loadDeleteButtonForCard} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
 
 
@@ -35,6 +35,8 @@ const injectCardsToHTML = function (columns, cardsList) {
             );
             domManager.addChild(`.card[data-card-id="${card.id}"]`, loadEditButtonForCard(card.id));
             document.getElementById('edit_title_for_card' + card.id).addEventListener('click', () => editCardTitle(card, columns));
+            domManager.addChild(`.card[data-card-id="${card.id}"]`, loadDeleteButtonForCard(card.id));
+            document.getElementById('delete_card' + card.id).addEventListener('click', () => deleteCard(card, columns));
         }
     }
 }
@@ -57,4 +59,14 @@ async function editCardTitle(card, columns) {
         }); // robi puta na podanego urla
     }
     await cardsManager.loadCards(card.board_id, columns); // ładuje wszystkie karty do tablicy
+}
+
+
+async function deleteCard(card, columns) {
+    if (confirm("Do you want to delete the card?") === true) {
+        let response = await fetch("/api/cards/" + card.id.toString() + "/delete", {
+            method: 'DELETE',
+        }); // robi puta na podanego urla
+        await cardsManager.loadCards(card.board_id, columns); // ładuje wszystkie karty do tablicy
+    }
 }
