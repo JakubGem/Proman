@@ -52,11 +52,11 @@ function dragLeave() {
 
 async function dragDrop(e, boardId) {
     let cardId = e.currentTarget
-    console.log(cardId.parentElement.parentElement.parentElement.getAttribute('data-board-id'))
-    console.log(cardId.parentElement)
-    let getBoard = document.getElementsByClassName('board')
+    // console.log(cardId.parentElement.parentElement.parentElement.getAttribute('data-board-id'))
+    // console.log(cardId.parentElement)
+    // let getBoard = document.getElementsByClassName('board')
     // console.log(getBoard)
-    console.log(getBoard)
+    // console.log(getBoard)
     // const cards = await dataHandler.getCardsByBoardId(boardId);
     // console.log(cards)
 
