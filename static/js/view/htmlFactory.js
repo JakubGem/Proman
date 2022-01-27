@@ -40,3 +40,8 @@ export function loadAddNewCardButton(boardId){
     // create new button
     return `<div class="add_card_button"><button id='add_card_button_for_board${boardId}'>Add new card</button></div>`
 }
+
+export function loadEditButtonForCard(cardId){
+    // create new button
+    return `<button id='edit_title_for_card${cardId}'>ET</button></div>`
+}

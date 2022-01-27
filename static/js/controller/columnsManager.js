@@ -18,7 +18,7 @@ export let columnsManager = {
     await cardsManager.loadCards(boardId, columns);
     console.log(boardId);
     domManager.addChild(`.board[data-board-id="${boardId}"]`, loadAddNewCardButton(boardId));
-    document.getElementById('add_card_button_for_board' + boardId).addEventListener('click', () => createNewCard(boardId));
+    document.getElementById('add_card_button_for_board' + boardId).addEventListener('click', () => createNewCard(boardId, columns));
   },
 };
 
@@ -26,11 +26,14 @@ function deleteButtonHandler(clickEvent) {
 
 }
 
-async function createNewCard(boardId){
-  let new_title = window.prompt('Enter card title: ', 'card title');
-  let response = await fetch("/api/boards/" + boardId.toString() + "/cards/add", {
+async function createNewCard(boardId, columns){
+  let new_title = prompt('Enter card title: ', 'card title');
+  if (new_title !== null) {
+    let response = await fetch("/api/boards/" + boardId.toString() + "/cards/add", {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({title: new_title}) // ZAMIENIA SŁOWIK NA JSONA
-  }); // robi posta na podanego urla
+    }); // robi posta na podanego urla
+  }
+  await cardsManager.loadCards(boardId, columns);
 }
