@@ -1,7 +1,7 @@
 import { dataHandler } from "../data/dataHandler.js";
-import { htmlFactory, htmlTemplates, loadAddNewCardButton } from "../view/htmlFactory.js";
+import { htmlFactory, htmlTemplates, loadAddNewCardButton} from "../view/htmlFactory.js";
 import { domManager } from "../view/domManager.js";
-import { cardsManager } from "./cardsManager.js";
+import { cardsManager, create_card} from "./cardsManager.js";
 
 export let columnsManager = {
   loadColumns: async function (boardId) {
@@ -34,6 +34,8 @@ async function createNewCard(boardId, columns){
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({title: new_title}) // ZAMIENIA SŁOWIK NA JSONA
     }); // robi posta na podanego urla
+    let card = await response.json();
+    console.log(card);
+    create_card(card);
   }
-  await cardsManager.loadCards(boardId, columns);
 }

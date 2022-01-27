@@ -1,5 +1,5 @@
 import {dataHandler} from "../data/dataHandler.js";
-import {htmlFactory, htmlTemplates, loadEditButtonForCard, loadDeleteButtonForCard} from "../view/htmlFactory.js";
+import {htmlFactory, htmlTemplates, loadDeleteButtonForCard, loadEditButtonForCard} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
 
 
@@ -21,22 +21,26 @@ const createSortedCardList = function (columns, cards) {
     return cardsList
 }
 
+export function create_card(card) {
+    const cardBuilder = htmlFactory(htmlTemplates.card);
+    const content = cardBuilder(card);
+    domManager.addChild(`.board-column[data-column-id="${card.columns_id}"]`, content);
+    domManager.addEventListener(
+        `.card[data-card-id="${card.id}"]`,
+        "click",
+        deleteButtonHandler
+    );
+    domManager.addChild(`.card[data-card-id="${card.id}"]`, loadEditButtonForCard(card.id));
+    document.getElementById('edit_title_for_card' + card.id).addEventListener('click', () => editCardTitle(card));
+    domManager.addChild(`.card[data-card-id="${card.id}"]`, loadDeleteButtonForCard(card.id));
+    document.getElementById('delete_card' + card.id).addEventListener('click', () => deleteCard(card));
+}
+
 const injectCardsToHTML = function (columns, cardsList) {
     console.debug(cardsList);
     for (let cards of cardsList) {
         for (let card of cards) {
-            const cardBuilder = htmlFactory(htmlTemplates.card);
-            const content = cardBuilder(card);
-            domManager.addChild(`.board-column[data-column-id="${card.columns_id}"]`, content);
-            domManager.addEventListener(
-                `.card[data-card-id="${card.id}"]`,
-                "click",
-                deleteButtonHandler
-            );
-            domManager.addChild(`.card[data-card-id="${card.id}"]`, loadEditButtonForCard(card.id));
-            document.getElementById('edit_title_for_card' + card.id).addEventListener('click', () => editCardTitle(card, columns));
-            domManager.addChild(`.card[data-card-id="${card.id}"]`, loadDeleteButtonForCard(card.id));
-            document.getElementById('delete_card' + card.id).addEventListener('click', () => deleteCard(card, columns));
+            create_card(card);
         }
     }
 }
@@ -49,7 +53,8 @@ function deleteButtonHandler(clickEvent) {
 
 }
 
-async function editCardTitle(card, columns) {
+async function editCardTitle(card) {
+    let old_title = card.title;
     let new_title = prompt('Enter new card title: ', card.title);
     if (new_title !== null) {
         let response = await fetch("/api/cards/" + (card.id).toString() + "/edit", {
@@ -57,16 +62,21 @@ async function editCardTitle(card, columns) {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({title: new_title}) // ZAMIENIA SŁOWIK NA JSONA
         }); // robi puta na podanego urla
+        let edited_card = document.querySelector(`.card[data-card-id="${card.id}"]`);
+        edited_card.innerHTML = edited_card.innerHTML.replace(old_title, new_title);
+        document.getElementById('edit_title_for_card' + card.id).addEventListener('click', () => editCardTitle(card));
+        document.getElementById('delete_card' + card.id).addEventListener('click', () => deleteCard(card));
+        card.title = new_title;
     }
-    await cardsManager.loadCards(card.board_id, columns); // ładuje wszystkie karty do tablicy
 }
 
 
-async function deleteCard(card, columns) {
+async function deleteCard(card) {
     if (confirm("Do you want to delete the card?") === true) {
         let response = await fetch("/api/cards/" + card.id.toString() + "/delete", {
             method: 'DELETE',
         }); // robi puta na podanego urla
-        await cardsManager.loadCards(card.board_id, columns); // ładuje wszystkie karty do tablicy
+        let deleted_card = document.querySelector(`.card[data-card-id="${card.id}"]`);
+        deleted_card.parentElement.removeChild(deleted_card); // szukanie rodzica i usuwanie jego dziecka
     }
 }
