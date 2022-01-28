@@ -38,6 +38,7 @@ function cardBuilder(card) {
 export function newBoardModal () {
     return `    
     <div class="modal-window" id="add-new-board-window">
+        <h2 class="modal-window-header">CREATE NEW BOARD</h2>
         <button type="button" class="close-modal-window" title="Cancel submit new board">❌</button>
         <div class="new-board-window">
             <form action="/save_new_board" id="new-board-form" class="new-board-form" method="post">
@@ -67,12 +68,12 @@ export function newBoardModal () {
                 </div>
                 <div class="radio-form">
                      <div class="radio-form-one-pick">
-                        <label for="public">Public<span class="public-board-expl" title="This board will be visible to everyone">💡</span></label>
                         <input class="type-new-board" type="radio" id="public" name="type" value="Public">
+                        <label for="public">Public<span class="public-board-expl" title="This board will be visible to everyone">💡</span></label>
                     </div>
                     <div class="radio-form-one-pick">
-                        <label for="private">Private<span class="private-board-expl" title="This board will be visible only to you">💡</span></label>
                         <input class="type-new-board" type="radio" id="private" name="type" value="Private" checked="checked">
+                        <label for="private">Private<span class="private-board-expl" title="This board will be visible only to you">💡</span></label>
                     </div>
                  </div>
                 <div class="new-board-submit-buttons">
@@ -85,11 +86,11 @@ export function newBoardModal () {
 }
 
 
-export function newBoardColumn(index){
+export function newBoardColumn(){
     return `
-<div className="new-column-input">
-    <input type="text" className="new-column-name" minLength="1" id="column-name-${index}" name="column-name-${index}" placeholder="Column name..."">
-    <button type="button" className="remove-input">✖</button>
+<div class="new-column-input">
+    <input type="text" class="new-column-name" minLength="1" name="column-name" placeholder="Column name..."">
+    <button type="button" class="remove-input">✖</button>
 </div>`
 }
 

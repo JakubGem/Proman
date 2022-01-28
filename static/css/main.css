@@ -70,7 +70,7 @@ input{
 
 }
 body{
-    position: absolute;
+    position: relative;
     left: 20%;
     display: flex;
     justify-content: center;
