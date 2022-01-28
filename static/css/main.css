@@ -28,10 +28,15 @@
 input{
     width: 50%;
 }
+
+.hidden {
+    display: none;
+}
+
 .main_page {
     display: grid;
     grid-template-columns: 80% 10% 10%;
-    grid-template-rows: 20% 95%;
+    grid-template-rows: 20% 1fr;
     grid-column: 2;
     grid-row: 1;
 }
@@ -45,8 +50,6 @@ input{
     grid-column: 1/4;
     grid-row: 2;
 }
-
-
 
 .card{
     position: relative;

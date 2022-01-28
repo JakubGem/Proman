@@ -15,14 +15,4 @@ export let domManager = {
       console.error("could not find such html element: " + parentIdentifier);
     }
   },
-}
-// let parent, childContent, place
-//   export function dragDiv(parent, childContent, place= 'beforeend'){
-//     {
-//     if (parent) {
-//       parent.insertAdjacentHTML(place, childContent);
-//     } else {
-//       console.error("could not find such html element: " + parent);
-//     }
-//   }
-// }
+};

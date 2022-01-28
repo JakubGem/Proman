@@ -1,44 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>ProMan</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>ProMan</title>
 
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon/favicon.ico') }}">
-    <link rel="icon" type="image/png" sizes="32x32"
-          href="{{ url_for('static', filename='favicon/favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="96x96"
-          href="{{ url_for('static', filename='favicon/favicon-96x96.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16"
-          href="{{ url_for('static', filename='favicon/favicon-16x16.png') }}">
-{#    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">#}
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/design.css') }}">
-
-</head>
-<body>
-<div class="drag">
-    <div id="root">
-    </div>
-</div>
-</body>
-<script type="module" src="{{ url_for('static', filename='js/main.js') }}" defer></script>
-<script type="module" src="{{ url_for('static', filename='js/controller/dragAndDrop.js') }}" defer></script>
-    <script type="module" src="{{ url_for('static', filename='js/main.js') }}" defer></script>
-</head>
-<body>
-<div class="main_page">
-    <div class="log_on_main_page">
-    {% if session['login']%}
-    <button class="btn btn-primary corner" onclick="location.href='/logout'">Logout</button>
-    {% else %}
-    <button class="btn btn-primary corner" onclick="location.href='/login'">Login</button>
-    <button class="btn btn-primary votes" onclick="location.href='/register'">Register</button>
-    {% endif %}
-</div>
-<div class="boards_on_main_page" id="root"></div>
-</div>
-
-</body>
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon/favicon.ico') }}">
+        <link rel="icon" type="image/png" sizes="32x32"
+              href="{{ url_for('static', filename='favicon/favicon-32x32.png') }}">
+        <link rel="icon" type="image/png" sizes="96x96"
+              href="{{ url_for('static', filename='favicon/favicon-96x96.png') }}">
+        <link rel="icon" type="image/png" sizes="16x16"
+              href="{{ url_for('static', filename='favicon/favicon-16x16.png') }}">
+    {#    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">#}
+            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/design.css') }}">
+        <script type="module" src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+        <script type="module" src="{{ url_for('static', filename='js/controller/dragAndDrop.js') }}" defer></script>
+        <script type="module" src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+    </head>
+    <body>
+        <div class="main_page">
+            <div class="log_on_main_page">
+            {% if session['login']%}
+            <button class="btn btn-primary corner" onclick="location.href='/logout'">Logout</button>
+            {% else %}
+            <button class="btn btn-primary corner" onclick="location.href='/login'">Login</button>
+            <button class="btn btn-primary votes" onclick="location.href='/register'">Register</button>
+            {% endif %}
+        </div>
+            <div class="boards_on_main_page" id="root"></div>
+        </div>
+            </div>
+        <div class="new-board-btn-container">
+            <button class="new-board-button">➕ Add new board ➕</button>
+        </div>
+    </body>
 </html>

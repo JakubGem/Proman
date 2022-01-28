@@ -50,7 +50,6 @@ function SortCards(card1, card2) {
 }
 
 function deleteButtonHandler(clickEvent) {
-
 }
 
 async function editCardTitle(card) {

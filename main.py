@@ -1,7 +1,7 @@
 from flask import Flask, render_template, url_for, session, request, redirect
 from dotenv import load_dotenv
 from werkzeug.security import generate_password_hash, check_password_hash
-
+import os
 from util import json_response
 import mimetypes
 from query import users_queries, board_queries, card_queries, columns_queries
@@ -18,6 +18,17 @@ def index():
     This is a one-pager which shows all the boards and cards
     """
     return render_template('index.html')
+
+
+@app.route("/save_new_board", methods=['POST', 'GET'])
+@json_response
+def save_new_board():
+    print(request.get_json())
+    try:
+        data = request.get_json()
+        return board_queries.save_new_board_data(data)
+    except:
+        return 'failed to save data'
 
 
 @app.route("/api/boards")

@@ -1,7 +1,8 @@
 export const htmlTemplates = {
     board: 1,
     card: 2,
-    column:3
+    column:3,
+    newBoard: 4
 }
 
 export function htmlFactory(template) {
@@ -10,6 +11,8 @@ export function htmlFactory(template) {
             return boardBuilder
         case htmlTemplates.card:
             return cardBuilder
+        case htmlTemplates.newBoard:
+            return newBoardModal
         case htmlTemplates.column:
             return columnBuilder
         default:
@@ -30,6 +33,64 @@ function cardBuilder(card) {
     return `<div class="empty" draggable="false" >
 <div class="card" draggable="true" data-card-id="${card.id}" >${card.title}</div></div>
 <div class="empty" draggable="false" ></div>`;
+}
+
+export function newBoardModal () {
+    return `    
+    <div class="modal-window" id="add-new-board-window">
+        <button type="button" class="close-modal-window" title="Cancel submit new board">❌</button>
+        <div class="new-board-window">
+            <form action="/save_new_board" id="new-board-form" class="new-board-form" method="post">
+                <div class="new-board-title">Give board name:</div>
+                <input type="text" class="new-board-title" id="board-title" name="board-title" placeholder="Board name..." required>
+                <div class="new-board-menu-text">New columns:</div>
+                <div class="all-new-columns">
+                    <div class="new-column-input">
+                        <input type="text" class="new-column-name" minlength="1" id="column-name-1" name="column-name-1" value="new">
+                        <button type="button" class="remove-input" title="Remove this column">✖</button>
+                    </div>
+                    <div class="new-column-input">
+                        <input type="text" class="new-column-name" minlength="1" id="column-name-2" name="column-name-2" value="in progress">
+                        <button type="button" class="remove-input" title="Remove this column">✖</button>
+                    </div>
+                    <div class="new-column-input">
+                        <input type="text" class="new-column-name" minlength="1" id="column-name-3" name="column-name-3" value="testing">
+                        <button type="button" class="remove-input" title="Remove this column">✖</button>
+                    </div>
+                    <div class="new-column-input">
+                        <input type="text" class="new-column-name" minlength="1" id="column-name-4" name="column-name-4" value="done">
+                        <button type="button" class="remove-input" title="Remove this column">✖</button>
+                    </div>
+                </div>
+                <div class="add-another-new-column-div">
+                    <button type="button" class="add-another-new-column" title="Add new column">➕</button> 
+                </div>
+                <div class="radio-form">
+                     <div class="radio-form-one-pick">
+                        <label for="public">Public<span class="public-board-expl" title="This board will be visible to everyone">💡</span></label>
+                        <input class="type-new-board" type="radio" id="public" name="type" value="Public">
+                    </div>
+                    <div class="radio-form-one-pick">
+                        <label for="private">Private<span class="private-board-expl" title="This board will be visible only to you">💡</span></label>
+                        <input class="type-new-board" type="radio" id="private" name="type" value="Private" checked="checked">
+                    </div>
+                 </div>
+                <div class="new-board-submit-buttons">
+                    <button type="submit" class="submit-new-board">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="overlay"></div>`
+}
+
+
+export function newBoardColumn(index){
+    return `
+<div className="new-column-input">
+    <input type="text" className="new-column-name" minLength="1" id="column-name-${index}" name="column-name-${index}" placeholder="Column name..."">
+    <button type="button" className="remove-input">✖</button>
+</div>`
 }
 
 function columnBuilder(column) {

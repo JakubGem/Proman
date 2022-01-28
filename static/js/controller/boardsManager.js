@@ -1,9 +1,10 @@
 import { dataHandler } from "../data/dataHandler.js";
-import {htmlFactory, htmlTemplates, loadAddNewCardButton} from "../view/htmlFactory.js";
+import { htmlFactory, htmlTemplates, newBoardModal, newBoardColumn, loadAddNewCardButton} from "../view/htmlFactory.js";
 import { domManager } from "../view/domManager.js";
 import { columnsManager } from "./columnsManager.js";
 
 export let boardsManager = {
+
   loadBoards: async function () {
     const boards = await dataHandler.getBoards();
     console.debug(boards);
@@ -26,3 +27,85 @@ function showHideButtonHandler(clickEvent) {
   document.getElementById(`board${boardId}`).classList.add('display')
 
 }
+
+export const addNewBoard = function (){
+  document.querySelector('.new-board-button').addEventListener('click', newBoardMenu)
+}
+
+async function newBoardMenu (){
+  const content = newBoardModal();
+  domManager.addChild("#root", content, 'afterend');
+  document.querySelector('.new-board-btn-container').classList.add('hidden')
+  addEventListenerToCloseModalWinow()
+  addEventListenerToRemoveButtons()
+  addEventListenerToAddNewColumnButton()
+  await submitNewBoard()
+}
+
+const addEventListenerToCloseModalWinow = function (){
+  document.querySelector('.close-modal-window').addEventListener('click', closeAddNewBoardWindow)
+}
+
+
+const addEventListenerToRemoveButtons = function (){
+  const buttons = document.querySelectorAll('.remove-input')
+  for (let button of buttons) {
+    button.addEventListener('click', ()=>button.parentElement.remove())
+  }
+}
+
+const addEventListenerToAddNewColumnButton = function () {
+  const addNewColumnBtn = document.querySelector('.add-another-new-column');
+  addNewColumnBtn.addEventListener('click', addNewColumnToNewBoard)
+}
+
+const addNewColumnToNewBoard = function (){
+  const newColumnsContainer = document.querySelector('.all-new-columns');
+  const hasChild = newColumnsContainer.children.length > 0;
+  const newColumnsContainerClass = '.all-new-columns'
+  if (!hasChild){
+    const content = newBoardColumn(1)
+    domManager.addChild(newColumnsContainerClass, content)
+  } else {
+    findLowestColumnIndex()
+  }
+}
+
+const findLowestColumnIndex = function (){
+  const newColumnsDiv = document.querySelectorAll('.new-column-input')
+  const columnsId = []
+  for (let column of newColumnsDiv){
+    console.debug(column)
+  }
+}
+
+const submitNewBoard = async function () {
+  const newBoard = document.getElementById('new-board-form');
+  newBoard.addEventListener('submit', (e) => {
+    e.preventDefault()
+    const data = {}
+    data['userid'] = 1
+    data['boardTitle'] = document.getElementById('board-title').value
+    data['columns'] = searchingNewColumnsValue()
+    data['type'] = document.getElementById('public').checked
+    console.debug(data)
+    dataHandler.createNewBoard(data)
+    alert('You have successfully add new board')
+    closeAddNewBoardWindow()
+  })
+}
+
+const searchingNewColumnsValue = function (){
+  const allNewBoardColumnData = document.querySelectorAll('.new-column-name');
+  const columnData= {}
+  for (let i=0; i<allNewBoardColumnData.length; i++){
+      columnData[i+1] = allNewBoardColumnData[i].value
+    }
+  return columnData
+}
+
+
+const closeAddNewBoardWindow = function (){
+    document.getElementById('add-new-board-window').remove()
+    document.querySelector('.new-board-btn-container').classList.remove('hidden')
+  }
