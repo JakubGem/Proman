@@ -93,8 +93,6 @@ function orderLIst(cards){
     for(i; i < list.length; i++){
         let orderedList = list[i].getAttribute('data-card-id')
         console.log(orderedList[i])
-
-
     }
 
 
