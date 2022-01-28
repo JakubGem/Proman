@@ -56,7 +56,7 @@ async function editCardTitle(card) {
     let old_title = card.title;
     let new_title = prompt('Enter new card title: ', card.title);
     if (new_title !== null) {
-        let response = await fetch("/api/cards/" + (card.id).toString() + "/edit", {
+        await fetch("/api/cards/" + (card.id).toString() + "/edit", {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({title: new_title}) // ZAMIENIA SŁOWIK NA JSONA
@@ -69,10 +69,9 @@ async function editCardTitle(card) {
     }
 }
 
-
 async function deleteCard(card) {
     if (confirm("Do you want to delete the card?") === true) {
-        let response = await fetch("/api/cards/" + card.id.toString() + "/delete", {
+        await fetch("/api/cards/" + card.id.toString() + "/delete", {
             method: 'DELETE',
         }); // robi puta na podanego urla
         let deleted_card = document.querySelector(`.card[data-card-id="${card.id}"]`);

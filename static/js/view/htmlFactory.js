@@ -1,7 +1,7 @@
 export const htmlTemplates = {
     board: 1,
     card: 2,
-    column:3,
+    column: 3,
     newBoard: 4
 }
 
@@ -17,25 +17,28 @@ export function htmlFactory(template) {
             return columnBuilder
         default:
             console.error("Undefined template: " + template)
-            return () => { return "" }
+            return () => {
+                return ""
+            }
     }
 }
 
 function boardBuilder(board) {
     return `<div class="board-container" id='board${board.id}'>
-            <div class="board-header">${board.title}</div>
-            <div class="board" data-board-id=${board.id}></div>  
+                <div class="board-header">${board.title}</div>
+                <div class="board" data-board-id=${board.id}></div>  
             </div>
             <button class="toggle-board-button" data-board-id="${board.id}">Show Cards</button>`;
 }
 
 function cardBuilder(card) {
     return `<div class="empty" draggable="false" >
-<div class="card" draggable="true" data-card-id="${card.id}" >${card.title}</div></div>
-<div class="empty" draggable="false" ></div>`;
+                <div class="card" draggable="true" data-card-id="${card.id}" >${card.title}</div></div>
+                <div class="empty" draggable="false" >
+            </div>`;
 }
 
-export function newBoardModal () {
+export function newBoardModal() {
     return `    
     <div class="modal-window" id="add-new-board-window">
         <h2 class="modal-window-header">CREATE NEW BOARD</h2>
@@ -85,8 +88,7 @@ export function newBoardModal () {
     <div class="overlay"></div>`
 }
 
-
-export function newBoardColumn(){
+export function newBoardColumn() {
     return `
 <div class="new-column-input">
     <input type="text" class="new-column-name" minLength="1" name="column-name" placeholder="Column name..."">
@@ -96,21 +98,18 @@ export function newBoardColumn(){
 
 function columnBuilder(column) {
     return `<div class="board-columns-container">
-<div class="board-column" data-column-id="${column.id}">${column.title}</div>
-</div>`;
+                <div class="board-column" data-column-id="${column.id}">${column.title}</div>
+            </div>`;
 }
 
-export function loadAddNewCardButton(boardId){
-    // create new button
+export function loadAddNewCardButton(boardId) {
     return `<div class="add_card_button"><button id='add_card_button_for_board${boardId}'>Add new card</button></div>`
 }
 
-export function loadEditButtonForCard(cardId){
-    // create new button
+export function loadEditButtonForCard(cardId) {
     return `<button class="card_button" id='edit_title_for_card${cardId}'>🗒️</button></div>`
 }
 
-export function loadDeleteButtonForCard(cardId){
-    // create new button
+export function loadDeleteButtonForCard(cardId) {
     return `<button class="card_button" id='delete_card${cardId}'>🗑️</button></div>`
 }
