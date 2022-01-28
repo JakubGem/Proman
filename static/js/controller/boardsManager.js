@@ -60,24 +60,11 @@ const addEventListenerToAddNewColumnButton = function () {
 }
 
 const addNewColumnToNewBoard = function (){
-  const newColumnsContainer = document.querySelector('.all-new-columns');
-  const hasChild = newColumnsContainer.children.length > 0;
   const newColumnsContainerClass = '.all-new-columns'
-  if (!hasChild){
-    const content = newBoardColumn(1)
-    domManager.addChild(newColumnsContainerClass, content)
-  } else {
-    findLowestColumnIndex()
+  const content = newBoardColumn()
+  domManager.addChild(newColumnsContainerClass, content)
   }
-}
 
-const findLowestColumnIndex = function (){
-  const newColumnsDiv = document.querySelectorAll('.new-column-input')
-  const columnsId = []
-  for (let column of newColumnsDiv){
-    console.debug(column)
-  }
-}
 
 const submitNewBoard = async function () {
   const newBoard = document.getElementById('new-board-form');
@@ -108,4 +95,5 @@ const searchingNewColumnsValue = function (){
 const closeAddNewBoardWindow = function (){
     document.getElementById('add-new-board-window').remove()
     document.querySelector('.new-board-btn-container').classList.remove('hidden')
+    document.querySelector('.overlay').classList.add('hidden')
   }
