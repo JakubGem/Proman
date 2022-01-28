@@ -26,6 +26,15 @@ export let dataHandler = {
   createNewCard: async function (cardTitle, boardId, statusId) {
     // creates new card, saves it and calls the callback function with its data
   },
+
+changeColumn: async function (cardId, columnId) {
+    const data = {
+      'card_id': cardId,
+      'column_id': columnId
+    };
+  const response = await apiPut(`/api/cards/${cardId}/change-column`, data);
+  return response;
+}
 };
 
 async function apiGet(url) {
@@ -37,6 +46,22 @@ async function apiGet(url) {
     return data;
   }
 }
+
+
+async function apiPut(url, data) {
+    let response = await fetch(url, {
+        method: "PUT",
+        headers: {
+      'Content-Type': 'application/json'},
+        body: JSON.stringify(data),
+    });
+    if (response.status === 200) {
+        await response.json();
+        console.log("PUT sent successfully")
+    }
+}
+
+async function apiDelete(url) {}
 
 async function apiPost(url, payload) {
   let dataToSend = {
@@ -52,7 +77,3 @@ async function apiPost(url, payload) {
     return data;
   }
 }
-
-async function apiDelete(url) {}
-
-async function apiPut(url) {}

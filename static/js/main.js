@@ -3,6 +3,8 @@ import { addNewBoard } from "./controller/boardsManager.js";
 function init() {
   addNewBoard()
   boardsManager.loadBoards();
+
 }
+
 
 init();

@@ -139,9 +139,7 @@ section.board{
     align-items: start;
 }
 .board-columns-container {
-    display: flex;
-    flex-direction: column;
-    flex-grow:1;
+    display: table;
 }
 .board {
     display: flex;
@@ -154,7 +152,15 @@ section.board{
     display: flex;
     justify-self: center;
 }
+.empty{
+    display: table;
+    width: 200px;
+    height: 28px;
+    background-color: #e30f0f;
+    top: 5px;
+    border: 1px solid #000000;
 
+}
 .card_button{
     text-align: right;
     margin: 1%;

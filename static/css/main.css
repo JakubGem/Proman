@@ -50,3 +50,36 @@ input{
     grid-column: 1/4;
     grid-row: 2;
 }
+
+
+
+.card{
+    position: relative;
+    border: 1px solid #aaaaaa;
+    padding: 0.5rem 0.1rem;
+}
+.board{
+    background-color: lightgreen;
+    border-block-color: #000000;
+    border: 1px solid #aaaaaa;
+}
+.empty{
+    display: inline-block;
+    width: 400px;
+    height: 100px;
+    background-color: #7878da;
+    border: 1px solid #aaaaaa;
+
+}
+body{
+    position: absolute;
+    left: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.drag{
+    width: 200px;
+    height: 80vh;
+    display: flex;
+}
