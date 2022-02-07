@@ -23,7 +23,26 @@ export let boardsManager = {
 function showHideButtonHandler(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
     columnsManager.loadColumns(boardId);
-    document.getElementById(`board${boardId}`).classList.add('display')
+    document.getElementById(`board${boardId}`).classList.add('display');
+    clickEvent.currentTarget.removeEventListener('click', showHideButtonHandler);
+    clickEvent.currentTarget.addEventListener('click', hideBoard);
+    clickEvent.currentTarget.innerHTML='Hide Cards';
+}
+
+
+function hideBoard(e) {
+    const boardId = e.target.dataset.boardId;
+    document.getElementById(`board${boardId}`).classList.remove('display');
+    removeColumns();
+    document.querySelector('.add_card_button').remove();
+    e.currentTarget.removeEventListener('click', hideBoard);
+    e.currentTarget.addEventListener('click', showHideButtonHandler);
+    e.currentTarget.innerHTML='Show Cards';
+}
+
+const removeColumns= function () {
+    const columns = document.querySelectorAll('.board-columns-container')
+    for (let column of columns) column.remove()
 }
 
 export const addNewBoard = function (){
