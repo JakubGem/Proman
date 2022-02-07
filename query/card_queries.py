@@ -46,3 +46,11 @@ def change_column(card_id, column_id):
         SET columns_id = %(column_id)s
         WHERE cards.id = %(card_id)s
         RETURNING *;""", {'card_id': card_id, 'column_id': column_id})
+
+
+def columns_name_for_the_board(board_id):
+    return data_manager.execute_select("""
+SELECT title FROM columns
+WHERE columns.board_id = %(board_id)s
+;
+""", {"board_id": board_id})

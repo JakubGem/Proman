@@ -1,15 +1,15 @@
 import data_manager
 
 
-def get_column_new_for_board(board_id):
+def get_column_new_for_board(board_id, name):
     return data_manager.execute_select(
         """
         SELECT id FROM columns
         WHERE columns.board_id = %(board_id)s
-        AND columns.title = 'new'
+        AND columns.title = %(name)s
         ;
         """
-        , {"board_id": board_id}, fetchall=False)
+        , {"board_id": board_id, "name": name}, fetchall=False)
 
 
 def get_columns(board_id):
