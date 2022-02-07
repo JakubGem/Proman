@@ -1,7 +1,7 @@
 from flask import Flask, render_template, url_for, session, request, redirect
 from dotenv import load_dotenv
 from werkzeug.security import generate_password_hash, check_password_hash
-from util import json_response
+from util import json_response, only_column_names
 import mimetypes
 from query import users_queries, board_queries, card_queries, columns_queries
 
@@ -97,7 +97,8 @@ def register():
 @app.route("/api/boards/<int:board_id>/cards/add", methods=['POST'])
 @json_response
 def create_new_card(board_id: int):
-    column_new_id = columns_queries.get_column_new_for_board(board_id)
+    column_name = request.get_json()['column_name']
+    column_new_id = columns_queries.get_column_new_for_board(board_id, column_name)
     card_data = {
         'board_id': board_id,
         'columns_id': column_new_id['id'],
@@ -132,6 +133,14 @@ def change_column_card(card_id: int):
     card_id = column['card_id']
     column_id = column['column_id']
     return card_queries.change_column(card_id, column_id)
+
+
+@app.route("/api/columns_name/<int:board_id>")
+@json_response
+def api_columns_name_for_the_board(board_id: int):
+    names = card_queries.columns_name_for_the_board(board_id)
+    return only_column_names(names)
+
 
 if __name__ == '__main__':
     main()

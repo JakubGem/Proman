@@ -8,3 +8,11 @@ def json_response(func):
         return jsonify(func(*args, **kwargs))
 
     return decorated_function
+
+
+def only_column_names(data):
+    """Return list of name columns from json."""
+    names = ""
+    for record in data:
+        names += record['title'] + ", "
+    return names[: -2]
