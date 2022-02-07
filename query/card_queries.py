@@ -23,27 +23,16 @@ def edit_card(card_id, title):
 
 
 def get_cards_for_board(board_id):
-    # remove this code once you implement the database
-    # return [{"title": "title1", "id": 1}, {"title": "board2", "id": 2}]
-
-    matching_cards = data_manager.execute_select(
+    return data_manager.execute_select(
         """
         SELECT * FROM cards
         WHERE cards.board_id = %(board_id)s
         ;
-        """
-        , {"board_id": board_id})
-
-    return matching_cards
+        """, {"board_id": board_id})
 
 
 def get_card_status(status_id):
-    """
-    Find the first status matching the given id
-    :param status_id:
-    :return: str
-    """
-    status = data_manager.execute_select(
+    return data_manager.execute_select(
         """
         SELECT * FROM statuses s
         WHERE s.id = %(status_id)s
@@ -51,4 +40,17 @@ def get_card_status(status_id):
         """
         , {"status_id": status_id})
 
-    return status
+
+def change_column(card_id, column_id):
+    return data_manager.execute_edit("""UPDATE cards 
+        SET columns_id = %(column_id)s
+        WHERE cards.id = %(card_id)s
+        RETURNING *;""", {'card_id': card_id, 'column_id': column_id})
+
+
+def columns_name_for_the_board(board_id):
+    return data_manager.execute_select("""
+SELECT title FROM columns
+WHERE columns.board_id = %(board_id)s
+;
+""", {"board_id": board_id})

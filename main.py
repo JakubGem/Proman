@@ -1,11 +1,9 @@
 from flask import Flask, render_template, url_for, session, request, redirect
 from dotenv import load_dotenv
 from werkzeug.security import generate_password_hash, check_password_hash
-
-from util import json_response
+from util import json_response, only_column_names
 import mimetypes
 from query import users_queries, board_queries, card_queries, columns_queries
-
 
 mimetypes.add_type('application/javascript', '.js')
 app = Flask(__name__)
@@ -15,18 +13,23 @@ app.secret_key = 'proman'
 
 @app.route("/")
 def index():
-    """
-    This is a one-pager which shows all the boards and cards
-    """
     return render_template('index.html')
+
+
+@app.route("/save_new_board", methods=['POST', 'GET'])
+@json_response
+def save_new_board():
+    print(request.get_json())
+    try:
+        data = request.get_json()
+        return board_queries.save_new_board_data(data)
+    except:
+        return 'failed to save data'
 
 
 @app.route("/api/boards")
 @json_response
 def get_boards():
-    """
-    All the boards
-    """
     return board_queries.get_boards()
 
 
@@ -39,17 +42,11 @@ def get_columns_for_board(board_id: int):
 @app.route("/api/boards/<int:board_id>/cards/")
 @json_response
 def get_cards_for_board(board_id: int):
-    """
-    All cards that belongs to a board
-    :param board_id: id of the parent board
-    """
     return card_queries.get_cards_for_board(board_id)
 
 
 def main():
     app.run(debug=True)
-
-    # Serving the favicon
     with app.app_context():
         app.add_url_rule('/favicon.ico', redirect_to=url_for('static', filename='favicon/favicon.ico'))
 
@@ -100,10 +97,8 @@ def register():
 @app.route("/api/boards/<int:board_id>/cards/add", methods=['POST'])
 @json_response
 def create_new_card(board_id: int):
-    """
-    Create new card for user and board.
-    """
-    column_new_id = columns_queries.get_column_new_for_board(board_id)
+    column_name = request.get_json()['column_name']
+    column_new_id = columns_queries.get_column_new_for_board(board_id, column_name)
     card_data = {
         'board_id': board_id,
         'columns_id': column_new_id['id'],
@@ -120,9 +115,6 @@ def create_new_card(board_id: int):
 @app.route("/api/cards/<int:card_id>/delete", methods=['DELETE'])
 @json_response
 def delete_card(card_id: int):
-    """
-    Delete card.
-    """
     card_queries.delete_card(card_id)
     return 'DELETED'
 
@@ -130,9 +122,6 @@ def delete_card(card_id: int):
 @app.route("/api/cards/<int:card_id>/edit", methods=['PUT'])
 @json_response
 def edit_card_title(card_id: int):
-    """
-    Edit card.
-    """
     title = request.get_json()['title']
     return card_queries.edit_card(card_id, title)
 
@@ -149,6 +138,22 @@ def add_new_column_to_board(board_id: int):
 def delete_column_from_board(column_id: int):
     columns_queries.delete_column(column_id)
     return "Column deleted"
+
+  
+@app.route("/api/cards/<int:card_id>/change-column", methods=['PUT'])
+@json_response
+def change_column_card(card_id: int):
+    column = request.get_json()
+    card_id = column['card_id']
+    column_id = column['column_id']
+    return card_queries.change_column(card_id, column_id)
+
+
+@app.route("/api/columns_name/<int:board_id>")
+@json_response
+def api_columns_name_for_the_board(board_id: int):
+    names = card_queries.columns_name_for_the_board(board_id)
+    return only_column_names(names)
 
 
 if __name__ == '__main__':
