@@ -126,6 +126,20 @@ def edit_card_title(card_id: int):
     return card_queries.edit_card(card_id, title)
 
 
+@app.route('/api/columns/<int:board_id>/add', methods=['POST'])
+@json_response
+def add_new_column_to_board(board_id: int):
+    title = request.get_json()['title']
+    return columns_queries.add_new_column(board_id, title)
+
+
+@app.route('/api/columns/<int:column_id>/delete', methods=['DELETE'])
+@json_response
+def delete_column_from_board(column_id: int):
+    columns_queries.delete_column(column_id)
+    return "Column deleted"
+
+  
 @app.route("/api/cards/<int:card_id>/change-column", methods=['PUT'])
 @json_response
 def change_column_card(card_id: int):

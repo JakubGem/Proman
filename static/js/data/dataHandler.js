@@ -13,6 +13,25 @@ export let dataHandler = {
     return response;
   },
 
+  getCard: async function (cardId) {
+    // the card is retrieved and then the callback function is called with the card
+  },
+    
+  createNewColumn: async function (columnTitle, boardId) {
+    let payload = {'title': columnTitle};
+    const response = await apiPost(`/api/columns/${boardId}/add`, payload);
+    return response;
+  },
+    
+  deleteColumn: async function (columnId) {
+    const response = await apiDelete(`/api/columns/${columnId}/delete`);
+    return response;
+  },
+    
+  createNewCard: async function (cardTitle, boardId, statusId) {
+    // creates new card, saves it and calls the callback function with its data
+
+
   createNewBoard: async function (data) {
     const response = await apiPost(`/save_new_board`, data);
     return response;
@@ -38,6 +57,27 @@ async function apiGet(url) {
   }
 }
 
+async function apiPost(url, payload) {
+    let response = await fetch(url, {
+    method: "POST",
+    body: JSON.stringify(payload),
+    headers: {"Content-type": "application/json; charset=UTF-8"}
+  });
+  if (response.status === 200) {
+    let data = response.json();
+    return data;
+  }
+}
+
+async function apiDelete(url) {
+  let response = await fetch(url, {
+    method: "DELETE",
+  });
+  if (response.status === 200) {
+    let data = response.json();
+    return data;
+  }
+
 async function apiPut(url, data) {
     let response = await fetch(url, {
         method: "PUT",
@@ -49,19 +89,4 @@ async function apiPut(url, data) {
         await response.json();
         console.log("PUT sent successfully")
     }
-}
-
-async function apiPost(url, payload) {
-  let dataToSend = {
-    method: "POST",
-    headers: {
-      'Content-Type':  "application/json"
-    },
-    body : JSON.stringify(payload)
-  }
-  let response = await fetch(url, dataToSend);
-  if (response.status === 200) {
-    let data = response.json();
-    return data;
-  }
 }
