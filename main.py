@@ -4,7 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from util import json_response
 import mimetypes
-from query import users_queries, board_queries, status_queries, card_queries, columns_queries
+from query import users_queries, board_queries, card_queries, columns_queries
 
 
 mimetypes.add_type('application/javascript', '.js')
@@ -27,7 +27,6 @@ def get_boards():
     """
     All the boards
     """
-
     return board_queries.get_boards()
 
 
@@ -136,6 +135,20 @@ def edit_card_title(card_id: int):
     """
     title = request.get_json()['title']
     return card_queries.edit_card(card_id, title)
+
+
+@app.route('/api/columns/<int:board_id>/add', methods=['POST'])
+@json_response
+def add_new_column_to_board(board_id: int):
+    title = request.get_json()['title']
+    return columns_queries.add_new_column(board_id, title)
+
+
+@app.route('/api/columns/<int:column_id>/delete', methods=['DELETE'])
+@json_response
+def delete_column_from_board(column_id: int):
+    columns_queries.delete_column(column_id)
+    return "Column deleted"
 
 
 if __name__ == '__main__':

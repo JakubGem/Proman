@@ -6,7 +6,6 @@ import { columnsManager } from "./columnsManager.js";
 export let boardsManager = {
   loadBoards: async function () {
     const boards = await dataHandler.getBoards();
-    console.debug(boards);
     for (let board of boards) {
       const boardBuilder = htmlFactory(htmlTemplates.board);
       const content = boardBuilder(board);
@@ -23,6 +22,6 @@ export let boardsManager = {
 function showHideButtonHandler(clickEvent) {
   const boardId = clickEvent.target.dataset.boardId;
   columnsManager.loadColumns(boardId);
-  document.getElementById(`board${boardId}`).classList.add('display')
+  document.getElementById(`board${boardId}`).classList.toggle('display')
 
 }

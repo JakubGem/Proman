@@ -22,6 +22,15 @@ export let dataHandler = {
   createNewBoard: async function (boardTitle) {
     // creates new board, saves it and calls the callback function with its data
   },
+  createNewColumn: async function (columnTitle, boardId) {
+    let payload = {'title': columnTitle};
+    const response = await apiPost(`/api/columns/${boardId}/add`, payload);
+    return response;
+  },
+  deleteColumn: async function (columnId) {
+    const response = await apiDelete(`/api/columns/${columnId}/delete`);
+    return response;
+  },
   createNewCard: async function (cardTitle, boardId, statusId) {
     // creates new card, saves it and calls the callback function with its data
   },
@@ -37,8 +46,26 @@ async function apiGet(url) {
   }
 }
 
-async function apiPost(url, payload) {}
+async function apiPost(url, payload) {
+    let response = await fetch(url, {
+    method: "POST",
+    body: JSON.stringify(payload),
+    headers: {"Content-type": "application/json; charset=UTF-8"}
+  });
+  if (response.status === 200) {
+    let data = response.json();
+    return data;
+  }
+}
 
-async function apiDelete(url) {}
+async function apiDelete(url) {
+  let response = await fetch(url, {
+    method: "DELETE",
+  });
+  if (response.status === 200) {
+    let data = response.json();
+    return data;
+  }
+}
 
 async function apiPut(url) {}
