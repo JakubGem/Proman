@@ -1,5 +1,5 @@
 import { dataHandler } from "../data/dataHandler.js";
-import { htmlFactory, htmlTemplates, loadAddNewCardButton} from "../view/htmlFactory.js";
+import { htmlFactory, htmlTemplates, loadAddNewCardButton, loadArchivedCardsButton} from "../view/htmlFactory.js";
 import { domManager } from "../view/domManager.js";
 import { cardsManager, create_card} from "./cardsManager.js";
 
@@ -18,6 +18,9 @@ export let columnsManager = {
     }await cardsManager.loadCards(boardId, columns)
       domManager.addChild(`.board[data-board-id="${boardId}"]`, loadAddNewCardButton(boardId));
       document.getElementById('add_card_button_for_board' + boardId).addEventListener('click', () => createNewCard(boardId));
+      domManager.addChild(`.board[data-board-id="${boardId}"]`, loadArchivedCardsButton(boardId));
+      document.getElementById('add_card_button_for_board' + boardId).addEventListener('click', () => archivedCards(boardId));
+
   },
 };
 
@@ -69,4 +72,9 @@ async function createNewCard(boardId){
 async function columnsNameForTheBoard(boardId){
     let response = await fetch("/api/columns_name/" + boardId);
     return await response.json();
+}
+
+
+async function archivedCards(boardId){
+    console.log('archive');
 }
