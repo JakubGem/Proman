@@ -11,10 +11,10 @@ export let columnsManager = {
       const columnBuilder = htmlFactory(htmlTemplates.column);
       const content = columnBuilder(column);
       domManager.addChild(`.board[data-board-id="${boardId}"]`, content);
-      domManager.addEventListener(
-        `.delete-column[data-column-id="${column.id}"]`,
-        "click",
-        deleteButtonHandler)
+      domManager.addEventListener(`.delete-column[data-column-id="${column.id}"]`,
+        "click", deleteButtonHandler);
+      domManager.addEventListener(`.content-button[data-column-id="${column.id}"]`,
+          'click', renameColumn);
     }await cardsManager.loadCards(boardId, columns)
       domManager.addChild(`.board[data-board-id="${boardId}"]`, loadAddNewCardButton(boardId));
       document.getElementById('add_card_button_for_board' + boardId).addEventListener('click', () => createNewCard(boardId));
@@ -31,10 +31,19 @@ const creatAddNewColumnBtn = function(boardId){
 
 
 async function addNewColumn (clickEvent) {
-  const boardId = clickEvent.target.dataset.buttonId;
-  let columnTitle = prompt("Please Provide New Column Title");
-  await dataHandler.createNewColumn(columnTitle, boardId);
-  await columnsManager.loadColumns(boardId);
+    const boardId = clickEvent.target.dataset.buttonId;
+    for (let i = 0; i < 5; i++) {
+        let columnTitle = prompt("Please Provide New Column Title");
+        if (columnTitle === '') {
+            alert('Provide column name')
+        } else {
+            await dataHandler.createNewColumn(columnTitle, boardId);
+            await prepareTable(boardId);
+            await columnsManager.loadColumns(boardId);
+            await cardsManager.loadCards(boardId);
+            break;
+        }
+    }
 }
 
 
@@ -43,8 +52,7 @@ async function deleteButtonHandler(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
     if (confirm('Are you sure you want to delete this column?')) {
         await dataHandler.deleteColumn(columnId);
-        await columnsManager.loadColumns(boardId);
-    } else {
+        await prepareTable(boardId);
         await columnsManager.loadColumns(boardId);
     }
 }
@@ -70,3 +78,24 @@ async function columnsNameForTheBoard(boardId){
     let response = await fetch("/api/columns_name/" + boardId);
     return await response.json();
 }
+
+async function prepareTable(boardId) {
+    let buttonClear = document.querySelector(`.help_div`);
+    buttonClear.innerHTML = "";
+    let tablesClear = document.querySelector(`.board[data-board-id="${boardId}"]`);
+    tablesClear.innerHTML = "";
+}
+
+async function renameColumn(clickEvent) {
+    let columnId = clickEvent.target.dataset.columnId;
+    let content = document.querySelector(`.board-column[data-column-id="${columnId}"]`);
+    content.contentEditable = !content.isContentEditable;
+	if (content.contentEditable === 'false') {
+		clickEvent.target.innerHTML = 'Edit';
+		let title = content.innerHTML
+        await dataHandler.renameColumn(columnId, title);
+	} else {
+		clickEvent.target.innerHTML = 'Save';
+	}
+}
+
