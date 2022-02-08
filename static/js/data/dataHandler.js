@@ -4,7 +4,7 @@ export let dataHandler = {
     return response;
   },
   getPrivateBoard: async function (user_id){
-      const response = await apiGet("/api/boards/<user_id>");
+      const response = await apiGet(`/api/boards/${user_id}`);
       return response;
     },
 

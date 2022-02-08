@@ -5,7 +5,7 @@ import { columnsManager } from "./columnsManager.js";
 
 export let boardsManager = {
     loadBoards: async function () {
-        const boards = await dataHandler.getBoards();
+        const boards = await getBoards();
         for (let board of boards) {
             const boardBuilder = htmlFactory(htmlTemplates.board);
             const content = boardBuilder(board);
@@ -19,9 +19,9 @@ export let boardsManager = {
     },
 };
 
-const privateBoard = function (){
-    const user_id = sessionStorage.user_id
-    dataHandler.getPrivateBoard(user_id)
+const getBoards = async function (){
+    console.debug(sessionStorage.getItem('user_id'))
+    return sessionStorage.getItem('user_id')? await dataHandler.getPrivateBoard(sessionStorage.getItem('user_id')): await dataHandler.getBoards();
 }
 
 function showHideButtonHandler(clickEvent) {

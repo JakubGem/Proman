@@ -33,9 +33,9 @@ def get_boards():
     return board_queries.get_boards()
 
 
-@app.route("/api/boards/<user_id>")
+@app.route("/api/boards/<int:user_id>")
 @json_response
-def get_boards_for_user(user_id):
+def get_boards_for_user(user_id: int):
     return board_queries.get_boards_for_user(user_id)
 
 
