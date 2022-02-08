@@ -29,9 +29,15 @@
             <button class="btn btn-primary votes" onclick="location.href='/register'">Register</button>
             {% endif %}
         </div>
-            <div class="boards_on_main_page" id="root"></div>
-        </div>
+            {% if session %}
+            <div class="private-boards" id="private-boards">
+                <h2> Your Private Boards </h2>
             </div>
+            {% endif %}
+            <div class="public-boards" id="public-boards">
+                <h2>Public boards</h2>
+            </div>
+        </div>
         <div class="new-board-btn-container">
             <button class="new-board-button">➕ Add new board ➕</button>
         </div>

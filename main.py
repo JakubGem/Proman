@@ -68,7 +68,6 @@ def login():
             session['login'] = True
             session['user'] = my_user['name']
             session['user_id'] = my_user['id']
-            print(session['user_id'])
             return render_template('index.html', user_id=session['user_id'])
         else:
             return render_template('login.html', message="Incorrect user name or password")
