@@ -20,7 +20,7 @@
         <script type="module" src="{{ url_for('static', filename='js/main.js') }}" defer></script>
     </head>
     <body>
-        <div class="main_page">
+        <div class="main_page" id="root">
             <div class="log_on_main_page">
             {% if session['login']%}
             <button class="btn btn-primary corner logout-btn" onclick="location.href='/logout'">Logout</button>
@@ -38,6 +38,7 @@
                 <div class="board-type-header">Public boards</div>
             </div>
         </div>
+        <div id="root"></div>
     {% if session %}
         <div class="new-board-btn-container">
             <button class="new-board-button">➕ Add new board ➕</button>

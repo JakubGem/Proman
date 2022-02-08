@@ -13,7 +13,10 @@ app.secret_key = 'proman'
 
 @app.route("/")
 def index():
-    return render_template('index.html')
+    if session.get("user_id"):
+        return render_template('index.html', user_id=session['user_id'])
+    else:
+        return render_template('index.html')
 
 
 @app.route("/save_new_board", methods=['POST', 'GET'])
@@ -37,7 +40,6 @@ def get_boards():
 @json_response
 def get_boards_for_user(user_id: int):
     return board_queries.get_boards_for_user(user_id)
-
 
 
 @app.route("/api/columns/<int:board_id>")
@@ -68,7 +70,7 @@ def login():
             session['login'] = True
             session['user'] = my_user['name']
             session['user_id'] = my_user['id']
-            return render_template('index.html', user_id=session['user_id'])
+            return redirect(url_for('index'))
         else:
             return render_template('login.html', message="Incorrect user name or password")
     return render_template('login.html')
@@ -146,7 +148,7 @@ def delete_column_from_board(column_id: int):
     columns_queries.delete_column(column_id)
     return "Column deleted"
 
-  
+
 @app.route("/api/cards/<int:card_id>/change-column", methods=['PUT'])
 @json_response
 def change_column_card(card_id: int):
