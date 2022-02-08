@@ -6,6 +6,11 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>ProMan</title>
 
+         <!-- Skrypty dla modalu -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <!-- Koniec skryptów dla modalu -->
         <link rel="shortcut icon" href="{{ url_for('static', filename='favicon/favicon.ico') }}">
         <link rel="icon" type="image/png" sizes="32x32"
               href="{{ url_for('static', filename='favicon/favicon-32x32.png') }}">
@@ -15,18 +20,20 @@
               href="{{ url_for('static', filename='favicon/favicon-16x16.png') }}">
 {#        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">#}
             <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/design.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/modal.css') }}">
         <script type="module" src="{{ url_for('static', filename='js/main.js') }}" defer></script>
         <script type="module" src="{{ url_for('static', filename='js/controller/dragAndDrop.js') }}" defer></script>
         <script type="module" src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+        <script type="module" src="{{ url_for('static', filename='js/util.js') }}"></script>
     </head>
     <body>
         <div class="main_page" id="root">
             <div class="log_on_main_page">
             {% if session['login']%}
-            <button class="btn btn-primary corner logout-btn" onclick="location.href='/logout'">Logout</button>
+            <button class="corner logout-btn" onclick="location.href='/logout'">Logout</button>
             {% else %}
-            <button class="btn btn-primary corner" onclick="location.href='/login'">Login</button>
-            <button class="btn btn-primary votes" onclick="location.href='/register'">Register</button>
+            <button onclick="location.href='/login'">Login</button>
+            <button onclick="location.href='/register'">Register</button>
             {% endif %}
         </div>
             {% if session %}
@@ -48,5 +55,20 @@
             sessionStorage.setItem('user_id', {{ user_id }});
         </script>
     {% endif %}
+    <!-- Początek modalu -->
+<div id="archived" class="modal fade">
+    <div class="modal-header archived-title">
+        <h1 id="archived_header">Archived cards</h1>
+        <button type="button" class="close" data-dismiss="modal">X</button>
+    </div>
+    <div class="modal-body">
+       <div id="all_archived_cards"></div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="restoreCards()">Add cards</button>
+    </div>
+</div>
+<!-- Koniec modalu -->
     </body>
 </html>
+

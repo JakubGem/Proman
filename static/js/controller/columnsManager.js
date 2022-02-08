@@ -1,5 +1,5 @@
 import { dataHandler } from "../data/dataHandler.js";
-import { htmlFactory, htmlTemplates, loadAddNewCardButton} from "../view/htmlFactory.js";
+import { htmlFactory, htmlTemplates, loadAddNewCardButton, loadArchivedCardsButton} from "../view/htmlFactory.js";
 import { domManager } from "../view/domManager.js";
 import { cardsManager, create_card} from "./cardsManager.js";
 
@@ -18,6 +18,9 @@ export let columnsManager = {
     }await cardsManager.loadCards(boardId, columns)
       domManager.addChild(`.board[data-board-id="${boardId}"]`, loadAddNewCardButton(boardId));
       document.getElementById('add_card_button_for_board' + boardId).addEventListener('click', () => createNewCard(boardId));
+      domManager.addChild(`.board[data-board-id="${boardId}"]`, loadArchivedCardsButton(boardId));
+      document.getElementById('archived_cards_button_for_board' + boardId).addEventListener('click', () => archivedCards(boardId));
+
   },
 };
 
@@ -69,4 +72,18 @@ async function createNewCard(boardId){
 async function columnsNameForTheBoard(boardId){
     let response = await fetch("/api/columns_name/" + boardId);
     return await response.json();
+}
+
+
+async function archivedCards(boardId){
+    // Display all archived cards for the board in modal.
+    let response = await fetch("/api/board/" + boardId + "/archived_cards");
+    let cards = await response.json();
+    let place_for_archived_cards = '';
+    for (let card of cards){
+        place_for_archived_cards += `<p><input type="checkbox" name="archived_input" value="${card['id']}">` + ' ' + card['title'] + '</p>';
+    }
+    document.getElementById("all_archived_cards").innerHTML = place_for_archived_cards;
+    console.log(cards);
+    $('#archived').modal();
 }
