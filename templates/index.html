@@ -38,10 +38,11 @@
                 <h2>Public boards</h2>
             </div>
         </div>
+    {% if session %}
         <div class="new-board-btn-container">
             <button class="new-board-button">➕ Add new board ➕</button>
         </div>
-    {% if session %}
+
         <script>
             sessionStorage.setItem('user_id', {{ user_id }});
         </script>

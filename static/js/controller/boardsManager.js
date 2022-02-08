@@ -5,6 +5,8 @@ import { columnsManager } from "./columnsManager.js";
 
 export let boardsManager = {
     loadBoards: async function () {
+        console.debug(sessionStorage.getItem('user_id'))
+        if (sessionStorage.getItem('user_id')) addNewBoard()
         const boards = await getBoards();
         for (let board of boards) {
             const boardBuilder = htmlFactory(htmlTemplates.board);
