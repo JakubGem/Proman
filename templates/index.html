@@ -27,6 +27,7 @@
     <script type="module" src="{{ url_for('static', filename='js/main.js') }}" defer></script>
     <script type="module" src="{{ url_for('static', filename='js/controller/dragAndDrop.js') }}" defer></script>
     <script type="module" src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+    <script type="module" src="{{ url_for('static', filename='js/util.js') }}"></script>
 </head>
 <body>
 <div class="main_page">
@@ -54,7 +55,7 @@
        <div id="all_archived_cards"></div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="restoreCards()">Add cards</button>
     </div>
 </div>
 <!-- Koniec modalu -->

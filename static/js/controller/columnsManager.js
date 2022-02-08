@@ -76,6 +76,7 @@ async function columnsNameForTheBoard(boardId){
 
 
 async function archivedCards(boardId){
+    // Display all archived cards for the board in modal.
     let response = await fetch("/api/board/" + boardId + "/archived_cards");
     let cards = await response.json();
     let place_for_archived_cards = '';
