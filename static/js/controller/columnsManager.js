@@ -78,6 +78,11 @@ async function columnsNameForTheBoard(boardId){
 async function archivedCards(boardId){
     let response = await fetch("/api/board/" + boardId + "/archived_cards");
     let cards = await response.json();
+    let place_for_archived_cards = '';
+    for (let card of cards){
+        place_for_archived_cards += `<p><input type="checkbox" name="archived_input" value="${card['id']}">` + ' ' + card['title'] + '</p>';
+    }
+    document.getElementById("all_archived_cards").innerHTML = place_for_archived_cards;
     console.log(cards);
     $('#archived').modal();
 }
