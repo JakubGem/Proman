@@ -2,7 +2,7 @@ export const htmlTemplates = {
     board: 1,
     card: 2,
     column:3,
-    button: 4
+    button: 4,
     newBoard: 5
 }
 
@@ -109,6 +109,7 @@ function columnBuilder(column) {
 
 function createNewColumnButton(boardId) {
     return `<button class="create-new-column" data-button-id="${boardId}">Add New Column</button>`;
+}
 
 export function loadAddNewCardButton(boardId) {
     return `<div class="add_card_button"><button id='add_card_button_for_board${boardId}'>Add new card</button></div>`

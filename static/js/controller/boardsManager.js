@@ -35,6 +35,7 @@ function hideBoard(e) {
     document.getElementById(`board${boardId}`).classList.remove('display');
     removeColumns();
     document.querySelector('.add_card_button').remove();
+    document.querySelector('.create-new-column').remove();
     e.currentTarget.removeEventListener('click', hideBoard);
     e.currentTarget.addEventListener('click', showHideButtonHandler);
     e.currentTarget.innerHTML='Show Cards';

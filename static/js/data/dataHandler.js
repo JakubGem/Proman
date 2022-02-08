@@ -29,8 +29,8 @@ export let dataHandler = {
   },
     
   createNewCard: async function (cardTitle, boardId, statusId) {
-    // creates new card, saves it and calls the callback function with its data
-
+      // creates new card, saves it and calls the callback function with its data
+  },
 
   createNewBoard: async function (data) {
     const response = await apiPost(`/save_new_board`, data);
@@ -70,13 +70,14 @@ async function apiPost(url, payload) {
 }
 
 async function apiDelete(url) {
-  let response = await fetch(url, {
-    method: "DELETE",
-  });
-  if (response.status === 200) {
-    let data = response.json();
-    return data;
-  }
+    let response = await fetch(url, {
+        method: "DELETE",
+    });
+    if (response.status === 200) {
+        let data = response.json();
+        return data;
+    }
+}
 
 async function apiPut(url, data) {
     let response = await fetch(url, {
