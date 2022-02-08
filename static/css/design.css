@@ -247,3 +247,9 @@ section.board{
 .add_card_button{
     margin-left: 1%;
 }
+
+.board-type-header {
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 20px;
+}
