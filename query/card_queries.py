@@ -69,3 +69,12 @@ def un_archive_card(card_id):
         SET active = true
         WHERE cards.id = %(card_id)s
         RETURNING *;""", {'card_id': card_id})
+
+
+def all_archived_cards_for_the_board(board_id):
+    return data_manager.execute_select("""
+SELECT * FROM cards
+WHERE cards.board_id = %(board_id)s
+AND cards.active = false
+;
+""", {"board_id": board_id})

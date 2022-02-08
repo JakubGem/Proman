@@ -19,7 +19,7 @@ export let columnsManager = {
       domManager.addChild(`.board[data-board-id="${boardId}"]`, loadAddNewCardButton(boardId));
       document.getElementById('add_card_button_for_board' + boardId).addEventListener('click', () => createNewCard(boardId));
       domManager.addChild(`.board[data-board-id="${boardId}"]`, loadArchivedCardsButton(boardId));
-      document.getElementById('add_card_button_for_board' + boardId).addEventListener('click', () => archivedCards(boardId));
+      document.getElementById('archived_cards_button_for_board' + boardId).addEventListener('click', () => archivedCards(boardId));
 
   },
 };
@@ -76,5 +76,8 @@ async function columnsNameForTheBoard(boardId){
 
 
 async function archivedCards(boardId){
-    console.log('archive');
+    let response = await fetch("/api/board/" + boardId + "/archived_cards");
+    let cards = await response.json();
+    console.log(cards);
+    $('#archived').modal();
 }

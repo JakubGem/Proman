@@ -168,5 +168,11 @@ def api_un_archive_card(card_id: int):
     return card_queries.un_archive_card(card_id)
 
 
+@app.route("/api/board/<int:board_id>/archived_cards")
+@json_response
+def api_all_archived_cards_for_boards(board_id: int):
+    return card_queries.all_archived_cards_for_the_board(board_id)
+
+
 if __name__ == '__main__':
     main()
