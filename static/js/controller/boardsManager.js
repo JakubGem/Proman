@@ -6,7 +6,6 @@ import { columnsManager } from "./columnsManager.js";
 export let boardsManager = {
     loadBoards: async function () {
         const boards = await dataHandler.getBoards();
-        console.debug(boards);
         for (let board of boards) {
             const boardBuilder = htmlFactory(htmlTemplates.board);
             const content = boardBuilder(board);
@@ -19,6 +18,11 @@ export let boardsManager = {
         }
     },
 };
+
+const privateBoard = function (){
+    const user_id = sessionStorage.user_id
+    dataHandler.getPrivateBoard(user_id)
+}
 
 function showHideButtonHandler(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;

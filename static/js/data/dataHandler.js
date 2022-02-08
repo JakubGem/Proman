@@ -3,6 +3,10 @@ export let dataHandler = {
     const response = await apiGet("/api/boards");
     return response;
   },
+  getPrivateBoard: async function (user_id){
+      const response = await apiGet("/api/boards/<user_id>");
+      return response;
+    },
 
   getColumnsByBoardId: async function (boardId) {
     const response = await apiGet(`/api/columns/${boardId}`);

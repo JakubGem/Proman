@@ -35,5 +35,10 @@
         <div class="new-board-btn-container">
             <button class="new-board-button">➕ Add new board ➕</button>
         </div>
+    {% if session %}
+        <script>
+            sessionStorage.setItem('user_id', {{ user_id }});
+        </script>
+    {% endif %}
     </body>
 </html>

@@ -33,6 +33,13 @@ def get_boards():
     return board_queries.get_boards()
 
 
+@app.route("/api/boards/<user_id>")
+@json_response
+def get_boards_for_user(user_id):
+    return board_queries.get_boards_for_user(user_id)
+
+
+
 @app.route("/api/columns/<int:board_id>")
 @json_response
 def get_columns_for_board(board_id: int):
@@ -61,7 +68,8 @@ def login():
             session['login'] = True
             session['user'] = my_user['name']
             session['user_id'] = my_user['id']
-            return redirect('/')
+            print(session['user_id'])
+            return render_template('index.html', user_id=session['user_id'])
         else:
             return render_template('login.html', message="Incorrect user name or password")
     return render_template('login.html')
