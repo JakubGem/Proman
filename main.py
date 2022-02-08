@@ -156,13 +156,13 @@ def api_columns_name_for_the_board(board_id: int):
     return only_column_names(names)
 
 
-@app.route("/api/card/<int:card_id>/archive")
+@app.route("/api/card/<int:card_id>/archive", methods=['PUT'])
 @json_response
 def api_archive_card(card_id: int):
     return card_queries.archive_card(card_id)
 
 
-@app.route("/api/card/<int:card_id>/unarchive")
+@app.route("/api/card/<int:card_id>/unarchive", methods=['PUT'])
 @json_response
 def api_un_archive_card(card_id: int):
     return card_queries.un_archive_card(card_id)

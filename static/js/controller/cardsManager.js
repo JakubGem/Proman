@@ -1,5 +1,5 @@
 import { dataHandler } from "../data/dataHandler.js";
-import {htmlFactory, htmlTemplates, loadDeleteButtonForCard, loadEditButtonForCard} from "../view/htmlFactory.js";
+import {htmlFactory, htmlTemplates, loadDeleteButtonForCard, loadEditButtonForCard, loadArchiveButtonForCard} from "../view/htmlFactory.js";
 import { domManager } from "../view/domManager.js";
 import {drop} from './dragAndDrop.js'
 
@@ -34,6 +34,8 @@ export function create_card(card) {
     document.getElementById('edit_title_for_card' + card.id).addEventListener('click', () => editCardTitle(card));
     domManager.addChild(`.card[data-card-id="${card.id}"]`, loadDeleteButtonForCard(card.id));
     document.getElementById('delete_card' + card.id).addEventListener('click', () => deleteCard(card));
+    domManager.addChild(`.card[data-card-id="${card.id}"]`, loadArchiveButtonForCard(card.id));
+    document.getElementById('archive_card' + card.id).addEventListener('click', () => archiveCard(card));
 }
 
 const injectCardsToHTML = function (columns, cardsList) {
@@ -65,6 +67,7 @@ async function editCardTitle(card) {
         edited_card.innerHTML = edited_card.innerHTML.replace(old_title, new_title);
         document.getElementById('edit_title_for_card' + card.id).addEventListener('click', () => editCardTitle(card));
         document.getElementById('delete_card' + card.id).addEventListener('click', () => deleteCard(card));
+        document.getElementById('archive_card' + card.id).addEventListener('click', () => archiveCard(card));
         card.title = new_title;
     }
 }
@@ -73,8 +76,18 @@ async function deleteCard(card) {
     if (confirm("Do you want to delete the card?") === true) {
         await fetch("/api/cards/" + card.id.toString() + "/delete", {
             method: 'DELETE',
-        }); // robi puta na podanego urla
+        }); // robi DELETE na podanego urla
         let deleted_card = document.querySelector(`.card[data-card-id="${card.id}"]`);
         deleted_card.parentElement.removeChild(deleted_card); // szukanie rodzica i usuwanie jego dziecka
+    }
+}
+
+async function archiveCard(card) {
+    if (confirm("Do you want to archive the card?") === true) {
+        await fetch("/api/card/" + card.id.toString() + "/archive", {
+            method: 'PUT',
+        }); // robi puta na podanego urla
+        let archived_card = document.querySelector(`.card[data-card-id="${card.id}"]`);
+        archived_card.parentElement.removeChild(archived_card); // szukanie rodzica i usuwanie jego dziecka
     }
 }
