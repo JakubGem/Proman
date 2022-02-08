@@ -122,3 +122,7 @@ export function loadEditButtonForCard(cardId) {
 export function loadDeleteButtonForCard(cardId) {
     return `<button class="card_button" id='delete_card${cardId}'>🗑️</button></div>`
 }
+
+export function addRefreshButton(boardId) {
+    return `<div className="refresh-button" data-board-id=${boardId}>🔁</div>`
+}

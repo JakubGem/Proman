@@ -1,5 +1,5 @@
 import { dataHandler } from "../data/dataHandler.js";
-import { htmlFactory, htmlTemplates, newBoardModal, newBoardColumn} from "../view/htmlFactory.js";
+import {htmlFactory, htmlTemplates, newBoardModal, newBoardColumn, addRefreshButton} from "../view/htmlFactory.js";
 import { domManager } from "../view/domManager.js";
 import { columnsManager } from "./columnsManager.js";
 
@@ -37,11 +37,21 @@ function showHideButtonHandler(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
     columnsManager.loadColumns(boardId);
     document.getElementById(`board${boardId}`).classList.add('display');
+    addRefreshBtn(boardId)
     clickEvent.currentTarget.removeEventListener('click', showHideButtonHandler);
     clickEvent.currentTarget.addEventListener('click', hideBoard);
     clickEvent.currentTarget.innerHTML='Hide Cards';
 }
 
+
+const addRefreshBtn = function (boardId){
+    document.getElementById(`board${boardId}`).insertAdjacentHTML("beforebegin", addRefreshButton(boardId))
+    document.querySelector('.refresh-button').addEventListener('click', (e)=>{
+
+        const boardNumber = e.currentTarget.dataset.boardId
+
+    })
+}
 
 function hideBoard(e) {
     const boardId = e.target.dataset.boardId;
@@ -105,10 +115,9 @@ const submitNewBoard = async function () {
         data['boardTitle'] = document.getElementById('board-title').value
         data['columns'] = searchingNewColumnsValue()
         data['type'] = document.getElementById('public').checked
-        console.debug(data)
         dataHandler.createNewBoard(data)
-        alert('You have successfully add new board')
         closeAddNewBoardWindow()
+        alert('You have successfully add new board')
     })
 }
 

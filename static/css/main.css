@@ -81,3 +81,6 @@ body{
     height: 80vh;
     display: flex;
 }
+.refresh-button {
+    display: flex;
+}
