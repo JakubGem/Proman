@@ -5,7 +5,7 @@ import { columnsManager } from "./columnsManager.js";
 
 export let boardsManager = {
     loadBoards: async function () {
-        console.debug(sessionStorage.getItem('user_id'))
+        addEventListenerToLogoutbtn()
         if (sessionStorage.getItem('user_id')) addNewBoard()
         const boards = await getBoards();
         for (let board of boards) {
@@ -21,6 +21,13 @@ export let boardsManager = {
             };
         }
     }
+
+
+const addEventListenerToLogoutbtn = function (){
+    if (sessionStorage.getItem('user_id'))
+        document.querySelector('.logout-btn').addEventListener('click', ()=>sessionStorage.removeItem('user_id'))
+}
+
 
 const getBoards = async function (){
     return sessionStorage.getItem('user_id')? await dataHandler.getPrivateBoard(sessionStorage.getItem('user_id')): await dataHandler.getBoards();

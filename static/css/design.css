@@ -239,3 +239,8 @@ section.board{
 .hidden {
     display: none;
 }
+.board-type-header {
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 20px;
+}
