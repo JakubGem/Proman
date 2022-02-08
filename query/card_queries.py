@@ -27,6 +27,7 @@ def get_cards_for_board(board_id):
         """
         SELECT * FROM cards
         WHERE cards.board_id = %(board_id)s
+        AND cards.active = true
         ;
         """, {"board_id": board_id})
 
@@ -54,3 +55,17 @@ SELECT title FROM columns
 WHERE columns.board_id = %(board_id)s
 ;
 """, {"board_id": board_id})
+
+
+def archive_card(card_id):
+    return data_manager.execute_edit("""UPDATE cards 
+        SET active = false
+        WHERE cards.id = %(card_id)s
+        RETURNING *;""", {'card_id': card_id})
+
+
+def un_archive_card(card_id):
+    return data_manager.execute_edit("""UPDATE cards 
+        SET active = true
+        WHERE cards.id = %(card_id)s
+        RETURNING *;""", {'card_id': card_id})
