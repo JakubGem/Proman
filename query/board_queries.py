@@ -5,8 +5,18 @@ def get_boards():
     return data_manager.execute_select(
         """
         SELECT * FROM boards
+        WHERE type=true
         ;
         """)
+
+def get_boards_for_user(user_id):
+    return data_manager.execute_select(
+        """
+        SELECT * FROM boards
+        WHERE type=true
+        OR user_id = %(user_id)s
+        ;
+        """, {'user_id': user_id})
 
 
 def save_new_board_data(data):

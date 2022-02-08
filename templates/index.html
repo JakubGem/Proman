@@ -13,27 +13,40 @@
               href="{{ url_for('static', filename='favicon/favicon-96x96.png') }}">
         <link rel="icon" type="image/png" sizes="16x16"
               href="{{ url_for('static', filename='favicon/favicon-16x16.png') }}">
-    {#    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">#}
+{#        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">#}
             <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/design.css') }}">
         <script type="module" src="{{ url_for('static', filename='js/main.js') }}" defer></script>
         <script type="module" src="{{ url_for('static', filename='js/controller/dragAndDrop.js') }}" defer></script>
         <script type="module" src="{{ url_for('static', filename='js/main.js') }}" defer></script>
     </head>
     <body>
-        <div class="main_page">
+        <div class="main_page" id="root">
             <div class="log_on_main_page">
             {% if session['login']%}
-            <button class="btn btn-primary corner" onclick="location.href='/logout'">Logout</button>
+            <button class="btn btn-primary corner logout-btn" onclick="location.href='/logout'">Logout</button>
             {% else %}
             <button class="btn btn-primary corner" onclick="location.href='/login'">Login</button>
             <button class="btn btn-primary votes" onclick="location.href='/register'">Register</button>
             {% endif %}
         </div>
-            <div class="boards_on_main_page" id="root"></div>
-        </div>
+            {% if session %}
+            <div class="private-boards" id="private-boards">
+                <div class="board-type-header"> Your Private Boards </div>
             </div>
+            {% endif %}
+            <div class="public-boards" id="public-boards">
+                <div class="board-type-header">Public boards</div>
+            </div>
+        </div>
+        <div id="root"></div>
+    {% if session %}
         <div class="new-board-btn-container">
             <button class="new-board-button">➕ Add new board ➕</button>
         </div>
+
+        <script>
+            sessionStorage.setItem('user_id', {{ user_id }});
+        </script>
+    {% endif %}
     </body>
 </html>

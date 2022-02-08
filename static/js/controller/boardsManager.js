@@ -5,20 +5,33 @@ import { columnsManager } from "./columnsManager.js";
 
 export let boardsManager = {
     loadBoards: async function () {
-        const boards = await dataHandler.getBoards();
-        console.debug(boards);
+        addEventListenerToLogoutbtn()
+        if (sessionStorage.getItem('user_id')) addNewBoard()
+        const boards = await getBoards();
         for (let board of boards) {
             const boardBuilder = htmlFactory(htmlTemplates.board);
             const content = boardBuilder(board);
-            domManager.addChild("#root", content);
+            board.type ? domManager.addChild("#public-boards", content):
+            domManager.addChild("#private-boards", content);
             domManager.addEventListener(
                 `.toggle-board-button[data-board-id="${board.id}"]`,
                 "click",
                 showHideButtonHandler,
-            );
+            )
+            };
         }
-    },
-};
+    }
+
+
+const addEventListenerToLogoutbtn = function (){
+    if (sessionStorage.getItem('user_id'))
+        document.querySelector('.logout-btn').addEventListener('click', ()=>sessionStorage.removeItem('user_id'))
+}
+
+
+const getBoards = async function (){
+    return sessionStorage.getItem('user_id')? await dataHandler.getPrivateBoard(sessionStorage.getItem('user_id')): await dataHandler.getBoards();
+}
 
 function showHideButtonHandler(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
@@ -88,14 +101,14 @@ const submitNewBoard = async function () {
     newBoard.addEventListener('submit', (e) => {
         e.preventDefault()
         const data = {}
-        data['userid'] = 1
+        data['userid'] = sessionStorage.getItem('user_id')
         data['boardTitle'] = document.getElementById('board-title').value
         data['columns'] = searchingNewColumnsValue()
         data['type'] = document.getElementById('public').checked
-        console.debug(data)
         dataHandler.createNewBoard(data)
         alert('You have successfully add new board')
         closeAddNewBoardWindow()
+        window.location.reload(true)
     })
 }
 
