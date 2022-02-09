@@ -15,10 +15,10 @@ export let boardsManager = {
             domManager.addChild("#private-boards", content);
             domManager.addEventListener(
                 `.toggle-board-button[data-board-id="${board.id}"]`,
-                "click",
-                showHideButtonHandler,
-            )
-            };
+                "click", showHideButtonHandler);
+            domManager.addEventListener(`.content-button[data-board-id="${board.id}"]`,
+                'click', renameBoard);
+            }
         }
     }
 
