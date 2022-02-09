@@ -149,19 +149,6 @@ def change_column_card(card_id: int):
     return card_queries.change_column(card_id, column_id)
 
 
-# @app.route("/api/get-order", methods=['POST'])
-# @json_response
-# def order_cards():
-#     if request.method == 'POST':
-#         card_list = request.json['cardList']
-#         # lista = request.json['lista']
-#         print(card_list)
-#         # print(lista)
-#         # cards = card_queries.get_cards()
-#         # print(cards)
-#         return card_list
-
-
 @app.route("/api/get-order-list", methods=['POST'])
 @json_response
 def order_cards_list():
@@ -169,13 +156,12 @@ def order_cards_list():
         ordered_list = {}
         i = 0
         card_list = request.json['cardList']
-        cardsdb = card_queries.get_cards()
+        print(card_list)
         for card in card_list:
             i += 1
-            for cards in cardsdb:
-                dicts = {int(card): i}
-                ordered_list.update(dicts)
-                dicts = {}
+            dicts = {int(card): i}
+            ordered_list.update(dicts)
+            dicts = {}
         for k, v in ordered_list.items():
             card_queries.change_order(k, v)
         return card_list

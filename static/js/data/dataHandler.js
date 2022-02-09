@@ -22,23 +22,13 @@ export let dataHandler = {
   createNewBoard: async function (boardTitle) {
     // creates new board, saves it and calls the callback function with its data
   },
-  cardOrderList: async function (lista, cardList) {
+  cardOrderList: async function (cardList) {
     const lists = {
-        'list': lista,
         'cardList': cardList
     };
-    const response = await apiPostt(`/api/get-order-list`, lists, cardList);
+    const response = await apiPost(`/api/get-order-list`, lists);
     return response;
   },
-
-
-  // cardOrder: async function (cardsList) {
-  //   const cardList = {
-  //       'cardList': cardsList
-  //   };
-  //   const response = await apiPost(`/api/get-order-list`, cardList);
-  //   return response;
-  // },
 
   createNewCard: async function (cardTitle, boardId, statusId) {
     // creates new card, saves it and calls the callback function with its data
@@ -89,21 +79,7 @@ async function apiPut(url, data) {
 }
 
 
-
-// async function apiPost(url, cardList) {
-//     let response = await fetch(url, {
-//         method: "POST",
-//         headers: {
-//       'Content-Type': 'application/json'},
-//         body: JSON.stringify(cardList),
-//     });
-//     if (response.status === 200) {
-//         await response.json();
-//         console.log("POST sent successfully")
-//     }
-// }
-
-async function apiPostt(url, lists) {
+async function apiPost(url, lists) {
     let response = await fetch(url, {
         method: "POST",
         headers: {
