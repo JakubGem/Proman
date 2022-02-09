@@ -15,6 +15,8 @@ export let columnsManager = {
         `.delete-column[data-column-id="${column.id}"]`,
         "click",
         deleteButtonHandler)
+        domManager.addEventListener(`.content-button[data-column-id="${column.id}"]`,
+          'click', renameColumn);
     }await cardsManager.loadCards(boardId, columns)
       domManager.addChild(`.board[data-board-id="${boardId}"]`, loadAddNewCardButton(boardId));
       document.getElementById('add_card_button_for_board' + boardId).addEventListener('click', () => createNewCard(boardId));
@@ -87,4 +89,16 @@ async function archivedCards(boardId){
     document.getElementById("all_archived_cards").innerHTML = place_for_archived_cards;
     console.log(cards);
     $('#archived').modal();
+}
+async function renameColumn(clickEvent) {
+    let columnId = clickEvent.target.dataset.columnId;
+    let content = document.querySelector(`.board-column[data-column-id="${columnId}"]`);
+    content.contentEditable = !content.isContentEditable;
+      if (content.contentEditable === 'false') {
+          clickEvent.target.innerHTML = 'Edit';
+          let title = content.innerHTML
+      await dataHandler.renameColumn(columnId, title);
+    } else {
+          clickEvent.target.innerHTML = 'Save';
+      }
 }
