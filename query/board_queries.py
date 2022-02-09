@@ -5,7 +5,8 @@ def get_boards():
     return data_manager.execute_select(
         """
         SELECT * FROM boards
-        WHERE type=true;
+        WHERE type=true
+        ORDER BY id DESC;
         """)
 
 def get_boards_for_user(user_id):
@@ -14,7 +15,7 @@ def get_boards_for_user(user_id):
         SELECT * FROM boards
         WHERE type=true
         OR user_id = %(user_id)s
-        ;
+        ORDER BY id DESC;
         """, {'user_id': user_id})
 
 
@@ -32,7 +33,6 @@ def save_new_board_data(data):
         GROUP BY id
         HAVING id = max(id);
         """, generate_query_dict(data))
-
 
 
 def create_query_values(data):
@@ -64,17 +64,28 @@ def delete_board(board_id):
         """, {'board_id': board_id})
 
 
+
+# def rename_column(board_id, title):
+#     new_board_name = data_manager.execute_edit(
+#         """
+#         WITH UPDATED AS
+#             (UPDATE boards
+#             SET title = %(title)s
+#             WHERE id = %(board_id)s
+#             RETURNING id)
+#         SELECT *
+#         FROM columns
+#         ORDER BY id ASC;
+#         """, {'board_id': board_id, 'title': title})
+#     return new_board_name
+
+
 def rename_column(board_id, title):
     new_board_name = data_manager.execute_edit(
         """
-        WITH UPDATED AS
-            (UPDATE boards
-            SET title = %(title)s
-            WHERE id = %(board_id)s
-            RETURNING id)
-        SELECT *
-        FROM columns
-        ORDER BY id ASC;
+        UPDATE boards
+        SET title = %(title)s
+        WHERE id = %(board_id)s
+        RETURNING id;
         """, {'board_id': board_id, 'title': title})
     return new_board_name
-
