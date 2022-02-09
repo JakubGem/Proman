@@ -107,7 +107,7 @@ async function orderLIst(cards) {
         // lista.push(cardsList)
 
     }
-    await dataHandler.cardOrder(cardsList)
+    // await dataHandler.cardOrder(cardsList)
     let cardId = document.getElementsByClassName('board-column')
     // console.log(cardId)
     for (i; i < cardId.length; i++) {
@@ -117,7 +117,7 @@ async function orderLIst(cards) {
         // console.log(lista)
     }
 
-    await dataHandler.cardOrderList(lista)
+    await dataHandler.cardOrderList(lista, cardsList)
 
 
     // lista.push(cardsList)
