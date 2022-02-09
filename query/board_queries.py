@@ -6,7 +6,7 @@ def get_boards():
         """
         SELECT * FROM boards
         WHERE type=true
-        ;
+        ORDER BY id DESC;
         """)
 
 def get_boards_for_user(user_id):
@@ -15,7 +15,7 @@ def get_boards_for_user(user_id):
         SELECT * FROM boards
         WHERE type=true
         OR user_id = %(user_id)s
-        ;
+        ORDER BY id DESC;
         """, {'user_id': user_id})
 
 
@@ -56,20 +56,26 @@ def generate_query_dict(data):
     return query_dict
 
 
+# def rename_column(board_id, title):
+#     new_board_name = data_manager.execute_edit(
+#         """
+#         WITH UPDATED AS
+#             (UPDATE boards
+#             SET title = %(title)s
+#             WHERE id = %(board_id)s
+#             RETURNING id)
+#         SELECT *
+#         FROM columns
+#         ORDER BY id ASC;
+#         """, {'board_id': board_id, 'title': title})
+#     return new_board_name
+
 def rename_column(board_id, title):
     new_board_name = data_manager.execute_edit(
         """
-        WITH UPDATED AS
-            (UPDATE boards
-            SET title = %(title)s
-            WHERE id = %(board_id)s
-            RETURNING id)
-        SELECT *
-        FROM columns
-        ORDER BY id ASC;
+        UPDATE boards
+        SET title = %(title)s
+        WHERE id = %(board_id)s
+        RETURNING id;
         """, {'board_id': board_id, 'title': title})
     return new_board_name
-
-
-
-

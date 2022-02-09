@@ -48,7 +48,18 @@ changeColumn: async function (cardId, columnId) {
     };
   const response = await apiPut(`/api/cards/${cardId}/change-column`, data);
   return response;
-}
+},
+renameColumn: async function (columnId, title) {
+    let data = {'title': title};
+    const response = await apiPut(`/api/columns/${columnId}/rename`, data);
+    return response;
+  },
+
+  renameBoard: async function (boardId, title) {
+    let data = {'title': title};
+    const response = await apiPut(`/api/boards/${boardId}/rename`, data);
+    return response;
+  }
 };
 
 async function apiGet(url) {

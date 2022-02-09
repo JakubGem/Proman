@@ -17,7 +17,7 @@ def get_columns(board_id):
         """
         SELECT * FROM columns
         WHERE columns.board_id = %(board_id)s
-        ;
+        ORDER BY id ASC;
         """, {"board_id": board_id})
     return matching_columns
 
@@ -42,3 +42,27 @@ def delete_column(column_id):
         """, {'column_id': column_id})
     return column_to_delete
 
+
+# def rename_column(column_id, title):
+#     new_column_name = data_manager.execute_edit(
+#         """
+#         WITH UPDATED AS
+#             (UPDATE columns
+#             SET title = %(title)s
+#             WHERE id = %(column_id)s
+#             RETURNING id)
+#         SELECT *
+#         FROM columns
+#         ORDER BY id ASC;
+#         """, {'column_id': column_id, 'title': title})
+#     return new_column_name
+
+def rename_column(column_id, title):
+    new_column_name = data_manager.execute_edit(
+        """
+        UPDATE columns
+        SET title = %(title)s
+        WHERE id = %(column_id)s
+        RETURNING id;
+        """, {'column_id': column_id, 'title': title})
+    return new_column_name
