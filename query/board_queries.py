@@ -54,3 +54,12 @@ def generate_query_dict(data):
     for name in columns_names:
         query_dict[f'col{columns_names.index(name)}'] = name
     return query_dict
+
+
+def delete_board(board_id):
+    return data_manager.execute_delete(
+        """
+        DELETE FROM boards
+        WHERE boards.id = %(board_id)s
+        ;
+        """, {'board_id': board_id})

@@ -1,43 +1,45 @@
-import { dataHandler } from "../data/dataHandler.js";
-import { htmlFactory, htmlTemplates, loadAddNewCardButton, loadArchivedCardsButton} from "../view/htmlFactory.js";
-import { domManager } from "../view/domManager.js";
-import { cardsManager, create_card} from "./cardsManager.js";
+import {dataHandler} from "../data/dataHandler.js";
+import {htmlFactory, htmlTemplates, loadAddNewCardButton, loadArchivedCardsButton, deleteBoard} from "../view/htmlFactory.js";
+import {domManager} from "../view/domManager.js";
+import {cardsManager, create_card} from "./cardsManager.js";
 
 export let columnsManager = {
     loadColumns: async function (boardId) {
-    creatAddNewColumnBtn(boardId)
-    const columns = await dataHandler.getColumnsByBoardId(boardId)
-    for (let column of columns) {
-      const columnBuilder = htmlFactory(htmlTemplates.column);
-      const content = columnBuilder(column);
-      domManager.addChild(`.board[data-board-id="${boardId}"]`, content);
-      domManager.addEventListener(
-        `.delete-column[data-column-id="${column.id}"]`,
-        "click",
-        deleteButtonHandler)
-    }await cardsManager.loadCards(boardId, columns)
-      domManager.addChild(`.board[data-board-id="${boardId}"]`, loadAddNewCardButton(boardId));
-      document.getElementById('add_card_button_for_board' + boardId).addEventListener('click', () => createNewCard(boardId));
-      domManager.addChild(`.board[data-board-id="${boardId}"]`, loadArchivedCardsButton(boardId));
-      document.getElementById('archived_cards_button_for_board' + boardId).addEventListener('click', () => archivedCards(boardId));
-
-  },
+        creatAddNewColumnBtn(boardId)
+        const columns = await dataHandler.getColumnsByBoardId(boardId)
+        for (let column of columns) {
+            const columnBuilder = htmlFactory(htmlTemplates.column);
+            const content = columnBuilder(column);
+            domManager.addChild(`.board[data-board-id="${boardId}"]`, content);
+            domManager.addEventListener(
+                `.delete-column[data-column-id="${column.id}"]`,
+                "click",
+                deleteButtonHandler)
+        }
+        await cardsManager.loadCards(boardId, columns)
+        domManager.addChild(`.board[data-board-id="${boardId}"]`, loadAddNewCardButton(boardId));
+        document.getElementById('add_card_button_for_board' + boardId).addEventListener('click', () => createNewCard(boardId));
+        domManager.addChild(`.board[data-board-id="${boardId}"]`, loadArchivedCardsButton(boardId));
+        document.getElementById('archived_cards_button_for_board' + boardId).addEventListener('click', () => archivedCards(boardId));
+        domManager.addChild(`.board[data-board-id="${boardId}"]`, deleteBoard(boardId));
+        document.getElementById('delete_board_' + boardId).addEventListener('click', () => deleteTheBoard(boardId));
+    },
 };
 
-const creatAddNewColumnBtn = function(boardId){
-  const buttonBuilder = htmlFactory(htmlTemplates.button);
-  const content = buttonBuilder(boardId);
-  domManager.addChild(`.board-container[id='board${boardId}']`, content);
-  domManager.addEventListener(`.create-new-column[data-button-id="${boardId}"]`, "click",
-          addNewColumn);
+const creatAddNewColumnBtn = function (boardId) {
+    const buttonBuilder = htmlFactory(htmlTemplates.button);
+    const content = buttonBuilder(boardId);
+    domManager.addChild(`.board-container[id='board${boardId}']`, content);
+    domManager.addEventListener(`.create-new-column[data-button-id="${boardId}"]`, "click",
+        addNewColumn);
 }
 
 
-async function addNewColumn (clickEvent) {
-  const boardId = clickEvent.target.dataset.buttonId;
-  let columnTitle = prompt("Please Provide New Column Title");
-  await dataHandler.createNewColumn(columnTitle, boardId);
-  await columnsManager.loadColumns(boardId);
+async function addNewColumn(clickEvent) {
+    const boardId = clickEvent.target.dataset.buttonId;
+    let columnTitle = prompt("Please Provide New Column Title");
+    await dataHandler.createNewColumn(columnTitle, boardId);
+    await columnsManager.loadColumns(boardId);
 }
 
 
@@ -53,7 +55,7 @@ async function deleteButtonHandler(clickEvent) {
 }
 
 
-async function createNewCard(boardId){
+async function createNewCard(boardId) {
     let new_title = prompt('Enter card title: ', 'card title');
     let columns_name = await columnsNameForTheBoard(boardId);
     let new_column_name = prompt('Enter card column name (' + columns_name + ')' + ': ');
@@ -70,21 +72,28 @@ async function createNewCard(boardId){
 }
 
 
-async function columnsNameForTheBoard(boardId){
+async function columnsNameForTheBoard(boardId) {
     let response = await fetch("/api/columns_name/" + boardId);
     return await response.json();
 }
 
 
-async function archivedCards(boardId){
+async function archivedCards(boardId) {
     // Display all archived cards for the board in modal.
     let response = await fetch("/api/board/" + boardId + "/archived_cards");
     let cards = await response.json();
     let place_for_archived_cards = '';
-    for (let card of cards){
+    for (let card of cards) {
         place_for_archived_cards += `<p><input type="checkbox" name="archived_input" value="${card['id']}">` + ' ' + card['title'] + '</p>';
     }
     document.getElementById("all_archived_cards").innerHTML = place_for_archived_cards;
     console.log(cards);
     $('#archived').modal();
+}
+
+
+async function deleteTheBoard(boardId) {
+    //let response = await fetch("/api/columns_name/" + boardId);
+    //return await response.json();
+    console.log('usuwanie');
 }
