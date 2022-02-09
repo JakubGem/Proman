@@ -54,3 +54,22 @@ def generate_query_dict(data):
     for name in columns_names:
         query_dict[f'col{columns_names.index(name)}'] = name
     return query_dict
+
+
+def rename_column(board_id, title):
+    new_board_name = data_manager.execute_edit(
+        """
+        WITH UPDATED AS
+            (UPDATE boards
+            SET title = %(title)s
+            WHERE id = %(board_id)s
+            RETURNING id)
+        SELECT *
+        FROM columns
+        ORDER BY id ASC;
+        """, {'board_id': board_id, 'title': title})
+    return new_board_name
+
+
+
+
