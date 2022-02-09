@@ -1,7 +1,14 @@
-import { dataHandler } from "../data/dataHandler.js";
-import {htmlFactory, htmlTemplates, newBoardModal, newBoardColumn, addRefreshButton} from "../view/htmlFactory.js";
-import { domManager } from "../view/domManager.js";
-import { columnsManager } from "./columnsManager.js";
+import {dataHandler} from "../data/dataHandler.js";
+import {
+    addRefreshButton,
+    deleteBoard,
+    htmlFactory,
+    htmlTemplates,
+    newBoardColumn,
+    newBoardModal
+} from "../view/htmlFactory.js";
+import {domManager} from "../view/domManager.js";
+import {columnsManager} from "./columnsManager.js";
 
 export let boardsManager = {
     loadBoards: async function () {
@@ -11,8 +18,8 @@ export let boardsManager = {
         for (let board of boards) {
             const boardBuilder = htmlFactory(htmlTemplates.board);
             const content = boardBuilder(board);
-            board.type ? domManager.addChild("#public-boards", content):
-            domManager.addChild("#private-boards", content);
+            board.type ? domManager.addChild("#public-boards", content) :
+                domManager.addChild("#private-boards", content);
             domManager.addEventListener(
                 `.toggle-board-button[data-board-id="${board.id}"]`,
                 "click", showHideButtonHandler);
@@ -20,17 +27,19 @@ export let boardsManager = {
             //     'click', renameBoard);
             domManager.addEventListener(`.content-button[data-board-id="${board.id}"]`,
                 'click', renameBoard);
-            }
+            domManager.addChild(`.board[data-board-id="${board.id}"]`, deleteBoard(board.id));
+            document.getElementById('delete_board_' + board.id).addEventListener('click', () => deleteTheBoard(board.id));
         }
     }
-
-const addEventListenerToLogoutBtn = function (){
-    if (sessionStorage.getItem('user_id'))
-        document.querySelector('.logout-btn').addEventListener('click', ()=>sessionStorage.removeItem('user_id'))
 }
 
-const getBoards = async function (){
-    return sessionStorage.getItem('user_id')? await dataHandler.getPrivateBoard(sessionStorage.getItem('user_id')): await dataHandler.getBoards();
+const addEventListenerToLogoutBtn = function () {
+    if (sessionStorage.getItem('user_id'))
+        document.querySelector('.logout-btn').addEventListener('click', () => sessionStorage.removeItem('user_id'))
+}
+
+const getBoards = async function () {
+    return sessionStorage.getItem('user_id') ? await dataHandler.getPrivateBoard(sessionStorage.getItem('user_id')) : await dataHandler.getBoards();
 }
 
 function showHideButtonHandler(clickEvent) {
@@ -44,9 +53,9 @@ function showHideButtonHandler(clickEvent) {
 }
 
 
-const addRefreshBtn = function (boardId){
+const addRefreshBtn = function (boardId) {
     document.getElementById(`board${boardId}`).insertAdjacentHTML("beforeend", addRefreshButton(boardId))
-    document.querySelector('.refresh-button').addEventListener('click', (e)=>{
+    document.querySelector('.refresh-button').addEventListener('click', (e) => {
         hideBoard(e)
         showHideButtonHandler(e)
     })
@@ -62,21 +71,21 @@ function hideBoard(e) {
     document.querySelector('.refresh-button').remove();
     e.currentTarget.removeEventListener('click', hideBoard);
     e.currentTarget.addEventListener('click', showHideButtonHandler);
-    if (e.currentTarget.classList.contains("toggle-board-button")===true) {
+    if (e.currentTarget.classList.contains("toggle-board-button") === true) {
         e.currentTarget.innerHTML = 'Show Cards'
     }
 }
 
-const removeColumns= function () {
+const removeColumns = function () {
     const columns = document.querySelectorAll('.board-columns-container')
     for (let column of columns) column.remove()
 }
 
-export const addNewBoard = function (){
+export const addNewBoard = function () {
     document.querySelector('.new-board-button').addEventListener('click', newBoardMenu)
 }
 
-async function newBoardMenu (){
+async function newBoardMenu() {
     const content = newBoardModal();
     domManager.addChild("#root", content, 'afterend');
     document.querySelector('.new-board-btn-container').classList.add('hidden')
@@ -86,15 +95,15 @@ async function newBoardMenu (){
     await submitNewBoard()
 }
 
-const addEventListenerToCloseModalWinow = function (){
+const addEventListenerToCloseModalWinow = function () {
     document.querySelector('.close-modal-window').addEventListener('click', closeAddNewBoardWindow)
 }
 
 
-const addEventListenerToRemoveButtons = function (){
+const addEventListenerToRemoveButtons = function () {
     const buttons = document.querySelectorAll('.remove-input')
     for (let button of buttons) {
-        button.addEventListener('click', ()=>button.parentElement.remove())
+        button.addEventListener('click', () => button.parentElement.remove())
     }
 }
 
@@ -103,7 +112,7 @@ const addEventListenerToAddNewColumnButton = function () {
     addNewColumnBtn.addEventListener('click', addNewColumnToNewBoard)
 }
 
-const addNewColumnToNewBoard = function (){
+const addNewColumnToNewBoard = function () {
     const newColumnsContainerClass = '.all-new-columns'
     const content = newBoardColumn()
     domManager.addChild(newColumnsContainerClass, content)
@@ -125,16 +134,16 @@ const submitNewBoard = async function () {
     })
 }
 
-const searchingNewColumnsValue = function (){
+const searchingNewColumnsValue = function () {
     const allNewBoardColumnData = document.querySelectorAll('.new-column-name');
-    const columnData= {}
-    for (let i=0; i<allNewBoardColumnData.length; i++){
-        columnData[i+1] = allNewBoardColumnData[i].value
+    const columnData = {}
+    for (let i = 0; i < allNewBoardColumnData.length; i++) {
+        columnData[i + 1] = allNewBoardColumnData[i].value
     }
     return columnData
 }
 
-const closeAddNewBoardWindow = function (){
+const closeAddNewBoardWindow = function () {
     document.getElementById('add-new-board-window').remove()
     document.querySelector('.new-board-btn-container').classList.remove('hidden')
     document.querySelector('.overlay').classList.add('hidden')
@@ -151,4 +160,16 @@ async function renameBoard(clickEvent) {
     } else {
         clickEvent.target.innerHTML = 'Save';
     }
+}
+
+async function deleteTheBoard(boardId) {
+    let response = await fetch("/api/board/" + boardId + "/delete", {
+        method: 'DELETE',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({board_id: boardId})
+    });
+    if (await response.json() === 'deleted') {
+        location.reload();
+    }
+    console.log('usuwanie');
 }

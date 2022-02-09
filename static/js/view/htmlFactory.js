@@ -121,6 +121,10 @@ export function loadArchivedCardsButton(boardId) {
     return `<div class="archived_cards_button"><button id='archived_cards_button_for_board${boardId}'>Archived cards</button></div>`
 }
 
+export function deleteBoard(boardId) {
+    return `<div class="delete_board_button"><button id='delete_board_${boardId}'>Delete board</button></div>`
+}
+
 export function loadEditButtonForCard(cardId) {
     return `<button class="card_button" id='edit_title_for_card${cardId}'>🗒️</button></div>`
 }

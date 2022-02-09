@@ -64,19 +64,19 @@ CREATE TABLE  proman_users(
 ---
 
 ALTER TABLE ONLY cards
-    ADD CONSTRAINT fk_cards_boards_id FOREIGN KEY (board_id) REFERENCES boards(id);
+    ADD CONSTRAINT fk_cards_boards_id FOREIGN KEY (board_id) REFERENCES boards(id) on delete cascade;
 
 ALTER TABLE ONLY cards
-    ADD CONSTRAINT fk_cards_user_id FOREIGN KEY (user_id) REFERENCES proman_users(id);
+    ADD CONSTRAINT fk_cards_user_id FOREIGN KEY (user_id) REFERENCES proman_users(id) on delete cascade;
 
 ALTER TABLE ONLY cards
-    ADD CONSTRAINT fk_cards_columns_id FOREIGN KEY (columns_id) REFERENCES columns(id);
+    ADD CONSTRAINT fk_cards_columns_id FOREIGN KEY (columns_id) REFERENCES columns(id) on delete cascade;
 
 ALTER TABLE ONLY boards
-    ADD CONSTRAINT fk_boards_user_id FOREIGN KEY (user_id) REFERENCES proman_users(id);
+    ADD CONSTRAINT fk_boards_user_id FOREIGN KEY (user_id) REFERENCES proman_users(id) on delete cascade;
 
 ALTER TABLE ONLY columns
-    ADD CONSTRAINT fk_columns_board_id FOREIGN KEY (board_id) REFERENCES boards(id);
+    ADD CONSTRAINT fk_columns_board_id FOREIGN KEY (board_id) REFERENCES boards(id) on delete cascade;
 
 
 ---

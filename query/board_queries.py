@@ -35,7 +35,6 @@ def save_new_board_data(data):
         """, generate_query_dict(data))
 
 
-
 def create_query_values(data):
     column_dict = data.get('columns')
     columns_names = list(column_dict.values())
@@ -56,6 +55,16 @@ def generate_query_dict(data):
     return query_dict
 
 
+def delete_board(board_id):
+    return data_manager.execute_delete(
+        """
+        DELETE FROM boards
+        WHERE boards.id = %(board_id)s
+        ;
+        """, {'board_id': board_id})
+
+
+
 # def rename_column(board_id, title):
 #     new_board_name = data_manager.execute_edit(
 #         """
@@ -69,6 +78,7 @@ def generate_query_dict(data):
 #         ORDER BY id ASC;
 #         """, {'board_id': board_id, 'title': title})
 #     return new_board_name
+
 
 def rename_column(board_id, title):
     new_board_name = data_manager.execute_edit(
