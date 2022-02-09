@@ -41,26 +41,14 @@ export let dataHandler = {
     return response;
   },
 
-  changeColumn: async function (cardId, columnId) {
+changeColumn: async function (cardId, columnId) {
     const data = {
       'card_id': cardId,
       'column_id': columnId
     };
   const response = await apiPut(`/api/cards/${cardId}/change-column`, data);
   return response;
-  },
-
-  renameColumn: async function (columnId, title) {
-    let data = {'title': title};
-    const response = await apiPut(`/api/columns/${columnId}/rename`, data);
-    return response;
-  },
-
-  renameBoard: async function (boardId, title) {
-    let data = {'title': title};
-    const response = await apiPut(`/api/boards/${boardId}/rename`, data);
-    return response;
-  }
+}
 };
 
 async function apiGet(url) {
@@ -96,7 +84,6 @@ async function apiDelete(url) {
 }
 
 async function apiPut(url, data) {
-    console.log(data);
     let response = await fetch(url, {
         method: "PUT",
         headers: {
