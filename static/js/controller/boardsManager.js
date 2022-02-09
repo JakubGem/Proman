@@ -5,7 +5,7 @@ import { columnsManager } from "./columnsManager.js";
 
 export let boardsManager = {
     loadBoards: async function () {
-        addEventListenerToLogoutbtn()
+        addEventListenerToLogoutBtn()
         if (sessionStorage.getItem('user_id')) addNewBoard()
         const boards = await getBoards();
         for (let board of boards) {
@@ -22,12 +22,10 @@ export let boardsManager = {
         }
     }
 
-
-const addEventListenerToLogoutbtn = function (){
+const addEventListenerToLogoutBtn = function (){
     if (sessionStorage.getItem('user_id'))
         document.querySelector('.logout-btn').addEventListener('click', ()=>sessionStorage.removeItem('user_id'))
 }
-
 
 const getBoards = async function (){
     return sessionStorage.getItem('user_id')? await dataHandler.getPrivateBoard(sessionStorage.getItem('user_id')): await dataHandler.getBoards();
@@ -40,16 +38,15 @@ function showHideButtonHandler(clickEvent) {
     addRefreshBtn(boardId)
     clickEvent.currentTarget.removeEventListener('click', showHideButtonHandler);
     clickEvent.currentTarget.addEventListener('click', hideBoard);
-    clickEvent.currentTarget.innerHTML='Hide Cards';
+    if (clickEvent.currentTarget.classList.contains("toggle-board-button")) clickEvent.currentTarget.innerHTML = 'Hide Cards'
 }
 
 
 const addRefreshBtn = function (boardId){
-    document.getElementById(`board${boardId}`).insertAdjacentHTML("beforebegin", addRefreshButton(boardId))
+    document.getElementById(`board${boardId}`).insertAdjacentHTML("beforeend", addRefreshButton(boardId))
     document.querySelector('.refresh-button').addEventListener('click', (e)=>{
-
-        const boardNumber = e.currentTarget.dataset.boardId
-
+        hideBoard(e)
+        showHideButtonHandler(e)
     })
 }
 
@@ -59,9 +56,13 @@ function hideBoard(e) {
     removeColumns();
     document.querySelector('.add_card_button').remove();
     document.querySelector('.create-new-column').remove();
+    document.querySelector('.archived_cards_button').remove();
+    document.querySelector('.refresh-button').remove();
     e.currentTarget.removeEventListener('click', hideBoard);
     e.currentTarget.addEventListener('click', showHideButtonHandler);
-    e.currentTarget.innerHTML='Show Cards';
+    if (e.currentTarget.classList.contains("toggle-board-button")===true) {
+        e.currentTarget.innerHTML = 'Show Cards'
+    }
 }
 
 const removeColumns= function () {
@@ -135,17 +136,4 @@ const closeAddNewBoardWindow = function (){
     document.getElementById('add-new-board-window').remove()
     document.querySelector('.new-board-btn-container').classList.remove('hidden')
     document.querySelector('.overlay').classList.add('hidden')
-}
-
-async function renameBoard(clickEvent) {
-    let boardId = clickEvent.target.dataset.boardId;
-    let content = document.querySelector(`.board-header[data-board-id="${boardId}"]`);
-    content.contentEditable = !content.isContentEditable;
-	if (content.contentEditable === 'false') {
-		clickEvent.target.innerHTML = 'Edit';
-		let title = content.innerHTML
-        await dataHandler.renameBoard(boardId, title);
-	} else {
-		clickEvent.target.innerHTML = 'Save';
-	}
 }

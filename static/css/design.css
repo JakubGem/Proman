@@ -253,3 +253,16 @@ section.board{
     font-weight: bold;
     padding: 20px;
 }
+.display {
+    position: relative;
+}
+
+.refresh-button {
+    position: absolute;
+    top: 0;
+    right: 5%;
+    display: flex;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
