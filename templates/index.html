@@ -7,9 +7,9 @@
         <title>ProMan</title>
 
          <!-- Skrypty dla modalu -->
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <script type="text/javascript" src="../static/js/bootstrap/jquery.min.js"></script>
+    <script type="text/javascript" src="../static/js/bootstrap/bootstrap.min.js"></script>
     <!-- Koniec skryptów dla modalu -->
         <link rel="shortcut icon" href="{{ url_for('static', filename='favicon/favicon.ico') }}">
         <link rel="icon" type="image/png" sizes="32x32"
@@ -45,7 +45,6 @@
                 <div class="board-type-header">Public boards</div>
             </div>
         </div>
-        <div id="root"></div>
     {% if session %}
         <div class="new-board-btn-container">
             <button class="new-board-button">➕ Add new board ➕</button>

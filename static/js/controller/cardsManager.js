@@ -24,7 +24,7 @@ const createSortedCardList = function (columns, cards){
 export function create_card(card) {
     const cardBuilder = htmlFactory(htmlTemplates.card);
     const content = cardBuilder(card);
-    domManager.addChild(`.board-column[data-column-id="${card.columns_id}"]`, content, 'afterend');
+    domManager.addChild(`.board-column[data-column-id="${card.columns_id}"]`, content);
     domManager.addEventListener(
         `.card[data-card-id="${card.id}"]`,
         "click",

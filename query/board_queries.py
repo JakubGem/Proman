@@ -70,6 +70,3 @@ def rename_column(board_id, title):
         """, {'board_id': board_id, 'title': title})
     return new_board_name
 
-
-
-
