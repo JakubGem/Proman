@@ -64,19 +64,19 @@ CREATE TABLE  proman_users(
 ---
 
 ALTER TABLE ONLY cards
-    ADD CONSTRAINT fk_cards_boards_id FOREIGN KEY (board_id) REFERENCES boards(id);
+    ADD CONSTRAINT fk_cards_boards_id FOREIGN KEY (board_id) REFERENCES boards(id) on delete cascade;
 
 ALTER TABLE ONLY cards
-    ADD CONSTRAINT fk_cards_user_id FOREIGN KEY (user_id) REFERENCES proman_users(id);
+    ADD CONSTRAINT fk_cards_user_id FOREIGN KEY (user_id) REFERENCES proman_users(id) on delete cascade;
 
 ALTER TABLE ONLY cards
-    ADD CONSTRAINT fk_cards_columns_id FOREIGN KEY (columns_id) REFERENCES columns(id);
+    ADD CONSTRAINT fk_cards_columns_id FOREIGN KEY (columns_id) REFERENCES columns(id) on delete cascade;
 
 ALTER TABLE ONLY boards
-    ADD CONSTRAINT fk_boards_user_id FOREIGN KEY (user_id) REFERENCES proman_users(id);
+    ADD CONSTRAINT fk_boards_user_id FOREIGN KEY (user_id) REFERENCES proman_users(id) on delete cascade;
 
 ALTER TABLE ONLY columns
-    ADD CONSTRAINT fk_columns_board_id FOREIGN KEY (board_id) REFERENCES boards(id);
+    ADD CONSTRAINT fk_columns_board_id FOREIGN KEY (board_id) REFERENCES boards(id) on delete cascade;
 
 
 ---
@@ -93,6 +93,10 @@ INSERT INTO columns(title, board_id) VALUES ('new', 1);
 INSERT INTO columns(title, board_id) VALUES ('in progress', 1);
 INSERT INTO columns(title, board_id) VALUES ('testing', 1);
 INSERT INTO columns(title, board_id) VALUES ('done', 1);
+INSERT INTO columns(title, board_id) VALUES ('new', 2);
+INSERT INTO columns(title, board_id) VALUES ('in progress', 2);
+INSERT INTO columns(title, board_id) VALUES ('testing', 2);
+INSERT INTO columns(title, board_id) VALUES ('done', 2);
 
 
 INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 1, 'new card 1', 1, 1);

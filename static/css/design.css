@@ -1,3 +1,7 @@
+*{
+    margin: 0;
+    padding: 0;
+}
 :root{
     --border-radius: 3px;
     --status-1: #590000;
@@ -10,6 +14,7 @@ body{
     min-width: 620px;
     background: #ddd url(http://cdn.backgroundhost.com/backgrounds/subtlepatterns/diagonal-noise.png);
     font-family: sans-serif;
+    position: relative;
 }
 
 h1, .board-title, .board-column-title{
@@ -164,4 +169,103 @@ section.board{
 .card_button{
     text-align: right;
     margin: 1%;
+}
+
+.modal-window {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30%;
+
+  background-color: #d3cfcf;
+  padding: 6rem;
+  border-radius: 5px;
+  box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
+  z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 2vh
+
+}
+.close-modal-window{
+  position: absolute;
+  top: 1.2rem;
+  right: 2rem;
+  font-size: 1.5rem;
+  color: #333;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 135%;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(3px);
+  z-index: 5;
+}
+.new-board-form {
+    display: flex;
+    flex-direction: column;
+    gap:1vh;
+    margin-left: 5vh;
+}
+.new-board-title {
+    width: 30vh;
+}
+.new-column-input {
+    /*display: flex;*/
+    flex-direction: column;
+    gap:0.5vh;
+}
+.submit-new-board {
+    width: 10vh;
+    height: 3vh;
+}
+
+.modal-window-header {
+    position: absolute;
+    top: 2.5rem;
+    left: 8rem;
+}
+.public-board-expl {
+    margin-left: 6px;
+}
+.hidden {
+    display: none;
+}
+
+.archived_cards_button{
+    margin-left: 1%;
+}
+
+.add_card_button{
+    margin-left: 1%;
+}
+
+.board-type-header {
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 20px;
+}
+.display {
+    position: relative;
+}
+
+.refresh-button {
+    position: absolute;
+    top: 0;
+    right: 5%;
+    display: flex;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.delete_board_button{
+    margin-left: 1%;
 }
