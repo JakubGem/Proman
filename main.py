@@ -183,7 +183,7 @@ def api_all_archived_cards_for_boards(board_id: int):
     return card_queries.all_archived_cards_for_the_board(board_id)
 
 
-@app.route("/api/board/<int:board_id>/delete")
+@app.route("/api/board/<int:board_id>/delete", methods=['DELETE'])
 @json_response
 def api_delete_board(board_id: int):
     board_queries.delete_board(board_id)
