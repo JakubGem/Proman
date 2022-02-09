@@ -29,7 +29,7 @@ export let columnsManager = {
 const creatAddNewColumnBtn = function(boardId){
   const buttonBuilder = htmlFactory(htmlTemplates.button);
   const content = buttonBuilder(boardId);
-  domManager.addChild(`.board-container[id='board${boardId}']`, content);
+  domManager.addChild(`.board[data-board-id='${boardId}']`, content);
   domManager.addEventListener(`.create-new-column[data-button-id="${boardId}"]`, "click",
           addNewColumn);
 }
@@ -55,12 +55,18 @@ async function deleteButtonHandler(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
     if (confirm('Are you sure you want to delete this column?')) {
         await dataHandler.deleteColumn(columnId);
-        await columnsManager.loadColumns(boardId);
-    } else {
+        await clearBord(boardId);
         await columnsManager.loadColumns(boardId);
     }
 }
 
+async function clearBord(boardId) {
+    // const cleanButton = document.querySelector(`.create-new-column[data-button-id="${boardId}"]`);
+    // cleanButton.removeEventListener('click', addNewColumn);
+    // cleanButton.innerHTML = "";
+    const cleanBoard = document.querySelector(`.board[data-board-id="${boardId}"]`);
+    cleanBoard.innerHTML = "";
+}
 
 async function createNewCard(boardId){
     let new_title = prompt('Enter card title: ', 'card title');
