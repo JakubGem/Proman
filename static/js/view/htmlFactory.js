@@ -28,9 +28,9 @@ export function htmlFactory(template) {
 
 function boardBuilder(board) {
     return `<div class="board-container" id='board${board.id}'>
-            <button class="content-button" data-board-id="${board.id}">Edit</button>
+            <div class="edit-button"><button class="content-button" data-board-id="${board.id}">Edit</button></div>
                 <div class="board-header" data-board-id=${board.id}>${board.title}</div>
-                <div class="board" data-board-id=${board.id}></div>    
+                <div class="board" data-board-id="${board.id}"></div>    
             </div>
             <button class="toggle-board-button" data-board-id="${board.id}">Show Cards</button>`;
 }
@@ -110,7 +110,9 @@ function columnBuilder(column) {
 }
 
 function createNewColumnButton(boardId) {
-    return `<button class="create-new-column" data-button-id="${boardId}">Add New Column</button>`;
+    return `<div class="create-column-button">
+                <button class="create-new-column" data-button-id="${boardId}">Add New Column</button>
+            </div>`;
 }
 
 export function loadAddNewCardButton(boardId) {
