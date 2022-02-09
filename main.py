@@ -165,6 +165,21 @@ def api_columns_name_for_the_board(board_id: int):
     return only_column_names(names)
 
 
+
+@app.route('/api/columns/<int:column_id>/rename', methods=['PUT'])
+@json_response
+def rename_column_name(column_id: int):
+    title = request.get_json()['title']
+    return columns_queries.rename_column(column_id, title)
+
+
+@app.route('/api/boards/<int:board_id>/rename', methods=['PUT'])
+@json_response
+def rename_board_name(board_id: int):
+    title = request.get_json()['title']
+    return board_queries.rename_column(board_id, title)
+
+  
 @app.route("/api/card/<int:card_id>/archive", methods=['PUT'])
 @json_response
 def api_archive_card(card_id: int):
