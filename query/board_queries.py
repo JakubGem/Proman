@@ -69,3 +69,7 @@ def rename_column(board_id, title):
         ORDER BY id ASC;
         """, {'board_id': board_id, 'title': title})
     return new_board_name
+
+
+
+
