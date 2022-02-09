@@ -130,3 +130,8 @@ export function loadDeleteButtonForCard(cardId) {
 export function loadArchiveButtonForCard(cardId) {
     return `<button class="card_button" id='archive_card${cardId}'>⏳</button></div>`
 }
+
+export function addRefreshButton(boardId) {
+    return `<div className="refresh-button" data-board-id=${boardId}>🔁</div>`
+}
+
