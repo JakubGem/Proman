@@ -186,7 +186,8 @@ def api_all_archived_cards_for_boards(board_id: int):
 @app.route("/api/board/<int:board_id>/delete")
 @json_response
 def api_delete_board(board_id: int):
-    return board_queries.delete_board(board_id)
+    board_queries.delete_board(board_id)
+    return "deleted"
 
 
 if __name__ == '__main__':

@@ -93,7 +93,13 @@ async function archivedCards(boardId) {
 
 
 async function deleteTheBoard(boardId) {
-    //let response = await fetch("/api/columns_name/" + boardId);
-    //return await response.json();
+    let response = await fetch("/api/board/" + boardId + "/delete", {
+        method: 'DELETE',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({board_id: boardId})
+    });
+    if (await response.json() === 'deleted'){
+
+    }
     console.log('usuwanie');
 }
