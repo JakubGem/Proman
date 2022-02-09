@@ -148,5 +148,32 @@ def change_column_card(card_id: int):
     column_id = column['column_id']
     return card_queries.change_column(card_id, column_id)
 
+
+@app.route("/api/get-order", methods=['POST'])
+@json_response
+def order_cards():
+    if request.method == 'POST':
+        card_list = request.json['cardList']
+        # lista = request.json['lista']
+        print(card_list)
+        # print(lista)
+        # cards = card_queries.get_cards()
+        # print(cards)
+        return card_list
+
+
+@app.route("/api/get-order-list", methods=['POST'])
+@json_response
+def order_cards_list():
+    if request.method == 'POST':
+        # print(card_list)
+        # card_list = request.json['cardList']
+        lista = request.json['list']
+        print(lista)
+        # cards = card_queries.get_cards()
+        # print(cards)
+        return lista
+
+
 if __name__ == '__main__':
     main()

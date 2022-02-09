@@ -59,3 +59,11 @@ def change_column(card_id, column_id):
     SET columns_id = %(column_id)s
     WHERE cards.id = %(card_id)s
     RETURNING *;""", {'card_id': card_id, 'column_id': column_id})
+
+
+def get_cards():
+    cards = data_manager.execute_select(""" 
+    SELECT id, board_id, columns_id, title, card_order, user_id, active FROM cards
+    WHERE board_id = 1;
+    """)
+    return cards
