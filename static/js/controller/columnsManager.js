@@ -52,21 +52,13 @@ async function addNewColumn (clickEvent) {
 
 async function deleteButtonHandler(clickEvent) {
     const columnId = clickEvent.target.dataset.columnId;
-    const boardId = clickEvent.target.dataset.boardId;
     if (confirm('Are you sure you want to delete this column?')) {
         await dataHandler.deleteColumn(columnId);
-        await clearBord(boardId);
-        await columnsManager.loadColumns(boardId);
+        let cleanBoard = document.querySelector(`.board-columns-container[data-column-id="${columnId}"]`);
+        cleanBoard.remove();
     }
 }
 
-async function clearBord(boardId) {
-    // const cleanButton = document.querySelector(`.create-new-column[data-button-id="${boardId}"]`);
-    // cleanButton.removeEventListener('click', addNewColumn);
-    // cleanButton.innerHTML = "";
-    const cleanBoard = document.querySelector(`.board[data-board-id="${boardId}"]`);
-    cleanBoard.innerHTML = "";
-}
 
 async function createNewCard(boardId){
     let new_title = prompt('Enter card title: ', 'card title');
