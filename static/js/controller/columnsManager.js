@@ -39,7 +39,14 @@ async function addNewColumn (clickEvent) {
   const boardId = clickEvent.target.dataset.buttonId;
   let columnTitle = prompt("Please Provide New Column Title");
   await dataHandler.createNewColumn(columnTitle, boardId);
-  await columnsManager.loadColumns(boardId);
+  const [column] = await dataHandler.getNewColumnByTitleAndId(columnTitle, boardId);
+  const columnBuilder = htmlFactory(htmlTemplates.column);
+  const content = columnBuilder(column);
+  domManager.addChild(`.add_card_button`, content, 'beforebegin');
+  domManager.addEventListener(`.delete-column[data-column-id="${column.id}"]`,
+        "click", deleteButtonHandler)
+  domManager.addEventListener(`.content-button[data-column-id="${column.id}"]`,
+          'click', renameColumn);
 }
 
 
