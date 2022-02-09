@@ -1,5 +1,11 @@
 import {dataHandler} from "../data/dataHandler.js";
-import {htmlFactory, htmlTemplates, loadAddNewCardButton, loadArchivedCardsButton, deleteBoard} from "../view/htmlFactory.js";
+import {
+    deleteBoard,
+    htmlFactory,
+    htmlTemplates,
+    loadAddNewCardButton,
+    loadArchivedCardsButton
+} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
 import {cardsManager, create_card} from "./cardsManager.js";
 
@@ -91,15 +97,27 @@ async function archivedCards(boardId) {
     $('#archived').modal();
 }
 
-
 async function deleteTheBoard(boardId) {
     let response = await fetch("/api/board/" + boardId + "/delete", {
         method: 'DELETE',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({board_id: boardId})
     });
-    if (await response.json() === 'deleted'){
+    if (await response.json() === 'deleted') {
 
     }
     console.log('usuwanie');
+}
+
+async function renameColumn(clickEvent) {
+    let columnId = clickEvent.target.dataset.columnId;
+    let content = document.querySelector(`.board-column[data-column-id="${columnId}"]`);
+    content.contentEditable = !content.isContentEditable;
+    if (content.contentEditable === 'false') {
+        clickEvent.target.innerHTML = 'Edit';
+        let title = content.innerHTML
+        await dataHandler.renameColumn(columnId, title);
+    } else {
+        clickEvent.target.innerHTML = 'Save';
+    }
 }
