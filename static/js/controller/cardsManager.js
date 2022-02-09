@@ -48,7 +48,7 @@ const injectCardsToHTML = function (columns, cardsList) {
 }
 
 function SortCards(card1, card2) {
-    return card1.card_order > card2.card_order ? 1 : -1;
+    return card1.card_order < card2.card_order ? 1 : -1;
 }
 
 function deleteButtonHandler(clickEvent) {

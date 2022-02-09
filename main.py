@@ -173,6 +173,7 @@ def order_cards_list():
             ordered_list.update(dicts)
             dicts = {}
         for k, v in ordered_list.items():
+            print(k,v)
             card_queries.change_order(k, v)
         return card_list
 
