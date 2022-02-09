@@ -115,6 +115,10 @@ export function loadAddNewCardButton(boardId) {
     return `<div class="add_card_button"><button id='add_card_button_for_board${boardId}'>Add new card</button></div>`
 }
 
+export function loadArchivedCardsButton(boardId) {
+    return `<div class="archived_cards_button"><button id='archived_cards_button_for_board${boardId}'>Archived cards</button></div>`
+}
+
 export function loadEditButtonForCard(cardId) {
     return `<button class="card_button" id='edit_title_for_card${cardId}'>🗒️</button></div>`
 }
@@ -123,6 +127,11 @@ export function loadDeleteButtonForCard(cardId) {
     return `<button class="card_button" id='delete_card${cardId}'>🗑️</button></div>`
 }
 
+export function loadArchiveButtonForCard(cardId) {
+    return `<button class="card_button" id='archive_card${cardId}'>⏳</button></div>`
+}
+
 export function addRefreshButton(boardId) {
     return `<div className="refresh-button" data-board-id=${boardId}>🔁</div>`
 }
+

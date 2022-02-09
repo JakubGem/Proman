@@ -61,14 +61,15 @@ input{
     border-block-color: #000000;
     border: 1px solid #aaaaaa;
 }
+
 .empty{
     display: inline-block;
     width: 400px;
     height: 100px;
     background-color: #7878da;
     border: 1px solid #aaaaaa;
-
 }
+
 body{
     position: relative;
     left: 20%;
@@ -76,11 +77,14 @@ body{
     justify-content: center;
     align-items: center;
 }
+
 .drag{
     width: 200px;
     height: 80vh;
     display: flex;
 }
+
 .refresh-button {
     display: flex;
 }
+

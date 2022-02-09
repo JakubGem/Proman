@@ -239,6 +239,15 @@ section.board{
 .hidden {
     display: none;
 }
+
+.archived_cards_button{
+    margin-left: 1%;
+}
+
+.add_card_button{
+    margin-left: 1%;
+}
+
 .board-type-header {
     font-size: 2rem;
     font-weight: bold;

@@ -111,12 +111,13 @@ const submitNewBoard = async function () {
     newBoard.addEventListener('submit', (e) => {
         e.preventDefault()
         const data = {}
-        data['userid'] = 1
+        data['userid'] = sessionStorage.getItem('user_id')
         data['boardTitle'] = document.getElementById('board-title').value
         data['columns'] = searchingNewColumnsValue()
         data['type'] = document.getElementById('public').checked
         dataHandler.createNewBoard(data)
         closeAddNewBoardWindow()
+        window.location.reload(true)
         alert('You have successfully add new board')
     })
 }
