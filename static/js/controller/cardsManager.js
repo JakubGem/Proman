@@ -17,7 +17,7 @@ const createSortedCardList = function (columns, cards){
     for (const column of columns) {
         let temporaryList = cards.filter(card => card.columns_id === column.id);
         cardsList.push(temporaryList.sort(SortCards));
-    }
+    }console.log(cardsList)
     return cardsList
 }
 

@@ -117,19 +117,7 @@ async function apiPut(url, data) {
 }
 
 
-async function apiPost(url, lists) {
-    let response = await fetch(url, {
-        method: "POST",
-        headers: {
-      'Content-Type': 'application/json'},
-        body: JSON.stringify(lists),
-    });
-    if (response.status === 200) {
-        await response.json();
-        console.log("POST sent successfully")
-    }
-}
 
-async function apiDelete(url) {}
+// async function apiDelete(url) {}
 
 // async function apiPut(url) {}

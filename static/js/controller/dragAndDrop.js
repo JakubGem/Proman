@@ -39,10 +39,12 @@ function dragOver(e) {
 async function dragDrop(e) {
     let cardId = e.currentTarget
     let columnId = cardId.parentElement.getAttribute('data-column-id')
+    console.log(columnId, cardId.parentElement)
     cardId.insertAdjacentElement("afterbegin", div.card1)
     let addDiv = document.createElement('div')
     addDiv.className = 'empty'
     cardId.insertAdjacentElement('afterend', addDiv)
+    console.log(cardId1, columnId)
     await dataHandler.changeColumn(cardId1, columnId)
     await orderLIst()
 }
