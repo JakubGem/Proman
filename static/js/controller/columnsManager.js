@@ -60,6 +60,7 @@ async function deleteButtonHandler(clickEvent) {
     }
 }
 
+
 async function createNewCard(boardId){
     let new_title = prompt('Enter card title: ', 'card title');
     let columns_name = await columnsNameForTheBoard(boardId);

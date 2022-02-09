@@ -18,8 +18,7 @@ export let boardsManager = {
                 "click", showHideButtonHandler);
             domManager.addEventListener(`.content-button[data-board-id="${board.id}"]`,
                 'click', renameBoard);
-            )
-            };
+            }
         }
     }
 
