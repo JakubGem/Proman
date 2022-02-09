@@ -15,9 +15,8 @@ export let boardsManager = {
             domManager.addChild("#private-boards", content);
             domManager.addEventListener(
                 `.toggle-board-button[data-board-id="${board.id}"]`,
-                "click", showHideButtonHandler);
-            domManager.addEventListener(`.content-button[data-board-id="${board.id}"]`,
-                'click', renameBoard);
+                "click",
+                showHideButtonHandler,
             )
             };
         }
@@ -136,17 +135,4 @@ const closeAddNewBoardWindow = function (){
     document.getElementById('add-new-board-window').remove()
     document.querySelector('.new-board-btn-container').classList.remove('hidden')
     document.querySelector('.overlay').classList.add('hidden')
-}
-
-async function renameBoard(clickEvent) {
-    let boardId = clickEvent.target.dataset.boardId;
-    let content = document.querySelector(`.board-header[data-board-id="${boardId}"]`);
-    content.contentEditable = !content.isContentEditable;
-	if (content.contentEditable === 'false') {
-		clickEvent.target.innerHTML = 'Edit';
-		let title = content.innerHTML
-        await dataHandler.renameBoard(boardId, title);
-	} else {
-		clickEvent.target.innerHTML = 'Save';
-	}
 }
