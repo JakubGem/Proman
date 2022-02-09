@@ -1,34 +1,58 @@
 import { dataHandler } from "../data/dataHandler.js";
-import { htmlFactory, htmlTemplates, newBoardModal, newBoardColumn} from "../view/htmlFactory.js";
+import {htmlFactory, htmlTemplates, newBoardModal, newBoardColumn, addRefreshButton} from "../view/htmlFactory.js";
 import { domManager } from "../view/domManager.js";
 import { columnsManager } from "./columnsManager.js";
 
 export let boardsManager = {
     loadBoards: async function () {
-        const boards = await dataHandler.getBoards();
-        console.debug(boards);
+        addEventListenerToLogoutbtn()
+        if (sessionStorage.getItem('user_id')) addNewBoard()
+        const boards = await getBoards();
         for (let board of boards) {
             const boardBuilder = htmlFactory(htmlTemplates.board);
             const content = boardBuilder(board);
-            domManager.addChild("#root", content);
+            board.type ? domManager.addChild("#public-boards", content):
+            domManager.addChild("#private-boards", content);
             domManager.addEventListener(
                 `.toggle-board-button[data-board-id="${board.id}"]`,
                 "click", showHideButtonHandler);
             domManager.addEventListener(`.content-button[data-board-id="${board.id}"]`,
                 'click', renameBoard);
+            )
+            };
         }
-    },
-};
+    }
+
+
+const addEventListenerToLogoutbtn = function (){
+    if (sessionStorage.getItem('user_id'))
+        document.querySelector('.logout-btn').addEventListener('click', ()=>sessionStorage.removeItem('user_id'))
+}
+
+
+const getBoards = async function (){
+    return sessionStorage.getItem('user_id')? await dataHandler.getPrivateBoard(sessionStorage.getItem('user_id')): await dataHandler.getBoards();
+}
 
 function showHideButtonHandler(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
     columnsManager.loadColumns(boardId);
     document.getElementById(`board${boardId}`).classList.add('display');
+    addRefreshBtn(boardId)
     clickEvent.currentTarget.removeEventListener('click', showHideButtonHandler);
     clickEvent.currentTarget.addEventListener('click', hideBoard);
     clickEvent.currentTarget.innerHTML='Hide Cards';
 }
 
+
+const addRefreshBtn = function (boardId){
+    document.getElementById(`board${boardId}`).insertAdjacentHTML("beforebegin", addRefreshButton(boardId))
+    document.querySelector('.refresh-button').addEventListener('click', (e)=>{
+
+        const boardNumber = e.currentTarget.dataset.boardId
+
+    })
+}
 
 function hideBoard(e) {
     const boardId = e.target.dataset.boardId;
@@ -88,14 +112,14 @@ const submitNewBoard = async function () {
     newBoard.addEventListener('submit', (e) => {
         e.preventDefault()
         const data = {}
-        data['userid'] = 1
+        data['userid'] = sessionStorage.getItem('user_id')
         data['boardTitle'] = document.getElementById('board-title').value
         data['columns'] = searchingNewColumnsValue()
         data['type'] = document.getElementById('public').checked
-        console.debug(data)
         dataHandler.createNewBoard(data)
-        alert('You have successfully add new board')
         closeAddNewBoardWindow()
+        window.location.reload(true)
+        alert('You have successfully add new board')
     })
 }
 
