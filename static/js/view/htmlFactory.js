@@ -132,6 +132,6 @@ export function loadArchiveButtonForCard(cardId) {
 }
 
 export function addRefreshButton(boardId) {
-    return `<div className="refresh-button" data-board-id=${boardId}>🔁</div>`
+    return `<div class="refresh-button" data-board-id=${boardId}>🔁</div>`
 }
 
