@@ -49,7 +49,6 @@ export function newBoardModal() {
         <button type="button" class="close-modal-window" title="Cancel submit new board">❌</button>
         <div class="new-board-window">
             <form action="/save_new_board" id="new-board-form" class="new-board-form" method="post">
-                <div class="new-board-title">Give board name:</div>
                 <input type="text" class="new-board-title" id="board-title" name="board-title" placeholder="Board name..." required>
                 <div class="new-board-menu-text">New columns:</div>
                 <div class="all-new-columns">

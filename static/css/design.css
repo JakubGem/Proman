@@ -172,11 +172,11 @@ section.board{
 }
 
 .modal-window {
-  position: absolute;
-  top: 50%;
+  position: fixed;
+  top: 50vh;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 30%;
+  width: 25%;
 
   background-color: #d3cfcf;
   padding: 6rem;
@@ -229,8 +229,9 @@ section.board{
 }
 
 .modal-window-header {
+    display: flex;
     position: absolute;
-    top: 2.5rem;
+    top: 0.2rem;
     left: 8rem;
 }
 .public-board-expl {
