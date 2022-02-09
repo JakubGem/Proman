@@ -1,5 +1,6 @@
 import {dataHandler} from "../data/dataHandler.js";
 
+
 const div = {card1: null}
 export async function drop(){
 const cards = document.querySelectorAll('.card');
@@ -36,12 +37,25 @@ function dragOver(e) {
 }
 
 async function dragDrop(e) {
-
     let cardId = e.currentTarget
     let columnId = cardId.parentElement.getAttribute('data-column-id')
+    console.log(columnId, cardId.parentElement)
     cardId.insertAdjacentElement("afterbegin", div.card1)
     let addDiv = document.createElement('div')
     addDiv.className = 'empty'
     cardId.insertAdjacentElement('afterend', addDiv)
+    console.log(cardId1, columnId)
     await dataHandler.changeColumn(cardId1, columnId)
+    await orderLIst()
+}
+
+async function orderLIst() {
+    let a = 0
+    let divs = document.getElementsByClassName('card')
+    let cardsList = []
+    for (a; a < divs.length; a++) {
+        cardsList.push(divs[a].getAttribute('data-card-id'))
+        console.log(cardsList)
+    }
+    await dataHandler.cardOrderList(cardsList)
 }

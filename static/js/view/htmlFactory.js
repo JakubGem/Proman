@@ -100,7 +100,7 @@ export function newBoardColumn() {
 }
 
 function columnBuilder(column) {
-    return `<div class="board-columns-container">
+    return `<div class="board-columns-container" data-column-id="${column.id}">
                 <button class="delete-column" data-board-id="${column.board_id}" 
                     data-column-id="${column.id}">Delete column</button>
                 <button class="content-button" data-column-id="${column.id}">Edit</button>

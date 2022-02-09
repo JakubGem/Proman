@@ -17,7 +17,7 @@ const createSortedCardList = function (columns, cards){
     for (const column of columns) {
         let temporaryList = cards.filter(card => card.columns_id === column.id);
         cardsList.push(temporaryList.sort(SortCards));
-    }
+    }console.log(cardsList)
     return cardsList
 }
 
@@ -48,7 +48,7 @@ const injectCardsToHTML = function (columns, cardsList) {
 }
 
 function SortCards(card1, card2) {
-    return card1.card_order > card2.card_order ? 1 : -1;
+    return card1.card_order < card2.card_order ? 1 : -1;
 }
 
 function deleteButtonHandler(clickEvent) {

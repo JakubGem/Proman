@@ -162,7 +162,28 @@ def change_column_card(card_id: int):
     column = request.get_json()
     card_id = column['card_id']
     column_id = column['column_id']
+    print(column_id)
     return card_queries.change_column(card_id, column_id)
+
+
+@app.route("/api/get-order-list", methods=['POST'])
+@json_response
+def order_cards_list():
+    if request.method == 'POST':
+        ordered_list = {}
+        i = 0
+        card_list = request.json['cardList']
+        print(card_list)
+        for card in card_list:
+            i += 1
+            dicts = {int(card): i}
+            ordered_list.update(dicts)
+            dicts = {}
+        for k, v in ordered_list.items():
+            print(k,v)
+            card_queries.change_order(k, v)
+        return card_list
+
 
 
 @app.route("/api/columns_name/<int:board_id>")

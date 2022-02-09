@@ -78,3 +78,17 @@ WHERE cards.board_id = %(board_id)s
 AND cards.active = false
 ;
 """, {"board_id": board_id})
+
+def get_cards():
+    cards = data_manager.execute_select(""" 
+    SELECT id, board_id, columns_id, title, card_order, user_id, active FROM cards
+    WHERE board_id = 1;
+    """)
+    return cards
+
+
+def change_order(id, card_order):
+    return data_manager.execute_edit("""UPDATE cards 
+    SET card_order = %(card_order)s
+    WHERE id = %(id)s
+    RETURNING *;""", {'card_order': card_order, 'id': id})

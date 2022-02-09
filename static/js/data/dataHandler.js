@@ -20,18 +20,27 @@ export let dataHandler = {
   getCard: async function (cardId) {
     // the card is retrieved and then the callback function is called with the card
   },
-    
+
   createNewColumn: async function (columnTitle, boardId) {
     let payload = {'title': columnTitle};
     const response = await apiPost(`/api/columns/${boardId}/add`, payload);
     return response;
   },
-    
+
+  cardOrderList: async function (cardList) {
+    const lists = {
+        'cardList': cardList
+    };
+    const response = await apiPost(`/api/get-order-list`, lists);
+    return response;
+  },
+
+
   deleteColumn: async function (columnId) {
     const response = await apiDelete(`/api/columns/${columnId}/delete`);
     return response;
   },
-    
+
   createNewCard: async function (cardTitle, boardId, statusId) {
       // creates new card, saves it and calls the callback function with its data
   },
@@ -111,3 +120,9 @@ async function apiPut(url, data) {
         console.log("PUT sent successfully")
     }
 }
+
+
+
+// async function apiDelete(url) {}
+
+// async function apiPut(url) {}
