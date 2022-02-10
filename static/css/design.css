@@ -35,11 +35,13 @@ button{
     font-size: 14px;
     font-family: sans-serif;
     padding: 4px 10px;
+    border-radius: 4px;
 }
 
 .board-container{
     max-width: 960px;
     margin: 0 auto;
+
 }
 
 section.board{
@@ -47,6 +49,7 @@ section.board{
     border: aliceblue;
     background: #ffffff90;
     border-radius: 3px;
+
 }
 
 .board-header{
@@ -62,6 +65,7 @@ section.board{
 }
 .board-title, .board-add, .board-toggle{
     display: inline-block;
+
 }
 
 .board-toggle{
@@ -70,13 +74,15 @@ section.board{
 }
 
 .board-columns{
-    display: flex;
+    display: table;
     flex-wrap: nowrap;
+
 }
 
 .board-column{
     padding: 10px;
     flex: 1;
+
 }
 
 .board-column-content{
@@ -89,6 +95,7 @@ section.board{
     margin-top: 4px;
     border-radius: 10px;
     background: #eee;
+
 }
 
 .board-column-title{
@@ -102,6 +109,8 @@ section.board{
     border-radius: var(--border-radius);
     margin: 4px 0;
     padding: 4px;
+
+
 }
 
 .board-column:nth-of-type(1) .card{
@@ -134,14 +143,18 @@ section.board{
 }
 
 .display {
-    display: grid;
+    /*display: grid;*/
+    display: block;
+    /*min-height: 500px;*/
     grid-template-rows: 5vh 60vh;
     gap:20px;
-    background: white;
+    background: #c4e3f3;
     border-radius: 5%;
     border-color: #a63a3a;
     border-style: dashed;
     align-items: start;
+    z-index: 10;
+
 }
 .board-columns-container {
     display: table;
@@ -156,12 +169,13 @@ section.board{
     text-align: center;
     display: flex;
     justify-self: center;
+    background-color: #c4e3f3;
 }
 .empty{
     transition: height 0.2s;
     display: table;
     width: 200px;
-    height: 10px;
+    height: 5px;
     top: 5px;
     /*background-color: #e30f0f;*/
     /*top: 5px;*/
@@ -177,7 +191,6 @@ section.board{
 
 
 .card_button{
-
     text-align: right;
     margin: 1%;
 }
@@ -210,6 +223,12 @@ section.board{
   background: none;
 }
 
+.hide_button{
+    position: relative;
+    z-index: 10;
+
+}
+
 .overlay {
   position: absolute;
   top: 0;
@@ -233,10 +252,16 @@ section.board{
     /*display: flex;*/
     flex-direction: column;
     gap:0.5vh;
+    border-radius: 4px;
 }
 .submit-new-board {
     width: 10vh;
     height: 3vh;
+    border-radius: 4px;
+}
+
+.toggle-board-button{
+    border-radius: 4px;
 }
 
 .modal-window-header {
@@ -280,4 +305,43 @@ section.board{
 
 .delete_board_button{
     margin-left: 1%;
+}
+/*___________________________*/
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #46b8da;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
 }

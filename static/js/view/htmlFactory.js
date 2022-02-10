@@ -87,7 +87,7 @@ export function newBoardModal() {
             </form>
         </div>
     </div>
-    <div class="overlay"></div>`
+    `
 }
 
 export function newBoardColumn() {
