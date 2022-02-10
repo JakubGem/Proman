@@ -38,8 +38,7 @@ function boardBuilder(board) {
 function cardBuilder(card) {
     return `<div class="empty" draggable="false" >
                 <div class="card" draggable="true" data-card-id="${card.id}" >${card.title}</div></div>
-                <div class="empty" draggable="false" >
-            </div>`;
+                <div class="empty" draggable="false" ></div>`;
 }
 
 export function newBoardModal() {
@@ -88,7 +87,7 @@ export function newBoardModal() {
             </form>
         </div>
     </div>
-    <div class="overlay"></div>`
+    `
 }
 
 export function newBoardColumn() {
@@ -105,7 +104,7 @@ function columnBuilder(column) {
                     data-column-id="${column.id}">Delete column</button>
                 <button class="content-button" data-column-id="${column.id}">Edit</button>
                 <div class="board-column" data-column-id="${column.id}">${column.title}</div>
-            </div>`;
+           <div class="empty" draggable="false" ><div class="empty" draggable="false" ></div></div></div>`;
 }
 
 function createNewColumnButton(boardId) {
