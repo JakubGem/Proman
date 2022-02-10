@@ -28,9 +28,9 @@ export function htmlFactory(template) {
 
 function boardBuilder(board) {
     return `<div class="board-container" id='board${board.id}'>
-            <button class="content-button" data-board-id="${board.id}">Edit</button>
+            <div class="edit-button"><button class="content-button" data-board-id="${board.id}">Edit</button></div>
                 <div class="board-header" data-board-id=${board.id}>${board.title}</div>
-                <div class="board" data-board-id=${board.id}></div>    
+                <div class="board" data-board-id="${board.id}"></div>    
             </div>
             <button class="toggle-board-button" data-board-id="${board.id}">Show Cards</button>`;
 }
@@ -48,7 +48,6 @@ export function newBoardModal() {
         <button type="button" class="close-modal-window" title="Cancel submit new board">❌</button>
         <div class="new-board-window">
             <form action="/save_new_board" id="new-board-form" class="new-board-form" method="post">
-                <div class="new-board-title">Give board name:</div>
                 <input type="text" class="new-board-title" id="board-title" name="board-title" placeholder="Board name..." required>
                 <div class="new-board-menu-text">New columns:</div>
                 <div class="all-new-columns">
@@ -109,7 +108,9 @@ function columnBuilder(column) {
 }
 
 function createNewColumnButton(boardId) {
-    return `<button class="create-new-column" data-button-id="${boardId}">Add New Column</button>`;
+    return `<div class="create-column-button">
+                <button class="create-new-column" data-button-id="${boardId}">Add New Column</button>
+            </div>`;
 }
 
 export function loadAddNewCardButton(boardId) {

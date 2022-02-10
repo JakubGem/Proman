@@ -22,7 +22,7 @@ DROP TABLE IF EXISTS boards CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS cards CASCADE;
 DROP TABLE IF EXISTS proman_users CASCADE;
-
+DROP TABLE IF EXISTS user_activity CASCADE;
 ---
 --- create tables
 ---
@@ -58,6 +58,12 @@ CREATE TABLE  proman_users(
     email       VARCHAR (200)     NOT NULL unique,
     password       VARCHAR (200)     NOT NULL
 );
+
+CREATE TABLE  last_activity(
+    id          SERIAL PRIMARY KEY  NOT NULL,
+    user_id       VARCHAR (200)     NOT NULL,
+    board_id       VARCHAR (200)     NOT NULL,
+    modification_time        bigint     NOT NULL unique);
 
 ---
 --- add constraints

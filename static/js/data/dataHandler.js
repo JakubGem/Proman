@@ -68,6 +68,11 @@ renameColumn: async function (columnId, title) {
     let data = {'title': title};
     const response = await apiPut(`/api/boards/${boardId}/rename`, data);
     return response;
+  },
+
+  getNewColumnByTitleAndId: async function (columnTitle, boardId) {
+    const response = await apiGet(`/api/column/${columnTitle}/${boardId}`);
+    return response;
   }
 };
 

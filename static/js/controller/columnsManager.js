@@ -29,7 +29,7 @@ export let columnsManager = {
 const creatAddNewColumnBtn = function(boardId){
   const buttonBuilder = htmlFactory(htmlTemplates.button);
   const content = buttonBuilder(boardId);
-  domManager.addChild(`.board-container[id='board${boardId}']`, content);
+  domManager.addChild(`.board[data-board-id='${boardId}']`, content);
   domManager.addEventListener(`.create-new-column[data-button-id="${boardId}"]`, "click",
           addNewColumn);
 }
@@ -39,18 +39,23 @@ async function addNewColumn (clickEvent) {
   const boardId = clickEvent.target.dataset.buttonId;
   let columnTitle = prompt("Please Provide New Column Title");
   await dataHandler.createNewColumn(columnTitle, boardId);
-  await columnsManager.loadColumns(boardId);
+  const [column] = await dataHandler.getNewColumnByTitleAndId(columnTitle, boardId);
+  const columnBuilder = htmlFactory(htmlTemplates.column);
+  const content = columnBuilder(column);
+  domManager.addChild(`.add_card_button`, content, 'beforebegin');
+  domManager.addEventListener(`.delete-column[data-column-id="${column.id}"]`,
+        "click", deleteButtonHandler)
+  domManager.addEventListener(`.content-button[data-column-id="${column.id}"]`,
+          'click', renameColumn);
 }
 
 
 async function deleteButtonHandler(clickEvent) {
     const columnId = clickEvent.target.dataset.columnId;
-    const boardId = clickEvent.target.dataset.boardId;
     if (confirm('Are you sure you want to delete this column?')) {
         await dataHandler.deleteColumn(columnId);
-        await columnsManager.loadColumns(boardId);
-    } else {
-        await columnsManager.loadColumns(boardId);
+        let cleanBoard = document.querySelector(`.board-columns-container[data-column-id="${columnId}"]`);
+        cleanBoard.remove();
     }
 }
 

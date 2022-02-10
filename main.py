@@ -142,6 +142,13 @@ def add_new_column_to_board(board_id: int):
     return columns_queries.add_new_column(board_id, title)
 
 
+@app.route('/api/column/<column_title>/<int:board_id>')
+@json_response
+def get_new_column_content(column_title, board_id: int):
+    column_data = columns_queries.get_new_column_data(column_title, board_id)
+    return column_data
+
+
 @app.route('/api/columns/<int:column_id>/delete', methods=['DELETE'])
 @json_response
 def delete_column_from_board(column_id: int):
