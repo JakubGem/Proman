@@ -5,6 +5,14 @@ from util import json_response, only_column_names
 import mimetypes
 from query import users_queries, board_queries, card_queries, columns_queries
 
+import os
+import psycopg2
+
+connection_string = os.environ.get('DATABASE_URL')
+connection = psycopg2.connect(connection_string)
+
+
+
 mimetypes.add_type('application/javascript', '.js')
 app = Flask(__name__)
 load_dotenv()
