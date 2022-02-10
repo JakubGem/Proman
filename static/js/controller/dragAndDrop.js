@@ -13,6 +13,9 @@ cards.forEach((card) => {
 
 empties.forEach((empty) => {
     empty.addEventListener('dragover', dragOver);
+    empty.addEventListener('dragend', dragEnd);
+    empty.addEventListener('dragenter', dragEnter);
+    empty.addEventListener('dragleave', dragLeave);
     empty.addEventListener('drop', dragDrop)
 });
 }
@@ -28,22 +31,43 @@ function dragStart(e) {
     dragable = this;
 }
 
-function dragEnd() {
+function dragEnd(e) {
     dragable = null;
+
+}
+
+function dragLeave(e) {
+    let currentElement = e.currentTarget
+    currentElement.classList.remove('empty--active')
+}
+
+function dragEnter(e) {
+    let currentElement = e.currentTarget
+    currentElement.classList.add('empty--active')
+    // let cardId = e.currentTarget
+    // // cardId.insertAdjacentElement("afterbegin", div.card1)
+    // let addDiv = document.createElement('div')
+    // addDiv.className = 'empty'
+    // currentElement.insertAdjacentElement('afterend', addDiv)
+    // console.log('enter')
 }
 
 function dragOver(e) {
     e.preventDefault();
+
 }
 
 async function dragDrop(e) {
     let cardId = e.currentTarget
+    cardId.classList.remove('empty--active')
+    console.log(cardId)
     let columnId = cardId.parentElement.getAttribute('data-column-id')
     console.log(columnId, cardId.parentElement)
     cardId.insertAdjacentElement("afterbegin", div.card1)
-    let addDiv = document.createElement('div')
-    addDiv.className = 'empty'
-    cardId.insertAdjacentElement('afterend', addDiv)
+    cardId.insertAdjacentElement("afterend", div.card1)
+    // let addDiv = document.createElement('div')
+    // addDiv.className = 'empty'
+    // cardId.insertAdjacentElement('afterend', addDiv)
     console.log(cardId1, columnId)
     await dataHandler.changeColumn(cardId1, columnId)
     await orderLIst()
