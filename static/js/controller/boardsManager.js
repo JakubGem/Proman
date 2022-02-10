@@ -43,11 +43,11 @@ const getBoards = async function () {
 }
 
 function showHideButtonHandler(clickEvent) {
-    clickEvent.target.classList.add('hide_button')
+    // clickEvent.target.classList.add('hide_button')
     const boardId = clickEvent.target.dataset.boardId;
     columnsManager.loadColumns(boardId);
     document.getElementById(`board${boardId}`).classList.add('display');
-    document.querySelector('.overlay').classList.remove('hidden')
+    // document.querySelector('.overlay').classList.remove('hidden')
     addRefreshBtn(boardId)
     clickEvent.currentTarget.removeEventListener('click', showHideButtonHandler);
     clickEvent.currentTarget.addEventListener('click', hideBoard);
@@ -66,9 +66,8 @@ const addRefreshBtn = function (boardId) {
 function hideBoard(e) {
     const boardId = e.target.dataset.boardId;
     document.getElementById(`board${boardId}`).classList.remove('display');
-    document.querySelector('.overlay').classList.add('hidden')
-    e.target.classList.remove('hide_button')
-
+    // document.querySelector('.overlay').classList.add('hidden')
+    // e.target.classList.remove('hide_button')
     removeColumns();
     document.querySelector('.add_card_button').remove();
     document.querySelector('.create-new-column').remove();
