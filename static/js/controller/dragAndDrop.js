@@ -64,7 +64,7 @@ async function dragDrop(e) {
     let columnId = cardId.parentElement.getAttribute('data-column-id')
     console.log(columnId, cardId.parentElement)
     cardId.insertAdjacentElement("afterbegin", div.card1)
-    cardId.insertAdjacentElement("afterend", div.card1)
+    // cardId.insertAdjacentElement("afterend", div.card1)
     // let addDiv = document.createElement('div')
     // addDiv.className = 'empty'
     // cardId.insertAdjacentElement('afterend', addDiv)
