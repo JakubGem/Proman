@@ -1,10 +1,11 @@
-# Porman
+# Proman
 
 ## About the app
 
 Proman is application that helps people oraganize their tasks and plans. 
 As a user you can create new cards, boards and archive them, it will make you calm about what you've done.
 Application is very similar with popular Trello, simple to use and even intuitively.
+https://proman-group1.herokuapp.com/
 
 
 ## Technologies
