@@ -30,4 +30,4 @@ Frontend technologies:
 * [Jakub Bogacki](https://github.com/kuba-bogacki)
 
 
-![image](https://user-images.githubusercontent.com/89380131/165123369-5a9bc88f-5cb0-47cf-a33d-31fcf694ebcd.png)
+![image](https://user-images.githubusercontent.com/89380131/165123538-82d86370-f98a-42a3-ae9f-6bea66f57466.png)
